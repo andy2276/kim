@@ -5,7 +5,6 @@ import math
 os.getcwd()
 
 os.chdir('..')
-os.chdir('..')
 os.chdir('resource')
 os.listdir() #이거 안해주면 읽지를 못함!
 
