@@ -1,8 +1,6 @@
 from pico2d import *
 import os
 
-os.chdir('..')
-os.chdir('resource')
 speed = 1
 flowspeed = 2
 
@@ -22,8 +20,8 @@ def handle_events():
             yp = 600 - e.y
 open_canvas()
 
-grass = load_image('grass.png')
-character = load_image('run_animation.png')
+grass = load_image('../resource/grass.png')
+character = load_image('../resource/run_animation.png')
 x, y = 800 // 2, 90
 xp,yp = 800//2,90
 frame = 0
