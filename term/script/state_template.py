@@ -1,7 +1,10 @@
 
-#//-----------------This module's name is 'state_template'-------------------//
-#//-----------------prev module is 'None'-------------------------------//
-#//---------------------Notice End-----------------------------------------//
+#//-----------------/This module's name is 'state_template'/------------------//
+#//-----------------/prev module is 'None'/-------------------------------//
+#//--------/first,second,third,fourth : import module/--------------------//
+#//--------/fifth,sixth : initializing variables/--------------------------//
+#//--------/seventh,eighth,ninth : define/---------------------------------//
+#//---------------------/Notice End/-----------------------------------------//
 
 
 #first import pico2d

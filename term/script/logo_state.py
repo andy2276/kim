@@ -1,8 +1,10 @@
 
-
-#//-----------------This module's name is 'logo_state'---------------------//
-#//-----------------prev module is 'main.py'-------------------------------//
-#//---------------------Notice End-----------------------------------------//
+#//-----------------/This module's name is 'logo_state'/-------------------//
+#//-----------------/prev module is 'main.py'/-------------------------------//
+#//--------/first,second,third,fourth : import module/--------------------//
+#//--------/fifth,sixth : initializing variables/--------------------------//
+#//--------/seventh,eighth,ninth : define/---------------------------------//
+#//---------------------/Notice End/-----------------------------------------//
 
 
 #first import pico2d
@@ -17,20 +19,34 @@ import time
 
 #sixth initializing global variables(for only using this module)
 
+global glLogoImage,glStartTime
 
+#seventh define class
+
+#eighth define function
+
+#ninth redefine game_framework's function
 def enter():
-	
+	global glLogoImage,glStartTime
+	glStartTime = time.time()
+	glLogoImage = load_image('../res/ui/logo_title/kpu_credit.png')
 
 def exit():
-	
-	
+	global glLogoImage
+	del glLogoImage
 
 def draw():
 	clear_canvas()
-	logo.draw(400, 300)
+	glLogoImage.draw(400, 300)
 	update_canvas()
 
 def update():
+	global glStartTime
+	lcMidTime = time.time() - glStartTime
+	if lcMidTime >= 1.0:
+            gf.change_state(loding_state)
+            return
+        delay(0.03)
 	
 
 def handle_events():
