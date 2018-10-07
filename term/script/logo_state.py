@@ -12,7 +12,7 @@ from pico2d import *
 #second import game_framework - keyword 'as' is only use game_framework
 import game_framework as gf
 #third import next module
-
+import loading_state
 #fourth import need module
 import time
 #fifth initializing module variables(for using to any modul)
@@ -41,12 +41,12 @@ def draw():
 	update_canvas()
 
 def update():
-	global glStartTime
-	lcMidTime = time.time() - glStartTime
-	if lcMidTime >= 1.0:
-            gf.change_state(loding_state)
-            return
-        delay(0.03)
+        global glStartTime
+        lcMidTime = time.time() - glStartTime
+        if lcMidTime >= 0.5:
+                gf.change_state(loading_state)
+                return
+        delay(0.02)
 	
 
 def handle_events():
@@ -61,8 +61,9 @@ def resume():
 #start to this module
 if __name__ == '__main__':
 	import sys
-	current_module = sys.modules[__name__]	
+	glCurrentModule = sys.modules[__name__]	
 	open_canvas()
-	game_framework.run(current_module)
+	gf.run(glCurrentModule)
 	close_canvas()
+
 
