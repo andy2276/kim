@@ -20,10 +20,11 @@ class clBoy():
     def __init__(self):
         self.x = rd.randint(0,200)
         self.y = rd.randint(90,550)
-        self.speed = rd.randint(1,5)
+        self.speed = rd.randint(1,3)
         self.frame = rd.randint(0,7)
         self.waypoints = []
         self.state = 0
+        self.go = 1
         if clBoy.ani == None:
             clBoy.ani = load_image('../resource/animation_sheet.png')
         if clBoy.wp == None:
@@ -32,7 +33,7 @@ class clBoy():
     def draw(self):
         for wp in self.waypoints:
             self.wp.draw(wp[0], wp[1])
-        self.ani.clip_draw(self.frame*100,self.state,100,100,self.x,self.y)
+        self.ani.clip_draw(self.frame*100,self.state*100,100,100,self.x,self.y)
         
     def update(self):
         self.frame = (self.frame + 1)%8
@@ -45,11 +46,11 @@ class clBoy():
                 self.x += self.speed * xd/dist
                 self.y += self.speed * yd/dist
                 if self.x < xp :
-                    self.state = 100
-                    go = 1
+                    self.state = 1
+                    self.go = 1
                 if self.x > xp:
                     self.state = 0
-                    go = 2
+                    self.go = 2
 
                 if xd < 0 and self.x< xp:
                     self.x = xp
@@ -61,10 +62,10 @@ class clBoy():
                     self.y = yp
                     
                 if(xp,yp)==(self.x,self.y):
-                    if go == 1 :
-                        self.state = 200
-                    elif go == 2 :
-                        self.state = 300
+                    if self.go == 1 :
+                        self.state = 2
+                    elif self.go == 2 :
+                        self.state = 3
                     del self.waypoints[0]
             
         
@@ -95,7 +96,11 @@ def handle_events():
             else:
                 for b in boys:
                     b.waypoints = []
-num = 1
+                    if b.go == 1:
+                        b.state = 3
+                    if b.go == 2:
+                        b.state = 2
+num = 100
 
 def enter():
     global boys,grass,num
