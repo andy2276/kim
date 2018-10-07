@@ -15,46 +15,56 @@ count = 0
 #define class
 
 class clBoy():
+    ani = None
+    wp = None
     def __init__(self):
         self.x = rd.randint(0,200)
         self.y = rd.randint(90,550)
-        self.speed = 1
+        self.speed = rd.randint(1,5)
         self.frame = rd.randint(0,7)
         self.waypoints = []
-        self.ani = load_image('../resource/run_animation.png')
-        self.wp = load_image('../resource/wp.png')
+        self.state = 0
+        if clBoy.ani == None:
+            clBoy.ani = load_image('../resource/animation_sheet.png')
+        if clBoy.wp == None:
+            clBoy.wp = load_image('../resource/wp.png')
 
     def draw(self):
         for wp in self.waypoints:
             self.wp.draw(wp[0], wp[1])
-        self.ani.clip_draw(self.frame*100,0,100,100,self.x,self.y)
+        self.ani.clip_draw(self.frame*100,self.state,100,100,self.x,self.y)
         
     def update(self):
         self.frame = (self.frame + 1)%8
         if len(self.waypoints)>0:
             xp,yp = self.waypoints[0]
-            if(self.x<=xp and self.y <=yp):
-                if(self.x != xp):
-                    self.x = self.x+self.speed
-                if(self.x != yp):
-                    self.y = self.y +self.speed
-            if(self.x<=xp and self.y >=yp):
-                if(self.x != xp):
-                    self.x = self.x+self.speed
-                if(self.x != yp):
-                    self.y = self.y -self.speed
-            if(self.x>=xp and self.y <=yp):
-                if(self.x != xp):
-                    self.x = self.x-self.speed
-                if(self.x != yp):
-                    self.y = self.y +self.speed
-            if(self.x >= xp and self.y >=yp):
-                if(self.x != xp):
-                    self.x = self.x-self.speed
-                if(self.x != yp):
-                    self.y = self.y -self.speed
-            if(xp,yp) == (self.x,self.y):
-                del self.waypoints[0]
+            xd = xp - self.x
+            yd = yp - self.y
+            dist = math.sqrt(xd**2+ yd **2)
+            if dist > 0:
+                self.x += self.speed * xd/dist
+                self.y += self.speed * yd/dist
+                if self.x < xp:
+                    self.state = 100
+                if self.x > xp:
+                    self.state = 0
+                if self.x == xp:
+                    if self.x < xp:
+                        self.state = 200
+                
+
+                if xd < 0 and self.x< xp:
+                    self.x = xp
+                if xd > 0 and self.x> xp:
+                    self.x = xp
+                if yd < 0 and self.y< yp:
+                    self.y = yp
+                if yd > 0 and self.y> yp:
+                    self.y = yp
+                    
+                if(xp,yp)==(self.x,self.y):
+                    del self.waypoints[0]
+            
         
 class clGrass():
     def __init__(self):
@@ -83,11 +93,12 @@ def handle_events():
             else:
                 for b in boys:
                     b.waypoints = []
+num = 1
 
 def enter():
-    global boys,grass
+    global boys,grass,num
     open_canvas()
-    boys = [clBoy() for i in range(20)]
+    boys = [clBoy() for i in range(num)]
     grass = clGrass()
     
 def exit():
@@ -104,5 +115,12 @@ def draw():
         b.draw()
     update_canvas()
     
+if __name__ == '__main__':
+	import sys
+	glCurrentModule = sys.modules[__name__]	
+	open_canvas()
+	gf.run(glCurrentModule)
+	close_canvas()
+
     
     
