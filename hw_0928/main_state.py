@@ -44,14 +44,12 @@ class clBoy():
             if dist > 0:
                 self.x += self.speed * xd/dist
                 self.y += self.speed * yd/dist
-                if self.x < xp:
+                if self.x < xp :
                     self.state = 100
+                    go = 1
                 if self.x > xp:
                     self.state = 0
-                if self.x == xp:
-                    if self.x < xp:
-                        self.state = 200
-                
+                    go = 2
 
                 if xd < 0 and self.x< xp:
                     self.x = xp
@@ -63,6 +61,10 @@ class clBoy():
                     self.y = yp
                     
                 if(xp,yp)==(self.x,self.y):
+                    if go == 1 :
+                        self.state = 200
+                    elif go == 2 :
+                        self.state = 300
                     del self.waypoints[0]
             
         
