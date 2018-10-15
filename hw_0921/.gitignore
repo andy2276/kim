@@ -104,4 +104,6 @@ venv.bak/
 .mypy_cache/
 .venv/
 .idea/
-.__pycache__/
+.hw_0914/
+.hw_0918/
+.2Dproject/
