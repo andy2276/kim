@@ -5,8 +5,9 @@
 	편할것이다.
 아군 클래스클래스
 	class clPlayerBody:
-		mvX-맴버변수 x 바디의 x위치
+		mvX-맴버변수 x 바디의 x위치 추가로 벡터좌표 mvVX와 mvVY를 만들어서 이동좌표를 만들자
 		mvY-멤버변수 y 바디의 y위치
+		현 mvx,mvy에다가 mvVx를 더하는 방식으로 하면 더 간단하게 계산이 될것이다.
 		mvHp-멤버변수 hp
 		mvSpeed-멤버변수 speed
 		mvBodyImage - 멤버변수 bodyimage
