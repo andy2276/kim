@@ -2,7 +2,7 @@
 from pico2d import *
 #define import module
 import sys
-sys.path.insert(0,'..//hw_0928')
+sys.path.insert(0,'..//hw_0928')#이렇게 상대 모듈을 이용한 상대 모듈 임포트방
 import game_framework as gf
 import title_state
 import json
