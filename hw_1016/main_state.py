@@ -115,17 +115,17 @@ def enter():
     global boys,grass,num
     open_canvas()
     boys = []
-    team_data_file = open('player.json','r')
-    team_data = json.load(team_data_file)
+    #team_data_file = open('player.json','r')
+    #team_data = json.load(team_data_file)
     
-    for i in team_data['boys']:
-        b = clBoy()
-        b.name = i['name']
-        b.state = action[i['StartState']]
-        b.x = i['x']
-        b.y = i['y']
-        boys.append(b)
-    team_data_file.close()
+    #for i in team_data['boys']:
+     #   b = clBoy()
+      #  b.name = i['name']
+      #  b.state = action[i['StartState']]
+       # b.x = i['x']
+        #b.y = i['y']
+        #boys.append(b)
+    #team_data_file.close()
     op = open('boys_data.json','r')
     data = json.load(op)
     for e in data['boys']:
