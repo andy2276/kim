@@ -114,10 +114,10 @@ num = 5
 def enter():
     global boys,grass,num
     open_canvas()
+    boys = []
     team_data_file = open('player.json','r')
     team_data = json.load(team_data_file)
     
-    boys = []
     for i in team_data['boys']:
         b = clBoy()
         b.name = i['name']
@@ -125,9 +125,19 @@ def enter():
         b.x = i['x']
         b.y = i['y']
         boys.append(b)
-    
-    grass = clGrass()
     team_data_file.close()
+    op = open('boys_data.json','r')
+    data = json.load(op)
+    for e in data['boys']:
+        bb = clBoy()
+        bb.name = e['name']
+        bb.x = e['x']
+        bb.y = e['y']
+        bb.speed = e['speed']
+        boys.append(bb)
+    grass = clGrass()
+    
+    op.close()
 def exit():
     global boys, grass
     del(grass)
