@@ -16,7 +16,7 @@ running = True
 count = 0
 
 #딕셔너리 멤버 함수 keys(),values(),items()모두 구성 요소를 보여주는 함수
-#
+
 action = {"LEFT_RUN": 0,"RIGHT_RUN":1,"LEFT_STAND":2,"RIGHT_STAND":3}
 
 #define class
