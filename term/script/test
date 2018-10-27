@@ -53,14 +53,21 @@ class clPlayerBody:
         if self.pressing == True:
             if self.keyType == SDLK_RIGHT:
                 self.rota -= 1
+                #self.tx = ((math.cos(self.rota) * self.x) + (-math.sin(self.rota) * self.y))
+                #self.ty = ((math.sin(self.rota) * self.x) + (math.cos(self.rota) * self.y))
+                print(self.x)
+                print(math.cos(self.rota)*self.x)
+
                 self.pressing = False
-
-
             if self.keyType == SDLK_LEFT:
                 self.rota +=1
                 self.pressing = False
-                #self.tx = ((math.cos(self.rota)*self.x) + (-math.sin(self.rota)*self.y))
-                #self.ty = ((math.sin(self.rota)*self.x)+(math.cos(self.rota)*self.y))
+            if self.keyType == SDLK_UP:
+                self.y +=1
+            if self.keyType == SDLK_DOWN:
+                self.y -=1
+
+
 
 
 
