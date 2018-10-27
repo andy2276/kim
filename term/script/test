@@ -31,10 +31,12 @@ class clPlayerBody:
         self.pressing = False
         self.keyType = None
         self.x, self.y = 100, 100  # X & Y == center's X & Y
-        self.fx,self.fy = self.x, self.y+100
+
+        self.dist = math.sqrt(self.x**2 + self.y**2)
+        self.fx, self.fy = self.x,self.y+self.dist
         self.hp, self.speed = 10, 10.0  # state
         #test
-        self.tx, self.ty = 300, 200
+        self.tx, self.ty = 0, 0
         self.rota = 0
         self.dir = 0
         self.rotateR, self.rotateL = 0, 0  # rotate
@@ -46,7 +48,12 @@ class clPlayerBody:
     def draw(self):
         #self.image.rotate_draw(self.rota, self.x,self.y)
         at = (2*math.pi)*(self.rota/36)
-        self.image.composite_draw(at,"",self.x ,self.y )
+        self.image.composite_draw(at, "", self.x + self.tx, self.y + ((self.rota) * self.tx * (1 / 360)))
+        #self.image.rotate_draw(at,self.tx,self.ty)
+        print(self.x, self.y)
+        self.image.composite_draw(at, "", self.x + self.tx, self.y + ((self.rota) * self.tx * (1 / 360)))
+        if (self.x + self.tx) <= (self.y +((self.rota) * self.tx * (1 / 360))):
+            self.image.composite_draw(at, "", self.x + self.tx, self.y + ((self.rota) * self.tx * (1 / 360)))
         #print((2*math.pi)*(self.rota/36))
 
         #self.image.composite_draw()
@@ -55,12 +62,18 @@ class clPlayerBody:
     def update(self):
         if self.pressing == True:
 
-            #ox= math.fabs((self.fx - self.x))
-            #oy = math.fabs((self.fy - self.y))
-            #print(ox,oy)
+
+            #print(self.tx, self.ty)
+            at = (2 * math.pi) * (self.rota / 36)
+            #self.tx = (self.fx - self.x)*math.cos(at) - (self.fy - self.y)*math.sin(at)+self.x
+            #self.ty = (self.fx - self.x)*math.sin(at) + (self.fy - self.y)*math.cos(at)+self.y
+
             #self.tx = ((math.cos(self.rota) * ox) + (-math.sin(self.rota) * oy))
             #self.ty = ((math.sin(self.rota) * ox) + (math.cos(self.rota) *oy))
-            #print(self.tx, self.ty)
+            self.tx = ((math.cos((2 * math.pi) * (self.rota / 36)) * self.x) + (
+                        -math.sin((2 * math.pi) * (self.rota / 36)) * self.y))
+            self.ty = ((math.sin((2 * math.pi) * (self.rota / 36)) * self.x) + (
+                        math.cos((2 * math.pi) * (self.rota / 36)) * self.y))
 
             if self.keyType == SDLK_RIGHT:
                 self.rota -= 1
@@ -74,6 +87,7 @@ class clPlayerBody:
                 self.pressing = False
             if self.keyType == SDLK_UP:
                 self.y +=1
+
             if self.keyType == SDLK_DOWN:
                 self.y -=1
 
