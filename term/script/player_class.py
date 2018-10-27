@@ -42,8 +42,8 @@ class clPlayerBody:
             if self.keyType == SDLK_LEFT:
                 self.x -=2
         
-    def handle_event(self,event):
-        pass
+    #def handle_event(self):
+     #   pass
         
 
 
@@ -78,10 +78,12 @@ def handle_events():
             gf.quit()
         if event.type ==SDL_KEYDOWN:
             player.pressing = True
-        if player.pressing == True:
             player.keyType = event.key
+            #왜 끊키는가? 왜 끝까지 가지 못하는가?
         if event.type == SDL_KEYUP:
+            player.keyType = None
             player.pressing = False
+            
 
 def pause():
 	pass
