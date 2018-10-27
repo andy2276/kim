@@ -18,23 +18,31 @@ import game_framework as gf
 #fifth initializing module variables(for using to any modul)
 
 #sixth initializing global variables(for only using this module)
-
+running = True
 #seventh define class
 
 class clPlayerBody:
+    global player,pressing,test,running
     def __init__(self):
-        self.mvX, self.mvY = 300,200 #X & Y
-        self.mvHp, self.mvSpeed = 10,10.0#state
-        self.mvRotateR, self.mvRotateL = 0,0#rotate
-        self.mvImage = load_image("../res/object/character/player_body_pix.png")
-        self.mvRoImage = None#image
+        self.pressing = False
+        self.keyType = None
+        self.x, self.y = 300,200 #X & Y
+        self.hp, self.speed = 10,10.0#state
+        self.rotateR, self.rotateL = 0,0#rotate
+        self.image = load_image("../res/object/character/player_body_pix.png")
+        self.roImage = None#image
 
     def draw(self):
-        self.mvImage.draw(self.mvX,self.mvY)
+        self.image.draw(self.x,self.y)
         
     def update(self):
-        pass
-    def handle_event(self):
+        if self.pressing == True:
+            if self.keyType == SDLK_RIGHT:
+                self.x += 2
+            if self.keyType == SDLK_LEFT:
+                self.x -=2
+        
+    def handle_event(self,event):
         pass
         
 
@@ -43,9 +51,7 @@ class clPlayerBody:
 
 #ninth redefine game_framework's function
 def enter():
-    global player,pressing
-    pressing = False
-
+    global player
     player = clPlayerBody()
 	
 
@@ -56,35 +62,33 @@ def draw():
     global player
     clear_canvas()
     player.draw()
+    
     update_canvas()
 	
 
 def update():
-	pass
+    global player
+    player.update()
+    
 def handle_events():
-    global player,pressing
+    global player
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             gf.quit()
         if event.type ==SDL_KEYDOWN:
-            pressing = True
-        if pressing == True:
-            if event.type == SDL_KEYUP:
-                pressing = False
-            if  event.key == SDLK_RIGHT:
-                player.mvX += 10
-            if event.key == SDLK_LEFT:
-                player.mvX -= 10
-            
-	
+            player.pressing = True
+        if player.pressing == True:
+            player.keyType = event.key
+        if event.type == SDL_KEYUP:
+            player.pressing = False
 
 def pause():
 	pass
 
 def resume():
 	pass
-
+    
 #start to this module
 
 if __name__ == '__main__':
