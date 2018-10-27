@@ -35,7 +35,6 @@ def draw():
 
 def update():
 	pass
-	
 
 def handle_events():
 	pass
@@ -45,6 +44,8 @@ def pause():
 
 def resume():
 	pass
+
+
 
 #start to this module
 if __name__ == '__main__':

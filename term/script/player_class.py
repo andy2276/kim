@@ -30,6 +30,7 @@ class clPlayerBody:
         self.hp, self.speed = 10,10.0#state
         self.rotateR, self.rotateL = 0,0#rotate
         self.image = load_image("../res/object/character/player_body_pix.png")
+            #loading state 에서 받자        
         self.roImage = None#image
 
     def draw(self):
@@ -61,9 +62,11 @@ def exit():
 def draw():
     global player
     clear_canvas()
+    #여기부분 없애기
     player.draw()
     
     update_canvas()
+    #여기부분 없애기 어차피 stage에서 모두 클리어후에 작업할것이기 때문에
 	
 
 def update():
@@ -79,6 +82,7 @@ def handle_events():
         if event.type ==SDL_KEYDOWN:
             player.pressing = True
             player.keyType = event.key
+            
             #왜 끊키는가? 왜 끝까지 가지 못하는가?
         if event.type == SDL_KEYUP:
             player.keyType = None

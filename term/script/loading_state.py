@@ -28,7 +28,7 @@ global glStartTime
 #ninth redefine game_framework's function
 def enter():
     global glLoadingImage,glStartTime
-    glLoadingImage = load_image('../res/ui/logo_title/loading_image.png')
+    glLoadingImage = load_image('../res/ui/logo_title/loading_image_pix.png')
 def exit():
     global glLoadingImage
     del glLoadingImage
