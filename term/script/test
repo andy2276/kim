@@ -30,12 +30,12 @@ class clPlayerBody:
     def __init__(self):
         self.pressing = False
         self.keyType = None
-        self.x, self.y = 300, 200  # X & Y == center's X & Y
+        self.x, self.y = 100, 100  # X & Y == center's X & Y
         self.hp, self.speed = 10, 10.0  # state
         #test
         self.tx, self.ty = 300, 200
         self.rota = 0
-
+        self.dir = 0
         self.rotateR, self.rotateL = 0, 0  # rotate
 
         self.image = load_image("../res/object/character/player_body_pix.png")
@@ -44,19 +44,24 @@ class clPlayerBody:
 
     def draw(self):
         #self.image.rotate_draw(self.rota, self.x,self.y)
-        self.image.composite_draw(math.pi*(self.rota/36),"",self.x,self.y)
-        #print(math.pi*(self.rota/36))
+        at = (2*math.pi)*(self.rota/36)
+        self.image.composite_draw(at,"",self.x ,self.y )
+        #print((2*math.pi)*(self.rota/36))
+
         #self.image.composite_draw()
 
 
     def update(self):
         if self.pressing == True:
+            self.tx = ((math.cos(self.rota) * self.x) + (-math.sin(self.rota) * self.y))
+            self.ty = ((math.sin(self.rota) * self.x) + (math.cos(self.rota) * self.y))
+            print(self.tx,self.ty)
+
             if self.keyType == SDLK_RIGHT:
                 self.rota -= 1
-                #self.tx = ((math.cos(self.rota) * self.x) + (-math.sin(self.rota) * self.y))
-                #self.ty = ((math.sin(self.rota) * self.x) + (math.cos(self.rota) * self.y))
-                print(self.x)
-                print(math.cos(self.rota)*self.x)
+
+                #print(self.x)
+                #print(math.cos(self.rota)*self.x)
 
                 self.pressing = False
             if self.keyType == SDLK_LEFT:
