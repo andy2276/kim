@@ -20,33 +20,64 @@ import game_framework as gf
 #sixth initializing global variables(for only using this module)
 
 #seventh define class
+
 class clPlayerBody:
     def __init__(self):
-        self.mvX,self.mvY #X & Y
-        self.mvHp,self.mvSpeed#state
-        self.mvRotate#rotate
-        self.mvImage,self.mvRoImage#image
-class clPlayerBarrel:
-    def __init__(self):
-        self.mvCenterX,self.mvCenterY
-        self.mvMouseX,self.mvMouseY
-        self.mvBarrelimage
+        self.mvX, self.mvY = 300,200 #X & Y
+        self.mvHp, self.mvSpeed = 10,10.0#state
+        self.mvRotateR, self.mvRotateL = 0,0#rotate
+        self.mvImage = load_image("../res/object/character/player_body_pix.png")
+        self.mvRoImage = None#image
+
+    def draw(self):
+        self.mvImage.draw(self.mvX,self.mvY)
+        
+    def update(self):
+        pass
+    def handle_event(self):
+        pass
+        
+
+
 #eighth define function
 
 #ninth redefine game_framework's function
 def enter():
-	pass
+    global player,pressing
+    pressing = False
+
+    player = clPlayerBody()
+	
 
 def exit():
 	pass
 
 def draw():
-	pass
+    global player
+    clear_canvas()
+    player.draw()
+    update_canvas()
+	
 
 def update():
 	pass
 def handle_events():
-	pass
+    global player,pressing
+    events = get_events()
+    for event in events:
+        if event.type == SDL_QUIT:
+            gf.quit()
+        if event.type ==SDL_KEYDOWN:
+            pressing = True
+        if pressing == True:
+            if event.type == SDL_KEYUP:
+                pressing = False
+            if  event.key == SDLK_RIGHT:
+                player.mvX += 10
+            if event.key == SDLK_LEFT:
+                player.mvX -= 10
+            
+	
 
 def pause():
 	pass
@@ -55,6 +86,7 @@ def resume():
 	pass
 
 #start to this module
+
 if __name__ == '__main__':
 	import sys
 	glCurrentModule = sys.modules[__name__]	
