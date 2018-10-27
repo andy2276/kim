@@ -25,12 +25,13 @@ running = True
 # seventh define class
 
 class clPlayerBody:
-    global player, pressing, test, running
+    global player
 
     def __init__(self):
         self.pressing = False
         self.keyType = None
         self.x, self.y = 100, 100  # X & Y == center's X & Y
+        self.fx,self.fy = self.x, self.y+100
         self.hp, self.speed = 10, 10.0  # state
         #test
         self.tx, self.ty = 300, 200
@@ -53,8 +54,10 @@ class clPlayerBody:
 
     def update(self):
         if self.pressing == True:
-            self.tx = ((math.cos(self.rota) * self.x) + (-math.sin(self.rota) * self.y))
-            self.ty = ((math.sin(self.rota) * self.x) + (math.cos(self.rota) * self.y))
+            #self.tx = ((math.cos(self.rota) * self.x) + (-math.sin(self.rota) * self.y))
+            #self.ty = ((math.sin(self.rota) * self.x) + (math.cos(self.rota) * self.y))
+            dist = (self.fx- self.x)**2 + (self.fy - self.y)**2
+
             print(self.tx, self.ty)
 
             if self.keyType == SDLK_RIGHT:
