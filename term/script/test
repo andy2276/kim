@@ -26,6 +26,19 @@ MAX_ROTATE_SPEED = 0.1
 
 # seventh define class
 
+def rotated(cx,cy,vx,vy,rad):
+    cosq,sinq  = math.cos(rad), math.sin(rad)
+    rvx = vx - cx
+    rvy = vy-cy
+
+    tx = (rvx * cosq) - (rvy * sinq)
+    ty = (rvy * cosq) + (rvx * sinq)
+
+    rtx = tx + cx
+    rty = ty + cy
+
+    return rtx, rty
+
 class clPlayerBody:
 
     def __init__(self):
@@ -50,6 +63,7 @@ class clPlayerBody:
     def draw(self):
         self.image.composite_draw(self.rad, "", self.cx, self.cy)
         self.pointer.draw(self.vx,self.vy)
+        print(self.vx,self.vy)
 
 
 
@@ -66,6 +80,7 @@ class clPlayerBody:
                 cosq = math.cos(self.rad)
                 sinq = math.sin(self.rad)
 
+                #원점으로 평행 이동
                 self.vx -=self.cx
                 self.vy -=self.cy
 
@@ -81,7 +96,7 @@ class clPlayerBody:
             if self.keyType == SDLK_LEFT:
                self.angle +=MAX_ROTATE_SPEED
 
-               self.rad = math.pi * self.angle / 180.0
+               self.rad = -math.pi * self.angle / 180.0
 
                cosq = math.cos(self.rad)
                sinq = math.sin(self.rad)
@@ -117,7 +132,7 @@ class clPlayerBody:
     #   pass
 
 
-# eighth define function
+# eighth define function . if you want up. you can do it.
 
 # ninth redefine game_framework's function
 def enter():
