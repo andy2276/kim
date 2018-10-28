@@ -19,77 +19,94 @@ import math
 
 # sixth initializing global variables(for only using this module)
 running = True
+MAX_ROTATE_SPEED = 0.1
+
 
 
 
 # seventh define class
 
 class clPlayerBody:
-    global player
 
     def __init__(self):
         self.pressing = False
         self.keyType = None
-        self.x, self.y = 100, 100  # X & Y == center's X & Y
-
-        self.dist = math.sqrt(self.x**2 + self.y**2)
-        self.fx, self.fy = self.x,self.y+self.dist
-        self.hp, self.speed = 10, 10.0  # state
-        #test
-        self.tx, self.ty = 0, 0
-        self.rota = 0
-        self.dir = 0
-        self.rotateR, self.rotateL = 0, 0  # rotate
-
         self.image = load_image("../res/object/character/player_body_pix.png")
+        self.cx, self.cy = 450, 450  # X & Y == center's X & Y this var is center position
+        self.fw, self.bk = 0 , 0 # this var is distance to forward or back
+        self.vx, self.vy = self.cx, self.cy + 100 # this var is vector x & y
+        self.hp, self.speed = 10, 10.0  # state
+        self.rad = 0.0
+        #test
+        self.tx, self.ty = 0, 0 #this var is transfrom x & y
+        self.angle = 0.0
+        self.pointer = load_image("../res/object/character/pointer.png")
+
+
+
         # loading state 에서 받자
         self.roImage = None  # image
 
     def draw(self):
-        #self.image.rotate_draw(self.rota, self.x,self.y)
-        at = (2*math.pi)*(self.rota/36)
-        self.image.composite_draw(at, "", self.x + self.tx, self.y + ((self.rota) * self.tx * (1 / 360)))
-        #self.image.rotate_draw(at,self.tx,self.ty)
-        print(self.x, self.y)
-        self.image.composite_draw(at, "", self.x + self.tx, self.y + ((self.rota) * self.tx * (1 / 360)))
-        if (self.x + self.tx) <= (self.y +((self.rota) * self.tx * (1 / 360))):
-            self.image.composite_draw(at, "", self.x + self.tx, self.y + ((self.rota) * self.tx * (1 / 360)))
-        #print((2*math.pi)*(self.rota/36))
+        self.image.composite_draw(self.rad, "", self.cx, self.cy)
+        self.pointer.draw(self.vx,self.vy)
 
-        #self.image.composite_draw()
+
 
 
     def update(self):
+        distx = (self.vx - self.cx)
+        disty = (self.vy - self.cy)
         if self.pressing == True:
 
-
-            #print(self.tx, self.ty)
-            at = (2 * math.pi) * (self.rota / 36)
-            #self.tx = (self.fx - self.x)*math.cos(at) - (self.fy - self.y)*math.sin(at)+self.x
-            #self.ty = (self.fx - self.x)*math.sin(at) + (self.fy - self.y)*math.cos(at)+self.y
-
-            #self.tx = ((math.cos(self.rota) * ox) + (-math.sin(self.rota) * oy))
-            #self.ty = ((math.sin(self.rota) * ox) + (math.cos(self.rota) *oy))
-            self.tx = ((math.cos((2 * math.pi) * (self.rota / 36)) * self.x) + (
-                        -math.sin((2 * math.pi) * (self.rota / 36)) * self.y))
-            self.ty = ((math.sin((2 * math.pi) * (self.rota / 36)) * self.x) + (
-                        math.cos((2 * math.pi) * (self.rota / 36)) * self.y))
-
             if self.keyType == SDLK_RIGHT:
-                self.rota -= 1
+                self.rad = math.pi * self.angle / 180.0
+                self.angle -= MAX_ROTATE_SPEED
 
-                #print(self.x)
-                #print(math.cos(self.rota)*self.x)
+                cosq = math.cos(self.rad)
+                sinq = math.sin(self.rad)
 
-                self.pressing = False
+                self.vx -=self.cx
+                self.vy -=self.cy
+
+                self.tx = self.vx * cosq - self.vy * sinq
+                self.ty = self.vy * cosq + self.vx * sinq
+
+                self.tx += self.cx
+                self.ty += self.cy
+
+                self.vx = self.tx
+                self.vy = self.ty
+
             if self.keyType == SDLK_LEFT:
-                self.rota +=1
-                self.pressing = False
+               self.angle +=MAX_ROTATE_SPEED
+
+               self.rad = math.pi * self.angle / 180.0
+
+               cosq = math.cos(self.rad)
+               sinq = math.sin(self.rad)
+
+               self.vx -= self.cx
+               self.vy -= self.cy
+
+               self.tx = self.vx * cosq + self.vy * sinq
+               self.ty = self.vy * cosq - self.vx * sinq
+
+               self.tx += self.cx
+               self.ty += self.cy
+
+               self.vx = self.tx
+               self.vy = self.ty
+
+
+
+
+                # dir == left
             if self.keyType == SDLK_UP:
-                self.y +=1
+                self.pressing = False
 
             if self.keyType == SDLK_DOWN:
-                self.y -=1
+                self.bk -=1
 
 
 
@@ -156,7 +173,7 @@ if __name__ == '__main__':
     import sys
 
     glCurrentModule = sys.modules[__name__]
-    open_canvas(900,900)
+    open_canvas()
     gf.run(glCurrentModule)
     close_canvas()
 
