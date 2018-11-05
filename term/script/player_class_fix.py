@@ -35,9 +35,9 @@ class Body:
         self.rotSpeed = 1 * math.pi/60
         self.key = {}
         for k in Body.keysType:
-            print(k)
+            #print(k)
             self.key[k] = False  #type init
-            print(self.key[k])
+            #print(self.key[k])
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
         #self.image.draw(self.x,self.y)
@@ -48,16 +48,16 @@ class Body:
         #move = 1 if self.key[SDLK_UP] else 0
         #move += -1 if self.key[SDLK_DOWN] else 0
 
-        #print(mag)
+        print(mag)
 
 
-    def handle_event(self,keys):
-        if keys.type == SDL_KEYDOWN or SDL_KEYUP :
+    def handle_event(self, keys):
+        if keys.type == SDL_KEYDOWN or keys.type == SDL_KEYUP :
 
             if keys.key in Body.keysType:
                 self.key[keys.key] = keys.type == SDL_KEYDOWN # if key[keys.key] in Body.keyType == True:
 
-                print(self.key[keys.key])
+                #print(self.key[keys.key])
                 #print(keys.key)
 
 
