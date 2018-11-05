@@ -27,7 +27,7 @@ class Body:
     keysType = [SDLK_a, SDLK_d, SDLK_w, SDLK_s]#97,100,119,115
 
     def __init__(self):
-        self.image = load_image("../res/object/character/player_body_pix.png")
+        self.image = load_image("../res/object/character/player_body_pix2.png")
 
         #self.x, self.y = get_canvas_width()/ GSIV["startX"] , get_canvas_height()/GSIV["startY"]
         self.x, self.y = 400, 400
@@ -43,12 +43,14 @@ class Body:
         #self.image.draw(self.x,self.y)
 
     def update(self):
-        mag = 1 if self.key[SDLK_a] else 0 # mag is 1. if self.key is True. else if 0
-        mag += -1 if self.key[SDLK_d] else 0
-        #move = 1 if self.key[SDLK_UP] else 0
-        #move += -1 if self.key[SDLK_DOWN] else 0
+        rot = 1 if self.key[SDLK_a] else 0 # mag is 1. if self.key is True. else if 0
+        rot += -1 if self.key[SDLK_d] else 0
+        mov = 1 if self.key[SDLK_w] else 0
+        mov += -1 if self.key[SDLK_s] else 0
 
-        print(mag)
+        self.rad += rot * self.rotSpeed
+
+        print(self.rad)
 
 
     def handle_event(self, keys):
