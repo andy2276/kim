@@ -17,7 +17,6 @@ count = 0
 
 # 딕셔너리 멤버 함수 keys(),values(),items()모두 구성 요소를 보여주는 함수
 
-action = {"LEFT_RUN": 0, "RIGHT_RUN": 1, "LEFT_STAND": 2, "RIGHT_STAND": 3}
 RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, TIME_OUT, SPACE_DOWN, ENTER_DOWN = range(7)
 
 key_event_table = {
@@ -32,28 +31,56 @@ key_event_table = {
 # define class
 class clBoy():
     ani = None
-    wp = None
+    pointer = None
 
     def __init__(self):
         self.name = 'no'
-        self.x = 100
-        self.y = 90
+        self.x,self.y = 150,150
+        self.dx = 0
+        self.dy = 0
+        self.mx,self.my = 0, 0
+        self.dir = 0
         self.speed = 1
         self.frame = 0
-
+        self.state = 3
+        if clBoy.ani == None:
+            clBoy.ani = load_image('../resource/animation_sheet.png')
+            clBoy.pointer = load_image('../resource/pointer.png')
     def __del__(self):
         pass
 
-        self.state = action["LEFT_STAND"]
-        self.go = 1
-        if clBoy.ani == None:
-            clBoy.ani = load_image('../resource/animation_sheet.png')
-
     def draw(self):
         self.ani.clip_draw(self.frame * 100, self.state * 100, 100, 100, self.x, self.y)
+        self.pointer.draw(self.mx,self.my)
 
     def update(self):
         self.frame = (self.frame + 1) % 8
+        if self.x in range(10,800) :
+            self.x += self.dx
+        else:
+            if self.x < 10 :
+                self.x += 10
+            elif self.x > 700:
+                self.x -= 10
+    def handle_events(self,e):
+        if(e.type,e.key) in key_event_table:
+            key_event = key_event_table[(e.type, e.key)]
+            if key_event == RIGHT_DOWN:
+                self.state = 1
+                self.dx += self.speed
+                if self.dx > 0: self.dir = 1
+            elif key_event == LEFT_DOWN:
+                self.state = 0
+                self.dx -= self.speed
+                if self.dx < 0: self.dir = 0
+            elif key_event == RIGHT_UP:
+                self.state = 3
+                self.dx -= self.speed
+                if self.dx < 0: self.dir = 0
+            elif key_event == LEFT_UP:
+                self.state = 2
+                self.dx += self.speed
+                if self.dx > 0: self.dir = 1
 
 
 
@@ -75,12 +102,9 @@ def handle_events():
             gf.quit()
             running = False
         if (e.type,e.key) in key_event_table:
-            pass
+            boy.handle_events(e)
         if e.type == SDL_MOUSEMOTION:
             boy.mx,boy.my = e.x, 600-e.y
-
-
-num = 5
 
 
 def enter():
@@ -89,9 +113,9 @@ def enter():
     grass = clGrass()
 
 def exit():
-    global boys, grass
+    global boy, grass
     del (grass)
-    del (boys)
+    del (boy)
 
 def update():
     global boy
