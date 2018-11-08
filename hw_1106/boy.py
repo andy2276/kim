@@ -54,8 +54,9 @@ class clBall:
         self.rad = math.atan2(self.my - self.y, self.mx - self.x)
         self.grav = 0.01
         self.time = 1/60
-        #self.dist = (math.sqrt((self.mx - self.x) ** 2 + (self.my - self.y) ** 2)) * 0.1
-        self.dist = 0.001
+        self.dist = (math.sqrt((self.mx - self.x) ** 2 + (self.my - self.y) ** 2)) /500000
+        #no~~~~~~~~~~~~~~~~~~~~
+        self.big = True
         self.sto = False
         self.dx = (self.dist / self.time) * math.cos(self.rad)
         self.dy = (self.dist / self.time) + math.sin(self.rad) - (self.grav * self.time)
@@ -74,8 +75,8 @@ class clBall:
         #self.dy = ((0.0000001 * math.sin(self.rad))-self.grav*1.0*self.time)*self.time
         if self.sto != True:
             self.x += self.dx * self.time
-            self.y += self.dy-(self.grav*(self.time**2))/2
-            self.time += 1/60
+            self.y += self.dy-((self.grav*(self.time**2))/2)
+            self.time += 1/30
     def get_bb(self):
         if self.big:
             return self.x - 20, self.y - 20, self.x + 20, self.y + 20
