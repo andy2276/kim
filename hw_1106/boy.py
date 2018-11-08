@@ -76,7 +76,11 @@ class clBall:
             self.x += self.dx * self.time
             self.y += self.dy-(self.grav*(self.time**2))/2
             self.time += 1/60
-
+    def get_bb(self):
+        if self.big:
+            return self.x - 20, self.y - 20, self.x + 20, self.y + 20
+        else:
+            return self.x - 10, self.y - 10, self.x + 10, self.y + 10
     def stop(self,a):
         if a == 1:
             self.x,self.y,self.dx,self.dy = 10,20,0,0
