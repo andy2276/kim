@@ -11,19 +11,19 @@ def enter():
     op = open('object.json')
     data = json.load(op)
     d = data['player'][0]
-
     player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],d["fowardSpeed"],d["backSpeed"])
-
     op.close()
 def exit():
 	pass
 
 def draw():
+    global player
     clear_canvas()
     player.draw()
     update_canvas()
 
 def update():
+    global player
     player.update()
 
 def handle_events():

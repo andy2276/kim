@@ -111,9 +111,3 @@ class Player:
 
         self.body.handle_event(keys)
         self.barrel.handle_event(keys)
-
-
-
-
-
-
