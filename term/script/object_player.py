@@ -34,8 +34,15 @@ class Body:
             self.rad += rot*self.rotSpeed
         #rot and mov not over 1 or -1
         if mov !=0:
-            self.x += mov * self.fwSpeed * math.cos(self.rad)
-            self.y += mov * self.fwSpeed * math.sin(self.rad)
+            mv = None
+            if self.key[SDLK_w]:
+                mv = self.fwSpeed
+            elif self.key[SDLK_s]:
+                mv = self.bkSpeed
+
+            self.x += mov * mv * math.cos(self.rad)
+            self.y += mov * mv * math.sin(self.rad)
+
 
         return self.x, self.y
 
