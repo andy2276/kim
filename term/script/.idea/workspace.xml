@@ -18,7 +18,7 @@
     <session id="1586185706">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -91,10 +91,10 @@
         <entry file="file://$PROJECT_DIR$/object_enemy.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
-              <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <marker date="1541785099807" expanded="true" signature="65:70" ph="..." />
+                <marker date="1541787988548" expanded="true" signature="65:70" ph="..." />
               </folding>
             </state>
           </provider>
@@ -392,14 +392,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="111" y="0" width="943" height="1100" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21546961" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32947975" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32227978" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32227978" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -636,10 +635,10 @@
     <entry file="file://$PROJECT_DIR$/object_enemy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <marker date="1541785099807" expanded="true" signature="65:70" ph="..." />
+            <marker date="1541787988548" expanded="true" signature="65:70" ph="..." />
           </folding>
         </state>
       </provider>
