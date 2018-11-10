@@ -49,12 +49,12 @@ class Body:
         rot += -1 if self.key[SDLK_d] else 0
         mov = 1 if self.key[SDLK_w] else 0
         mov += -1 if self.key[SDLK_s] else 0
-
+        #print(self.rad)
         if rot != 0:
             if mov < 0 :
                 rot = -rot
             self.rad += rot * self.rotSpeed
-
+        
         #print("body",self.rad)
         if mov != 0:
             #if self.key[SDLK_s] and (self.key[SDLK_a] or self.key[SDLK_d]) :
@@ -68,7 +68,6 @@ class Body:
 
     def handle_event(self, keys):
         if keys.type == SDL_KEYDOWN or keys.type == SDL_KEYUP :
-
             if keys.key in Body.keysType:
                 self.key[keys.key] = keys.type == SDL_KEYDOWN # if key[keys.key] in Body.keyType == True:
 
