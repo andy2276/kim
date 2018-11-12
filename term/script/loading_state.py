@@ -8,48 +8,40 @@
 #//---------------------/Notice End/-----------------------------------------//
 
 
-#first import pico2d
 from pico2d import *
-#second import game_framework - keyword 'as' is only use game_framework
 import game_framework as gf
-#third import next module
+import math
 
-#fourth import need module
-
-#fifth initializing module variables(for using to any modul)
-
-#sixth initializing global variables(for only using this module)
 global glLoadingImage
 global glStartTime
-#seventh define class
 
-#eighth define function
+class loadingImage:
+    def __init__(self):
+        self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
+        
 
-#ninth redefine game_framework's function
+
 def enter():
-    global glLoadingImage,glStartTime
-    glLoadingImage = load_image('../res/ui/logo_title/loading_image_pix.png')
+   pass
+
 def exit():
-    global glLoadingImage
-    del glLoadingImage
-    pass
+   pass
+
+
 
 def draw():
     clear_canvas()
-    glLoadingImage.draw(400,300)
+
     update_canvas()
     pass
 
 def update():
-        delay(0.03)
+    pass
 def handle_events():
-    event = get_events()
-    for e in event:
-        if e.type == SDL_QUIT:
-            gf.quit()
-        elif e.type == SDL_KEYDOWN:
-            if e.key == SDLK_ESCAPE:
-                gf.quit()
+    events = get_events()
+    for key in events:
+        if key.type == SDL_QUIT: gf.quit()
+        elif (key.type,key.key) == (SDL_KEYDOWN, SDLK_ESCAPE): gf.pop_state()
 def pause():
     pass
 

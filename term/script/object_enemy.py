@@ -31,24 +31,10 @@ class enemy:
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
     def update(self):
+
         pass
 
     def handle_event(self):
         pass
 
 
-
-def isSearchRange(me,target):
-    YnI = math.sqrt((me.x - target.x)**2 + (me.y-target.y)**2)
-    if YnI - (target.searchR**2) <= 0 :
-        print("in!!!");
-
-class te:
-    def __init__(self,x,y,sear):
-        self.x,self.y = x,y
-        self.searchR = sear
-
-
-te1 =te(3,4,10)
-te2 =te(4,5,9)
-isSearchRange(te1,te2)
