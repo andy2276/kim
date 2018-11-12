@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c77c2dcc-ec3a-49a3-9e37-b90af48a82f4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/object_enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/object_enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/object_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/object_player.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +17,7 @@
           <entry key="project.closed" value="15" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.11" value="3" />
+          <entry key="project.open.time.11" value="4" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.3" value="1" />
@@ -26,7 +25,7 @@
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -44,13 +43,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="new_player_class" value="290" />
-          <entry key="py" value="7050" />
+          <entry key="py" value="7406" />
           <entry key="test" value="4604" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="11944" />
+          <entry key="Python" value="12300" />
         </counts>
       </usages-collector>
     </session>
@@ -60,7 +59,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../../gyong/2dgp-2018-2/pr1102_world/boy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
+            <state relative-caret-position="2337">
               <caret line="128" column="22" selection-start-line="128" selection-start-column="22" selection-end-line="128" selection-end-column="22" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -72,13 +71,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/object_enemy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+            <state relative-caret-position="285">
+              <caret line="42" column="29" lean-forward="true" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
-                <marker date="1541948355712" expanded="true" signature="371:376" ph="..." />
-                <marker date="1541948355712" expanded="true" signature="809:875" ph="..." />
-                <marker date="1541948355712" expanded="true" signature="892:911" ph="..." />
+                <marker date="1542028094486" expanded="true" signature="374:379" ph="..." />
+                <marker date="1542028094486" expanded="true" signature="812:878" ph="..." />
+                <marker date="1542028094486" expanded="true" signature="895:914" ph="..." />
+                <marker date="1542028094486" expanded="true" signature="1121:1211" ph="..." />
               </folding>
             </state>
           </provider>
@@ -87,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/object_player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
+            <state relative-caret-position="57">
               <caret line="5" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -188,10 +188,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-26" />
-    <option name="y" value="14" />
-    <option name="width" value="943" />
-    <option name="height" value="1100" />
+    <option name="x" value="-25" />
+    <option name="width" value="913" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -199,23 +198,23 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="script" type="b2602c69:ProjectViewProjectNode" />
-              <item name="script" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
             <path>
               <item name="script" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="script" type="b2602c69:ProjectViewProjectNode" />
+              <item name="script" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -253,7 +252,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.player_object_control">
+  <component name="RunManager" selected="Python.object_enemy">
     <configuration name="boys_state" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="script" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -267,6 +266,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../../gyong/2dgp-2018-2/pr1028_review_rot/boys_state.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="object_enemy" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="script" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/object_enemy.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -338,41 +358,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="script" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.test" />
       <item itemvalue="Python.player" />
       <item itemvalue="Python.boys_state" />
       <item itemvalue="Python.player_class_fix" />
       <item itemvalue="Python.player_object_control" />
+      <item itemvalue="Python.object_enemy" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.object_enemy" />
         <item itemvalue="Python.player_object_control" />
         <item itemvalue="Python.player_class_fix" />
         <item itemvalue="Python.boys_state" />
         <item itemvalue="Python.player" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -390,14 +389,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-26" y="14" width="943" height="1100" extended-state="0" />
+    <frame x="-25" y="0" width="913" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21546961" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22285715" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32947975" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32227978" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32169312" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -549,6 +549,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../gyong/2dgp-2018-2/pr1102_world/boy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2337">
+          <caret line="128" column="22" selection-start-line="128" selection-start-column="22" selection-end-line="128" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/object_player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+            <marker date="1541948355768" expanded="true" signature="79:80" ph="..." />
+            <marker date="1541948355768" expanded="true" signature="91:96" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pico2d/pico2d.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4237">
@@ -592,37 +614,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../gyong/2dgp-2018-2/pr1102_world/boy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="128" column="22" selection-start-line="128" selection-start-column="22" selection-end-line="128" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/object_player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-            <marker date="1541948355768" expanded="true" signature="79:80" ph="..." />
-            <marker date="1541948355768" expanded="true" signature="91:96" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/object_enemy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+        <state relative-caret-position="285">
+          <caret line="42" column="29" lean-forward="true" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <marker date="1541948355712" expanded="true" signature="371:376" ph="..." />
-            <marker date="1541948355712" expanded="true" signature="809:875" ph="..." />
-            <marker date="1541948355712" expanded="true" signature="892:911" ph="..." />
+            <marker date="1542028094486" expanded="true" signature="374:379" ph="..." />
+            <marker date="1542028094486" expanded="true" signature="812:878" ph="..." />
+            <marker date="1542028094486" expanded="true" signature="895:914" ph="..." />
+            <marker date="1542028094486" expanded="true" signature="1121:1211" ph="..." />
           </folding>
         </state>
       </provider>
