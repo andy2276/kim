@@ -13,7 +13,7 @@ import game_framework as gf
 import json
 import math
 
-global glLoadingImage
+global loadimage
 global glStartTime
 
 class loadingImage:
@@ -26,11 +26,22 @@ class loadingImage:
         self.object_enemy_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
         }
+class loadingState:
+    def __init__(self):
+        op= open('object.json')
+        data = json.load(op)
+        
+        self.player = data["player"][0]
+        self.enemy = data[][]
 
+        
+        op.close()
 
 
 def enter():
-   pass
+    global loadimage = loadingImage()
+    global loadstate = loadingState()
+   
 
 def exit():
    pass
