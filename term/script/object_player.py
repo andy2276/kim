@@ -1,6 +1,7 @@
 from pico2d import *
 
 import math
+import collision as co
 
 MOVE_TIME = 1/60
 
@@ -23,6 +24,7 @@ class Body:
 
     def draw(self):
         self.image.composite_draw(self.rad, "" , self.x, self.y)
+
 
     def update(self):
         rot = 1 if self.key[SDLK_a] else 0
@@ -98,7 +100,7 @@ class Player:
         self.barrel = Barrel(self.x,self.y,self.rotSpeed)
 
 
-        self.collision = 0  # 함수만들거임
+        self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 
     def draw(self):
         self.body.draw()
