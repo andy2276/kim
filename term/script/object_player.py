@@ -15,7 +15,7 @@ class Body:
         self.rotSpeed= prs/10 * math.pi/60
         self.fwSpeed = pfs*MOVE_TIME
         self.bkSpeed = pbs*MOVE_TIME
-        print(self.fwSpeed,self.bkSpeed)
+        #print(self.fwSpeed,self.bkSpeed)
         self.rad = prad
         self.key = {}
         for k in Body.KeyEvent :
@@ -77,9 +77,9 @@ class Barrel:
 
     def handle_event(self,keys):
         if keys.type == SDL_MOUSEMOTION:
-            print(keys.x,600- keys.y)
+            #print(keys.x,600- keys.y)
             self.mx, self.my = keys.x, 600 - keys.y
-            print(self.mx, self.my)
+            #print(self.mx, self.my)
 
 #-------Tank Body+Barrel---------
 class Player:

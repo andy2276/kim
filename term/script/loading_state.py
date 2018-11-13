@@ -26,9 +26,6 @@ class loadingImage:
         self.object_enemy_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
         }
-class loadingState:
-    def __init__(self):
-        self.
 
 
 
