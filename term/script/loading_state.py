@@ -26,21 +26,24 @@ class loadingImage:
         self.object_enemy_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
         }
+
+
 class loadingState:
     def __init__(self):
         op= open('object.json')
         data = json.load(op)
         
         self.player = data["player"][0]
-        self.enemy = data[][]
+        #self.enemy = data[][]
 
         
         op.close()
 
 
 def enter():
-    global loadimage = loadingImage()
-    global loadstate = loadingState()
+    #global loadimage = loadingImage()
+    #global loadstate = loadingState()
+    pass
    
 
 def exit():

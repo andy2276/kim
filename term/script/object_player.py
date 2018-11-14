@@ -85,6 +85,7 @@ class Barrel:
 class Player:
     def __init__(self, sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs):
         self.id = sName
+        self.play = 'player'
         self.x, self.y = sX, sY
 
         self.x = get_canvas_width() // 2

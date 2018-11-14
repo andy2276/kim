@@ -4,6 +4,7 @@ import math
 import random
 import object_player as Player
 import loading_state
+import collision
 MOVE_TIME = 1/60
 
 player = Player.Player
@@ -20,12 +21,16 @@ class enemy:
     ENEMY_STATE = {'stay','recon','found','move','attack'}
     def __init__(self,sName,sX,sY,sRad,sRs,sFs,sAi):
         self.name = sName
-        self.x, self.y = sX,sY
+        self.x, self.y = sX,
+        self.play = 'enemy'
         self.tx,self.ty = 0,0
         self.rad = sRad
         self.rotForce = sRs*MOVE_TIME * math.pi/60
         self.fwForce = sFs*MOVE_TIME
         self.ai = sAi
+
+
+        self.collider = collision.collider(self.x,self.y,"box",16,16)
 
         self.state = 'stay'
         self.searchR = enemy.ENEMY_RANGE[self.name]["search"]
@@ -37,9 +42,8 @@ class enemy:
     def update(self):
         if self.state == 'stay':
             enemy.stay(self)
-        elif self.state == 'move':
+        elif self.state == 'recon':
             enemy.move(self)
-
 
     def handle_event(self):
         pass
@@ -48,7 +52,7 @@ class enemy:
         self.tx = math.fabs(self.x + random.randint(-50,50))
         self.ty =  math.fabs(self.y + random.randint(-50,50))
         print("test",self.x,self.y,self.tx,self.ty)
-        self.state = 'move'
+        self.state = 'recon'
     def move(self):
         #if 0.1<=math.sqrt((self.tx-self.x)**2+(self.ty - self.y)**2)<=1:
          #   print("ok")
@@ -62,6 +66,8 @@ class enemy:
         #print(math.degrees(self.rad))
         self.x += math.cos(self.rad)*self.fwForce
         self.y += math.sin(self.rad)*self.fwForce
+
+
 
 
 
