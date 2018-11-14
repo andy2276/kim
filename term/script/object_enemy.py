@@ -17,7 +17,7 @@ player = Player.Player
 class enemy:
     _class = ["bagic_enemy"]
     _RANGE = {
-        'bagic_enemy':{"search":50,"attack":30}
+        'bagic_enemy':{"search":150,"attack":30}
     }
     _STATE = {'stay','recon','found','move','attack'}
     _COUNT = 1
@@ -72,18 +72,22 @@ class enemy:
            # return
 
         if -1<=self.x - self.tx<=1:#근사치
-            print("ok")
             self.state = 'stay'
             return
         if self.found :
             print('found you!')
             self.state = 'found'
             return
+        else:
+            print("restart")
+            self.state = 'stay'
+            return
 
         enemy.move(self)
 
     def foundyou(self):
         enemy.move(self)
+
 
 
     def move(self):

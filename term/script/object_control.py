@@ -37,6 +37,7 @@ def update():
         e.found = collision.isSearchRange(player,e,0)
         if e.found:
             e.tx,e.ty,e.dist = collision.isSearchRange(player,e,1)
+            e.found = collision.isSearchRange(player, e, 0)
         e.update()
 
 def handle_events():
