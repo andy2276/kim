@@ -80,12 +80,16 @@ class enemy:
             self.state = 'found'
             return
 
-        self.rad = math.atan2(self.ty-self.y,self.tx-self.x)
-        self.x += math.cos(self.rad)*self.fwForce
-        self.y += math.sin(self.rad)*self.fwForce
+        enemy.move(self)
 
     def foundyou(self):
-        self.rad = math.atan2(self.ty-self.y,self.tx-self.x)
+        enemy.move(self)
+
+
+    def move(self):
+        self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
+        self.x += math.cos(self.rad) * self.fwForce
+        self.y += math.sin(self.rad) * self.fwForce
 
 
 
