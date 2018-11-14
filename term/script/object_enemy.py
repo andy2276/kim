@@ -4,7 +4,7 @@ import math
 import random
 import object_player as Player
 import loading_state
-import collision
+
 MOVE_TIME = 1/60
 
 player = Player.Player
@@ -30,7 +30,7 @@ class enemy:
         self.ai = sAi
 
 
-        self.collider = collision.collider(self.x,self.y,"box",16,16)
+
 
         self.state = 'stay'
         self.searchR = enemy.ENEMY_RANGE[self.name]["search"]
