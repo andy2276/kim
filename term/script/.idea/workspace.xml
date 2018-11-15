@@ -21,14 +21,14 @@
             <file pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/collision.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="259">
-                    <caret line="78" column="58" selection-start-line="78" selection-start-column="58" selection-end-line="78" selection-end-column="58" />
+                  <state relative-caret-position="202">
+                    <caret line="64" column="12" lean-forward="true" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
                     <folding>
                       <element signature="e#0#20#0" expanded="true" />
-                      <marker date="1542301850555" expanded="true" signature="89:91" ph="..." />
-                      <marker date="1542301850555" expanded="true" signature="1188:2673" ph="..." />
-                      <marker date="1542301850555" expanded="true" signature="1812:1832" ph="..." />
-                      <marker date="1542301850555" expanded="true" signature="2596:2605" ph="..." />
+                      <marker date="1542301889960" expanded="true" signature="89:91" ph="..." />
+                      <marker date="1542301889960" expanded="true" signature="1188:2670" ph="..." />
+                      <marker date="1542301889960" expanded="true" signature="1812:1832" ph="..." />
+                      <marker date="1542301889960" expanded="true" signature="2596:2605" ph="..." />
                     </folding>
                   </state>
                 </provider>
@@ -37,8 +37,8 @@
             <file pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/object_enemy.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="532">
-                    <caret line="34" column="33" lean-forward="true" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+                  <state relative-caret-position="836">
+                    <caret line="83" column="32" lean-forward="true" selection-start-line="83" selection-start-column="32" selection-end-line="83" selection-end-column="32" />
                     <folding>
                       <element signature="e#0#20#0" expanded="true" />
                     </folding>
@@ -609,8 +609,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/object_enemy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="34" column="33" lean-forward="true" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+        <state relative-caret-position="836">
+          <caret line="83" column="32" lean-forward="true" selection-start-line="83" selection-start-column="32" selection-end-line="83" selection-end-column="32" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -619,14 +619,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/collision.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="78" column="58" selection-start-line="78" selection-start-column="58" selection-end-line="78" selection-end-column="58" />
+        <state relative-caret-position="202">
+          <caret line="64" column="12" lean-forward="true" selection-start-line="64" selection-start-column="12" selection-end-line="64" selection-end-column="12" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <marker date="1542301850555" expanded="true" signature="89:91" ph="..." />
-            <marker date="1542301850555" expanded="true" signature="1188:2673" ph="..." />
-            <marker date="1542301850555" expanded="true" signature="1812:1832" ph="..." />
-            <marker date="1542301850555" expanded="true" signature="2596:2605" ph="..." />
+            <marker date="1542301889960" expanded="true" signature="89:91" ph="..." />
+            <marker date="1542301889960" expanded="true" signature="1188:2670" ph="..." />
+            <marker date="1542301889960" expanded="true" signature="1812:1832" ph="..." />
+            <marker date="1542301889960" expanded="true" signature="2596:2605" ph="..." />
           </folding>
         </state>
       </provider>
