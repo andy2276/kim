@@ -105,6 +105,8 @@ class Player:
         self.w, self.h = w, h
 
 
+
+
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 
     def draw(self):

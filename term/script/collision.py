@@ -76,13 +76,13 @@ class Collision:
                    self.y + self.h / 2 - Collision._precision["high"]
 
     def isCollision(self,other):
-        #아더가지고
+        #아더와 본인의 타겟을 계속 비교한다. 리턴을 빠르게 하면 속도에서 이득을 볼수있을것이다.
         pass
 
 
 
 
-a = collider(10, 10, "box", 2, 3)
+a = cllider(10, 10, "box", 2, 3)
 b = collider(20, 30, "circle", 2, 2)
 
 print(a.bb)

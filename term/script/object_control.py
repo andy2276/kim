@@ -5,6 +5,7 @@ import json
 import object_player
 import object_enemy
 import collision
+import random
 
 enemyList = []
 
@@ -13,10 +14,15 @@ def enter():
     op = open('object.json')
     data = json.load(op)
     d = data['player'][1]
-    player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],d["fowardSpeed"],d["backSpeed"],d["width"],d["high"])
+    player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],
+                                  d["fowardSpeed"],d["backSpeed"],d["width"],d["high"])
     op.close()
+    player.collision = collision.Collision(player)
+
+
     for i in range(3):
-        enemy = object_enemy.enemy("bagic_enemy",300,300,90,10,10,0,58,78)
+        enemy = object_enemy.enemy("bagic_enemy",random.randint(100,500),300,90,10,10,0,58,78)
+        enemy.collision = collision.Collision(enemy)
         enemyList.append(enemy)
         print(enemyList[i].count)
 def exit():
