@@ -1,11 +1,9 @@
+from pico2d import *
+
 import math
 
 #------------draw collision box?
 drawCollider = False
-
-def drawCollision():
-
-
 
 
 def isSearchRange(player, enemy,want):
@@ -38,27 +36,47 @@ class collider:
     def update(self):
         pass
 
-class collision:
+class Collision:
     _precision = {"high":0,"middle":1,"low":2}
     def __init__(self,object):
         self.type = object.colType
         self.x,self.y = object.x,object.y
         self.w,self.h = object.w, object.h
+        self.target = object
         if self.type == 'box':
-            self.rdx,self.rdy = self.x-self.w/2 - collision._precision["high"],self.y-self.h/2- collision._precision["high"]
-            self.lux,self.luy = self.x+self.w/2- collision._precision["high"],self.y+self.h/2- collision._precision["high"]
+            self.rdx,self.rdy = 0
+            self.lux,self.luy =0
+            Collision.boxCollision(self,True)
         elif self.type == 'circle':
             self.r = self.w/2
     def draw(self):
         if drawCollider :
             if self.type == 'box':
-                
+                draw_rectangle(*Collision.boxCollision(self,False))
             elif self.type == 'circle':
+                pass
 
 
     def update(self):
         pass
+
+
     def handle_event(self):
+        pass
+    def boxCollision(self,option):
+        if option:
+            self.rdx, self.rdy = self.x - self.w / 2 - Collision._precision["high"],\
+                                 self.y - self.h / 2 - Collision._precision["high"]
+            self.lux, self.luy = self.x + self.w / 2 - Collision._precision["high"],\
+                                 self.y + self.h / 2 - Collision._precision["high"]
+        else:
+            return self.x - self.w / 2 - Collision._precision["high"],\
+                   self.y - self.h / 2 - Collision._precision["high"],\
+                   self.x + self.w / 2 - Collision._precision["high"],\
+                   self.y + self.h / 2 - Collision._precision["high"]
+
+    def isCollision(self,other):
+        #아더가지고
         pass
 
 
