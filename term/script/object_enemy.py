@@ -71,6 +71,7 @@ class enemy:
           #  self.state = 'stay'
            # return
 
+
         if -1<=self.x - self.tx<=1:#근사치
             self.state = 'stay'
             return
@@ -78,15 +79,15 @@ class enemy:
             print('found you!')
             self.state = 'found'
             return
-        else:
-            print("restart")
-            self.state = 'stay'
-            return
+
 
         enemy.move(self)
 
     def foundyou(self):
         enemy.move(self)
+        if self.found == False:
+            self.state = 'stay'
+            return
 
 
 
