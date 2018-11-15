@@ -1,7 +1,5 @@
 from pico2d import *
-
 import math
-
 
 MOVE_TIME = 1/60
 
@@ -104,9 +102,6 @@ class Player:
         self.colType = 'box'
         self.w, self.h = w, h
 
-
-
-
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 
     def draw(self):
@@ -114,11 +109,9 @@ class Player:
         self.barrel.draw()
     def update(self):
         self.x, self.y = self.body.update()
-
         self.barrel.update(self.x, self.y)
 
     def handle_event(self,keys):
-
         self.body.handle_event(keys)
         self.barrel.handle_event(keys)
 

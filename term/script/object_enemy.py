@@ -2,17 +2,9 @@ from pico2d import *
 
 import math
 import random
-import object_player as Player
 import loading_state
-from collision import isSearchRange
 
 MOVE_TIME = 1/60
-
-player = Player.Player
-
-
-
-
 
 class enemy:
     _class = ["bagic_enemy"]
