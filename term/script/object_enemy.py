@@ -21,23 +21,27 @@ class enemy:
     }
     _STATE = {'stay','recon','found','move','attack'}
     _COUNT = 1
-    def __init__(self,sName,sX,sY,sRad,sRs,sFs,sAi):
+    def __init__(self,sName,sX,sY,sRad,sRs,sFs,sAi,w,h):
         self.name = sName
+        self.play = 'enemy'
         self.x, self.y = sX,sY
 
         self.tx,self.ty = 0,0
 
+        self.collision = None
+        self.colType = 'box'
+        self.w,self.h = w,h
+
         self.count = enemy._COUNT
-        enemy._COUNT += 1
+        enemy._COUNT += 1#id & count
 
         self.rad = sRad
         self.rotForce = sRs*MOVE_TIME * math.pi/60
         self.fwForce = sFs*MOVE_TIME
         self.ai = sAi
 
-        self.play = 'enemy'
-        self.state = 'stay'
 
+        self.state = 'stay'
         self.found = False
         self.dist = 0
 

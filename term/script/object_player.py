@@ -83,7 +83,7 @@ class Barrel:
 
 #-------Tank Body+Barrel---------
 class Player:
-    def __init__(self, sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs):
+    def __init__(self, sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs,w,h):
         self.id = sName
         self.play = 'player'
         self.x, self.y = sX, sY
@@ -99,6 +99,10 @@ class Player:
 
         self.body = Body(self.x,self.y,self.rad,self.rotSpeed,self.bodyFwSpeed,self.bodyBkSpeed)
         self.barrel = Barrel(self.x,self.y,self.rotSpeed)
+
+        self.collision = None
+        self.colType = 'box'
+        self.w, self.h = w, h
 
 
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임

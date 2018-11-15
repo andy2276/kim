@@ -17,9 +17,11 @@
 			"y":0,
 			"hp":10000,
 			"rad":90,
-			"rotateSpeed":0.5,
-			"fowardSpeed":25,
-			"backSpeed":15
+			"rotateSpeed":2,
+			"fowardSpeed":50,
+			"backSpeed":25,
+			"width":78,
+			"high":58
 		}
 	],
 	"enemy":
@@ -32,7 +34,9 @@
 			"rad":90,
 			"rotateForce":0.1,
 			"SpeedForce":10,
-			"ai":0
+			"ai":0,
+			"width":58,
+			"high":75
 		}
 	]
 }

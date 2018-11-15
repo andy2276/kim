@@ -1,2 +1,2 @@
 [player_body]
-w = 85 h = 112
+w = 58h = 78

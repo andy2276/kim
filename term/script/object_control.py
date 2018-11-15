@@ -13,10 +13,10 @@ def enter():
     op = open('object.json')
     data = json.load(op)
     d = data['player'][1]
-    player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],d["fowardSpeed"],d["backSpeed"])
+    player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],d["fowardSpeed"],d["backSpeed"],d["width"],d["high"])
     op.close()
     for i in range(3):
-        enemy = object_enemy.enemy("bagic_enemy",300,300,90,10,10,0)
+        enemy = object_enemy.enemy("bagic_enemy",300,300,90,10,10,0,58,78)
         enemyList.append(enemy)
         print(enemyList[i].count)
 def exit():
