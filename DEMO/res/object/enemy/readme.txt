@@ -1,0 +1,1 @@
+[bagic_enemy] w: 58 h : 75
