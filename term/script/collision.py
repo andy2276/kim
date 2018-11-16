@@ -44,6 +44,9 @@ class Collision:
         self.x,self.y = object.x,object.y
         self.w,self.h = object.w, object.h
         self.target = object
+
+        self.crush = False
+        self.him = None
         if self.type == 'box':
             self.ldx,self.ldy = 0,0
             self.rux,self.ruy =0,0
@@ -60,7 +63,15 @@ class Collision:
 
 
     def update(self):
-        pass
+        self.x, self.y = self.target.x, self.target.y
+        self.rad = self.target.rad
+        if self.type == 'box':
+            self.ldx += math.cos(self.rad)
+            self.ldy += math.sin(self.rad)
+            self.rux += math.cos(self.rad)
+            self.ruy += math.sin(self.rad)
+
+
 
 
     def handle_event(self):
@@ -72,16 +83,40 @@ class Collision:
             self.rux, self.ruy = self.x + self.w / 2 - Collision._precision["high"],\
                                  self.y + self.h / 2 - Collision._precision["high"]
         else:
-            return self.x - self.w / 2 - Collision._precision["high"],\
-                   self.y - self.h / 2 - Collision._precision["high"],\
-                   self.x + self.w / 2 - Collision._precision["high"],\
-                   self.y + self.h / 2 - Collision._precision["high"]
+            return self.ldx,self.ldy,self.rux,self.ruy
 
     def isCollision(self,other):
         #아더와 본인의 타겟을 계속 비교한다. 리턴을 빠르게 하면 속도에서 이득을 볼수있을것이다.
         if self.target.colType == 'box':
-            if self.rux < other.collision.ldx :return False
-            if self.ruy> other.collision.ldy:
+            if self.rux < other.collision.ldx :
+                self.crush = False
+                self.him = None
+                return False
+            if self.ruy < other.collision.ldy :
+                self.crush = False
+                self.him = None
+                return False
+            if self.ldx > other.collision.rux :
+                self.crush = False
+                self.him = None
+                return False
+            if self.ldy > other.collision.ruy :
+                self.crush = False
+                self.him = None
+                return False
+
+            self.crush  = True
+            self.him = other
+
+            return True
+        if self.target.colType == 'circle':
+            pass
+
+    def whoCollideMe(self):
+        if self.crush :
+            return self.him
+        return
+
 
 
 

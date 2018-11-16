@@ -44,7 +44,7 @@ class Body:
             self.x += mov * mv * math.cos(self.rad)
             self.y += mov * mv * math.sin(self.rad)
 
-
+        self.collision.update()
         return self.x, self.y
 
     def handle_event(self,keys):

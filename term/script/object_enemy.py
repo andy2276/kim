@@ -47,6 +47,7 @@ class enemy:
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
     def update(self):
+        self.collision.update()
         if self.state == 'stay':
             enemy.stay(self)
         elif self.state == 'recon':
