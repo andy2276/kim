@@ -46,8 +46,11 @@ class enemy:
             self.image = loading_state.loadingImage().object_enemy_image[self.name]
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
+        if self.collision != None:
+            self.collision.draw()
+        #self.collision.draw()
     def update(self):
-        self.collision.update()
+
         if self.state == 'stay':
             enemy.stay(self)
         elif self.state == 'recon':
@@ -56,7 +59,8 @@ class enemy:
             enemy.foundyou(self)
         elif self.state == 'attack':
             enemy.attack(self)
-
+        if self.collision != None:
+            self.collision.update()
 
     def handle_event(self):
         pass

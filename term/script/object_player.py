@@ -44,7 +44,7 @@ class Body:
             self.x += mov * mv * math.cos(self.rad)
             self.y += mov * mv * math.sin(self.rad)
 
-        self.collision.update()
+
         return self.x, self.y
 
     def handle_event(self,keys):
@@ -68,6 +68,7 @@ class Barrel:
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
         self.rad = math.atan2(self.y - self.my,self.x - self.mx)
+        #self.collision.draw()
 
     def update(self, px, py):
 
@@ -104,14 +105,20 @@ class Player:
         self.colType = 'box'
         self.w, self.h = w, h
 
+
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 
     def draw(self):
         self.body.draw()
         self.barrel.draw()
+        if self.collision != None:
+            self.collision.draw()
     def update(self):
+
         self.x, self.y = self.body.update()
         self.barrel.update(self.x, self.y)
+        if self.collision != None:
+            self.collision.update()
 
     def handle_event(self,keys):
         self.body.handle_event(keys)

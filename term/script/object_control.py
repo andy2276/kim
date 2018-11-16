@@ -9,6 +9,7 @@ import random
 
 enemyList = []
 
+
 def enter():
     global player,enemy
     op = open('object.json')
@@ -18,8 +19,6 @@ def enter():
                                   d["fowardSpeed"],d["backSpeed"],d["width"],d["high"])
     op.close()
     player.collision = collision.Collision(player)
-
-
     for i in range(3):
         enemy = object_enemy.enemy("bagic_enemy",random.randint(100,500),300,90,10,10,0,58,78)
         enemy.collision = collision.Collision(enemy)

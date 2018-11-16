@@ -3,7 +3,7 @@ from pico2d import *
 import math
 
 #------------draw collision box?
-drawCollider = False
+drawCollider = True
 
 
 def isSearchRange(player, enemy,want):
@@ -36,7 +36,7 @@ class collider:
 
     def update(self):
         pass
-
+#충돌체는 나중에 하고 지금은 인공지능이나 만들자.
 class Collision:
     _precision = {"high":0,"middle":1,"low":2}
     def __init__(self,object):
@@ -66,12 +66,10 @@ class Collision:
         self.x, self.y = self.target.x, self.target.y
         self.rad = self.target.rad
         if self.type == 'box':
-            self.ldx += math.cos(self.rad)
-            self.ldy += math.sin(self.rad)
-            self.rux += math.cos(self.rad)
-            self.ruy += math.sin(self.rad)
-
-
+            self.ldx +=math.cos(self.rad)
+            self.ldy +=math.sin(self.rad)
+            self.rux +=math.cos(self.rad)
+            self.ruy +=math.sin(self.rad)
 
 
     def handle_event(self):
