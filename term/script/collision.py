@@ -44,8 +44,8 @@ class Collision:
         self.w,self.h = object.w, object.h
         self.target = object
         if self.type == 'box':
-            self.rdx,self.rdy = 0
-            self.lux,self.luy =0
+            self.rdx,self.rdy = 0,0
+            self.lux,self.luy =0,0
             Collision.boxCollision(self,True)
         elif self.type == 'circle':
             self.r = self.w/2
@@ -77,5 +77,7 @@ class Collision:
 
     def isCollision(self,other):
         #아더와 본인의 타겟을 계속 비교한다. 리턴을 빠르게 하면 속도에서 이득을 볼수있을것이다.
-        pass
+        if self.target.colType == 'box':
+
+
 
