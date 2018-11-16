@@ -9,6 +9,7 @@ drawCollider = False
 def isSearchRange(player, enemy,want):
     #return true, UnI - enemy.searchR return false only false
     UnI = math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2)
+
     if UnI - enemy.searchR <= 0:
         if want == 1:
             return player.x,player.y,enemy.searchR - UnI
@@ -44,8 +45,9 @@ class Collision:
         self.w,self.h = object.w, object.h
         self.target = object
         if self.type == 'box':
-            self.rdx,self.rdy = 0,0
-            self.lux,self.luy =0,0
+            self.ldx,self.ldy = 0,0
+            self.rux,self.ruy =0,0
+            self.rad = object.rad
             Collision.boxCollision(self,True)
         elif self.type == 'circle':
             self.r = self.w/2
@@ -65,9 +67,9 @@ class Collision:
         pass
     def boxCollision(self,option):
         if option:
-            self.rdx, self.rdy = self.x - self.w / 2 - Collision._precision["high"],\
+            self.ldx, self.ldy = self.x - self.w / 2 - Collision._precision["high"],\
                                  self.y - self.h / 2 - Collision._precision["high"]
-            self.lux, self.luy = self.x + self.w / 2 - Collision._precision["high"],\
+            self.rux, self.ruy = self.x + self.w / 2 - Collision._precision["high"],\
                                  self.y + self.h / 2 - Collision._precision["high"]
         else:
             return self.x - self.w / 2 - Collision._precision["high"],\
@@ -78,6 +80,10 @@ class Collision:
     def isCollision(self,other):
         #아더와 본인의 타겟을 계속 비교한다. 리턴을 빠르게 하면 속도에서 이득을 볼수있을것이다.
         if self.target.colType == 'box':
+            if self.rux < other.collision.ldx :return False
+            if self.ruy> other.collision.ldy:
+
+
 
 
 

@@ -35,6 +35,8 @@ class enemy:
 
         self.state = 'stay'
         self.found = False
+        self.attack = False
+
         self.dist = 0
 
         self.searchR = enemy._RANGE[self.name]["search"]
@@ -51,6 +53,8 @@ class enemy:
             enemy.reconnaissance(self)
         elif self.state == 'found':
             enemy.foundyou(self)
+        elif self.state == 'attack':
+            enemy.attack(self)
 
 
     def handle_event(self):
@@ -59,7 +63,7 @@ class enemy:
     def stay(self):
         self.tx = math.fabs(self.x + random.randint(-50,50))
         self.ty =  math.fabs(self.y + random.randint(-50,50))
-        print("test",self.x,self.y,self.tx,self.ty)
+        #print("test",self.x,self.y,self.tx,self.ty)
         self.state = 'recon'
     def reconnaissance(self):
         #if 0.1<=math.sqrt((self.tx-self.x)**2+(self.ty - self.y)**2)<=1:
@@ -84,14 +88,21 @@ class enemy:
         if self.found == False:
             self.state = 'stay'
             return
-
-
+        if self.dist<=self.attackR:
+            self.state = 'attack'
+            print("attack", self.dist)
+            self.attack = True
+            return
 
     def move(self):
         self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
         self.x += math.cos(self.rad) * self.fwForce
         self.y += math.sin(self.rad) * self.fwForce
 
+    def attack(self):
+        if  -1 <= self.dist -self.attackR <= 1:
+            print("attack",self.dist)
+            return
 
 
 

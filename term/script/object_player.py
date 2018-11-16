@@ -58,6 +58,8 @@ class Barrel:
     def __init__(self,px,py,prs):
         self.x,self.y = px,py
 
+        self.tx,self.ty = 0,0
+
         self.mx,self.my = 0, 0
         self.rad = 0.0
         self.rotSpeed = prs/10 * math.pi/60
