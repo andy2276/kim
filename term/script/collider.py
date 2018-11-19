@@ -3,7 +3,7 @@ import math
 
 colliderFlag = False
 
-# v1    v2
+# v2    v1
 #     o
 # v3    v4
 
@@ -13,12 +13,7 @@ class Collision:
         self.target = object
 
         if self.target.colType =='box':
-            #self.left, self.bottom, self.right, self.top = Collision.get_initBox(self)
-            #self.v1,self.v2,self.v3,self.v4 = [self.left,self.top],\
-             #                                 [self.right,self.top],\
-              #                                [self.left,self.bottom],\
-               #                               [self.right,self.bottom]
-            self.vector = {'v1':[0,0],'v2':[0,0],'v3':[0,0],'v4':[0,0]}
+            self.vector = [[0,0],[0,0],[0,0],[0,0]]
         elif self.target.colType =='circle':
             self.r = self.target.w/2
 
@@ -53,20 +48,24 @@ class Collision:
                 return True
         else:print("this object is None type")
 
-    def get_initBox(self):#여기에다가 다시
-        return self.target.x - self.target.w / 2,\
-               self.target.y - self.target.h / 2,\
-               self.target.x + self.target.w / 2,\
-               self.target.y + self.target.h / 2
+    def get_initBox(self):
+        return [self.target.x + self.target.w / 2, self.target.y + self.target.h / 2],\
+               [self.target.x - self.target.w / 2, self.target.y + self.target.h / 2],\
+               [self.target.x - self.target.w / 2, self.target.y - self.target.h / 2],\
+               [self.target.x + self.target.w / 2, self.target.y - self.target.h / 2]
+
+
+        #여기에다가 다시
+
+
+
 
     def update_rotBox(self):
-        self.left, self.bottom, self.right, self.top = Collision.get_initBox(self)
+        newVector = Collision.get_initBox(self)
+        for v in range(4):
+            self.vector[v] = newVector[v]
+            Collision.matrix(self,self.vector[v])
 
-        self.left += math.cos(self.target.rad)
-        self.bottom += math.sin(self.target.rad)
-
-        self.right += math.cos(self.target.rad)
-        self.top += math.sin(self.target.rad)
 
 
     def get_rotBox(self):
@@ -89,6 +88,9 @@ class Collision:
                                              [self.left, self.bottom], \
                                              [self.right, self.bottom]
 
+    def matrix(self,vec):
+        vec[0] = math.cos(self.target.rad) * vec[0] - math.sin(self.target.rad) * vec[1]
+        vec[1] = math.sin(self.target.rad) * vec[0] + math.cos(self.target.rad) * vec[1]
 
 def isSearchRange(player, enemy,want):
     #return true, UnI - enemy.searchR return false only false
@@ -100,6 +102,8 @@ def isSearchRange(player, enemy,want):
         return True
     else:
         return False
+
+
 
 def isAttackRange(player, enemy,want):
     UnI = math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2)

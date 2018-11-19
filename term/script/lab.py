@@ -12,6 +12,7 @@ class test:
 
 
 
+
     def draw(self):
         draw_rectangle(*test.get_bb(self))
     def get_bb(self):
@@ -19,8 +20,28 @@ class test:
 
 
 t = test()
-t.vec['a'][0],t.vec['a'][1] = (10,20)
 
+oxy = [5,5]
+vector = [[6,6],[4,6],[4,4],[6,4]]
+rad = -math.pi * 1/180
+def matrix(vec):
+    vec[0]= math.cos(rad)*vec[0] - math.sin(rad)*vec[1]
+    vec[1]= math.sin(rad)*vec[0] + math.cos(rad)*vec[1]
+
+def te():
+    return [1,2],[3,4],[5,6],[7,8]
+
+matrix(vector[3])
+a = te()
+k = 0
+
+
+for d in range(4):
+    vector[d] = a[d]
+
+
+print(vector[1])
+#print(vector[3])
 
 
 
