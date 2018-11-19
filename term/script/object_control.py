@@ -4,7 +4,6 @@ import game_framework as gf
 import json
 import object_player
 import object_enemy
-import collision
 import random
 import collider
 

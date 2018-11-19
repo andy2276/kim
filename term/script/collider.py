@@ -3,13 +3,22 @@ import math
 
 colliderFlag = False
 
+# v1    v2
+#     o
+# v3    v4
+
 class Collision:
     def __init__(self,object):
 
         self.target = object
 
         if self.target.colType =='box':
-            self.left, self.bottom, self.right, self.top = Collision.get_initBox(self)
+            #self.left, self.bottom, self.right, self.top = Collision.get_initBox(self)
+            #self.v1,self.v2,self.v3,self.v4 = [self.left,self.top],\
+             #                                 [self.right,self.top],\
+              #                                [self.left,self.bottom],\
+               #                               [self.right,self.bottom]
+            self.vector = {'v1':[0,0],'v2':[0,0],'v3':[0,0],'v4':[0,0]}
         elif self.target.colType =='circle':
             self.r = self.target.w/2
 
@@ -29,16 +38,22 @@ class Collision:
                 #print(other.name,"is in!!")
                 return True
             elif other.colType == 'circle':
+
+
+
                 print(other.colType)
                 pass
         elif self.target.colType == 'circle':
             if other.colType == 'box':
                 pass
             elif other.colType == 'circle':
-                pass
+                UnI = math.sqrt((self.target.x - other.x) ** 2 + (self.target.y - other.y) ** 2)
+                if UnI > self.r + other.collision.r: False
+
+                return True
         else:print("this object is None type")
 
-    def get_initBox(self):
+    def get_initBox(self):#여기에다가 다시
         return self.target.x - self.target.w / 2,\
                self.target.y - self.target.h / 2,\
                self.target.x + self.target.w / 2,\
@@ -49,6 +64,7 @@ class Collision:
 
         self.left += math.cos(self.target.rad)
         self.bottom += math.sin(self.target.rad)
+
         self.right += math.cos(self.target.rad)
         self.top += math.sin(self.target.rad)
 
@@ -57,7 +73,21 @@ class Collision:
         Collision.update_rotBox(self)
 
         return self.left, self.bottom, self.right, self.top
-
+    def get_rotExtendBox(self,object):
+        eL,eB,eR,eT = Collision.get_initBox(self)
+        eL,eB,eR,eT = eL - object.collision.r,\
+                      eB - object.collision.r,\
+                      eR + object.collision.r,\
+                      eT + object.collision.r
+        eL += math.cos(self.target.rad)
+        eB += math.sin(self.target.rad)
+        eR += math.cos(self.target.rad)
+        eT += math.sin(self.target.rad)
+    def update_vetor(self):#delete
+        self.v1, self.v2, self.v3, self.v4 = [self.left, self.top], \
+                                             [self.right, self.top], \
+                                             [self.left, self.bottom], \
+                                             [self.right, self.bottom]
 
 
 def isSearchRange(player, enemy,want):
