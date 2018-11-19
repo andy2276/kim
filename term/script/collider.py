@@ -5,4 +5,4 @@ class Collision:
         self.target = object
 
     def update(self):
-        print(self.target.x)
+        print("collision ",self.target.x)

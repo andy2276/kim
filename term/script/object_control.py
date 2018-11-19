@@ -12,18 +12,17 @@ enemyList = []
 
 
 def enter():
-    global player,enemy,a
+    global player,enemy
     op = open('object.json')
     data = json.load(op)
     d = data['player'][1]
     player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],
                                   d["fowardSpeed"],d["backSpeed"],d["width"],d["high"])
     op.close()
-    a=player.collision = collision.Collision(player)
-    collider.Collision(player)
+    player.collision = collider.Collision(player)
     for i in range(3):
         enemy = object_enemy.enemy("bagic_enemy",random.randint(100,500),300,90,10,10,0,58,78)
-        enemy.collision = collision.Collision(enemy)
+
         enemyList.append(enemy)
         print(enemyList[i].count)
 def exit():
@@ -38,7 +37,7 @@ def draw():
     update_canvas()
 
 def update():
-    global player,enemy,a
+    global player,enemy
     player.update()
     for e in enemyList:
         e.found = collision.isSearchRange(player,e,0)
@@ -46,7 +45,7 @@ def update():
             e.tx,e.ty,e.dist = collision.isSearchRange(player,e,1)
             e.state = 'found'
         e.update()
-    a.update
+
 
 def handle_events():
     global player,barrel

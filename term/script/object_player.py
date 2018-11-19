@@ -111,12 +111,13 @@ class Player:
     def draw(self):
         self.body.draw()
         self.barrel.draw()
-        if self.collision != None:
-            self.collision.draw()
+        #if self.collision != None:
+         #   self.collision.draw()
     def update(self):
 
         self.x, self.y = self.body.update()
         self.barrel.update(self.x, self.y)
+        print("player ",self.x)
         if self.collision != None:
             self.collision.update()
 

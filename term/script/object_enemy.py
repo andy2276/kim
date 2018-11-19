@@ -95,7 +95,7 @@ class enemy:
             return
         if self.dist<=self.attackR:
             self.state = 'attack'
-            print("attack", self.dist)
+            #print("attack", self.dist)
             self.attack = True
             return
 
@@ -106,7 +106,7 @@ class enemy:
 
     def attack(self):
         if  -1 <= self.dist -self.attackR <= 1:
-            print("attack",self.dist)
+            #print("attack",self.dist)
             return
 
 
