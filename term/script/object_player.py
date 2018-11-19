@@ -85,7 +85,7 @@ class Barrel:
 #-------Tank Body+Barrel---------
 class Player:
     def __init__(self, sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs,w,h):
-        self.id = sName
+        self.name = sName
         self.play = 'player'
         self.x, self.y = sX, sY
 
@@ -117,7 +117,7 @@ class Player:
 
         self.x, self.y = self.body.update()
         self.barrel.update(self.x, self.y)
-        print("player ",self.x)
+        #print("player ",self.x)
         if self.collision != None:
             self.collision.update()
 

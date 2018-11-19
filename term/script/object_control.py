@@ -22,7 +22,7 @@ def enter():
     player.collision = collider.Collision(player)
     for i in range(3):
         enemy = object_enemy.enemy("bagic_enemy",random.randint(100,500),300,90,10,10,0,58,78)
-
+        enemy.collision = collider.Collision(enemy)
         enemyList.append(enemy)
         print(enemyList[i].count)
 def exit():
@@ -40,10 +40,11 @@ def update():
     global player,enemy
     player.update()
     for e in enemyList:
-        e.found = collision.isSearchRange(player,e,0)
+        e.found = collider.isSearchRange(player,e,0)
         if e.found:
-            e.tx,e.ty,e.dist = collision.isSearchRange(player,e,1)
+            e.tx,e.ty,e.dist = collider.isSearchRange(player,e,1)
             e.state = 'found'
+            e.collision.isCollider(player)
         e.update()
 
 

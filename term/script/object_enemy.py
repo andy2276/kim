@@ -20,6 +20,7 @@ class enemy:
 
         self.tx,self.ty = 0,0
 
+        # this place is Collider
         self.collision = None
         self.colType = 'box'
         self.w,self.h = w,h
@@ -46,8 +47,7 @@ class enemy:
             self.image = loading_state.loadingImage().object_enemy_image[self.name]
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        if self.collision != None:
-            self.collision.draw()
+
         #self.collision.draw()
     def update(self):
 

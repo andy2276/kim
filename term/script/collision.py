@@ -6,16 +6,7 @@ import math
 drawCollider = True
 
 
-def isSearchRange(player, enemy,want):
-    #return true, UnI - enemy.searchR return false only false
-    UnI = math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2)
 
-    if UnI - enemy.searchR <= 0:
-        if want == 1:
-            return player.x,player.y,enemy.searchR - UnI
-        return True
-    else:
-        return False
 class collider:
     def __init__(self, xo, yo, coltype, widtho, higho):
         self.x, self.y = xo, yo
