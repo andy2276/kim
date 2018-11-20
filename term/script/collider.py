@@ -1,7 +1,7 @@
-import pico2d
+from pico2d import *
 import math
 
-colliderFlag = False
+colliderFlag = True
 
 # v2    v1
 #     o
@@ -11,11 +11,18 @@ class Collision:
     def __init__(self,object):
 
         self.target = object
-
+        if self.target.play == 'player':
+            self.image = load_image("../res/object/character/player_box.png")
+        elif self.target.play == 'enemy':
+            self.image = load_image("../res/object/enemy/bagic_enemy_box")
         if self.target.colType =='box':
             self.vector = [[0,0],[0,0],[0,0],[0,0]]
         elif self.target.colType =='circle':
             self.r = self.target.w/2
+
+    def draw(self):
+        if colliderFlag:
+            self.image.composite_draw(self.target.rad,"",self.target.x,self.target.y)
 
     def update(self):
         Collision.update_rotBox(self)
@@ -25,16 +32,10 @@ class Collision:
         if self.target.colType =='box':
             if other.colType == 'box':
                 Collision.update_rotBox(self)
-                oL, oB, oR, oT = other.collision.get_rotBox()
-                if self.left > oR : return False
-                if self.right < oL : return  False
-                if self.bottom > oT : return False
-                if self.top < oB : return False
+
                 #print(other.name,"is in!!")
                 return True
             elif other.colType == 'circle':
-
-
 
                 print(other.colType)
                 pass
@@ -55,42 +56,45 @@ class Collision:
                [self.target.x + self.target.w / 2, self.target.y - self.target.h / 2]
 
 
-        #여기에다가 다시
-
-
-
-
     def update_rotBox(self):
         newVector = Collision.get_initBox(self)
         for v in range(4):
             self.vector[v] = newVector[v]
-            Collision.matrix(self,self.vector[v])
-
-
+            self.vector[v][0],self.vector[v][1]=Collision.get_matrix(self,self.vector[v])
 
     def get_rotBox(self):
         Collision.update_rotBox(self)
 
-        return self.left, self.bottom, self.right, self.top
+        return
     def get_rotExtendBox(self,object):
-        eL,eB,eR,eT = Collision.get_initBox(self)
-        eL,eB,eR,eT = eL - object.collision.r,\
-                      eB - object.collision.r,\
-                      eR + object.collision.r,\
-                      eT + object.collision.r
-        eL += math.cos(self.target.rad)
-        eB += math.sin(self.target.rad)
-        eR += math.cos(self.target.rad)
-        eT += math.sin(self.target.rad)
-    def update_vetor(self):#delete
-        self.v1, self.v2, self.v3, self.v4 = [self.left, self.top], \
-                                             [self.right, self.top], \
-                                             [self.left, self.bottom], \
-                                             [self.right, self.bottom]
+        extend = Collision.get_initBox(self)
 
-    def matrix(self,vec):
-        vec[0] = math.cos(self.target.rad) * vec[0] - math.sin(self.target.rad) * vec[1]
-        vec[1] = math.sin(self.target.rad) * vec[0] + math.cos(self.target.rad) * vec[1]
+        extend[0][0] += object.Collision.r
+        extend[0][1] += object.Collision.r
+
+        extend[0][0] -= object.Collision.r
+        extend[0][1] += object.Collision.r
+
+        extend[0][0] -= object.Collision.r
+        extend[0][1] -= object.Collision.r
+
+        extend[0][0] += object.Collision.r
+        extend[0][1] -= object.Collision.r
+
+        for v in range(4):
+            extend[v][0] += math.cos(self.target.rad)
+            extend[v][1] += math.sin(self.target.rad)
+
+        return extend
+
+    def get_matrix(self,vec):
+        dx,dy = vec[0]-self.target.x, vec[1]-self.target.y
+        tx = dx * math.cos(self.target.rad)-dy*math.sin(self.target.rad)
+        ty = dx * math.sin(self.target.rad) + dy*math.cos(self.target.rad)
+        vec[0]=vec[0]+tx
+        vec[1]=vec[1]+ty
+        return vec[0],vec[1]
+
 
 def isSearchRange(player, enemy,want):
     #return true, UnI - enemy.searchR return false only false

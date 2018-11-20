@@ -23,24 +23,35 @@ t = test()
 
 oxy = [5,5]
 vector = [[6,6],[4,6],[4,4],[6,4]]
-rad = -math.pi * 1/180
+vector2 = [[6,6],[4,6],[4,4],[6,4]]
+rad = 45*(math.pi * 1/180)
 def matrix(vec):
+
     vec[0]= math.cos(rad)*vec[0] - math.sin(rad)*vec[1]
     vec[1]= math.sin(rad)*vec[0] + math.cos(rad)*vec[1]
 
-def te():
-    return [1,2],[3,4],[5,6],[7,8]
+def mat(vec):
+    vec[0] += math.cos(rad)
+    vec[1] += math.sin(rad)
 
-matrix(vector[3])
+def te():
+    return [10,10],[8,10],[8,8],[10,8]
+
+
+
 a = te()
+b = te()
 k = 0
 
 
 for d in range(4):
     vector[d] = a[d]
+    vector2[d] = b[d]
+    matrix(vector[d])
+    mat(vector2[d])
 
-
-print(vector[1])
+print(vector)
+print(vector2)
 #print(vector[3])
 
 
