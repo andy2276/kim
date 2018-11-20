@@ -72,18 +72,17 @@ class Collision:
         extend[0][0] += object.Collision.r
         extend[0][1] += object.Collision.r
 
-        extend[0][0] -= object.Collision.r
-        extend[0][1] += object.Collision.r
+        extend[1][0] -= object.Collision.r
+        extend[1][1] += object.Collision.r
 
-        extend[0][0] -= object.Collision.r
-        extend[0][1] -= object.Collision.r
+        extend[2][0] -= object.Collision.r
+        extend[2][1] -= object.Collision.r
 
-        extend[0][0] += object.Collision.r
-        extend[0][1] -= object.Collision.r
+        extend[3][0] += object.Collision.r
+        extend[3][1] -= object.Collision.r
 
         for v in range(4):
-            extend[v][0] += math.cos(self.target.rad)
-            extend[v][1] += math.sin(self.target.rad)
+            extend[v][0],extend[v][1]= self.get_matrix(self, extend[v])
 
         return extend
 
@@ -117,3 +116,5 @@ def isAttackRange(player, enemy,want):
         return True
     else:
         return False
+
+def
