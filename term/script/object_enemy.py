@@ -112,7 +112,7 @@ class enemy:
 
     def attack(self):
         if self.attackR >= self.dist:
-            print("coWha!!")
+            #print("coWha!!")
             if self.safeR >= self.dist:
                 self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
                 self.x -= math.cos(self.rad) * self.fwForce

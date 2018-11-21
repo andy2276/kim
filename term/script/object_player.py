@@ -2,7 +2,7 @@ from pico2d import *
 import math
 
 MOVE_TIME = 1/60
-BARREL_GUNPORT = 16
+BARREL_GUNPORT = 106
 
 #-------Tank Body---------
 class Body:
@@ -65,7 +65,7 @@ class Barrel:
         self.rad = 0.0
         self.rotSpeed = prs/10 * math.pi/60
 
-        self.gpx,self.gpy =self.x ,self.y
+        self.gpx, self.gpy =self.x-BARREL_GUNPORT ,self.y
 
         if Barrel.image == None:
             Barrel.image = load_image('../res/object/character/player_barrel_pix2.png')
@@ -73,7 +73,7 @@ class Barrel:
 
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        self.im.draw(self.gpx,self.gpx)
+        self.im.draw(self.gpx,self.gpy)
 
         #self.collision.draw()
 
@@ -84,8 +84,12 @@ class Barrel:
 
 
 
+
+
+
+
         self.x , self.y = px, py
-        dx = 
+
 
 
 
