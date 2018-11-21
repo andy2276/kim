@@ -7,14 +7,29 @@ colliderFlag = True
 #     o
 # v3    v4
 
+def ptInArea(x, y, pts):
+    inside = False;
+    j = len(pts) - 1
+    for i in range(len(pts)):
+        xi, yi = pts[i][0], pts[i][1];
+        xj, yj = pts[j][0], pts[j][1];
+
+        intersects = ((yi > y) != (yj > y)) and \
+                     (x < (xj - xi) * (y - yi) / (yj - yi) + xi)
+        if intersects: inside = not inside;
+        j = i
+    return inside;
+
 class Collision:
     def __init__(self,object):
 
         self.target = object
-        if self.target.play == 'player':
-            self.image = load_image("../res/object/character/player_box.png")
-        elif self.target.play == 'enemy':
-            self.image = load_image("../res/object/enemy/bagic_enemy_box")
+        if colliderFlag:
+            if self.target.play == 'player':
+                self.image = load_image("../res/object/character/player_box.png")
+            elif self.target.play == 'enemy':
+                self.image = load_image("../res/object/enemy/bagic_enemy_box.png")
+            self.im = load_image("../res/object/character/po.png")
         if self.target.colType =='box':
             self.vector = [[0,0],[0,0],[0,0],[0,0]]
         elif self.target.colType =='circle':
@@ -23,6 +38,10 @@ class Collision:
     def draw(self):
         if colliderFlag:
             self.image.composite_draw(self.target.rad,"",self.target.x,self.target.y)
+            for v in range(4):
+                self.im.draw(self.vector[v][0],self.vector[v][1])
+        #print(self.target.name,self.vector)
+        #print("x y ",self.target.x,self.target.y)
 
     def update(self):
         Collision.update_rotBox(self)
@@ -32,8 +51,18 @@ class Collision:
         if self.target.colType =='box':
             if other.colType == 'box':
                 Collision.update_rotBox(self)
+                for v in range(4):
+                    self.target.crush = ptInArea(other.collision.vector[v][0],
+                                                 other.collision.vector[v][1], self.vector)
+                    if self.target.crush == True:
+                        break
+                if self.target.crush == False:
+                    self.target.crush = ptInArea(other.x,other.y,self.vector)
 
-                #print(other.name,"is in!!")
+                if colliderFlag:
+                    if self.target.crush:
+                        print("in!!",self.target.name)
+
                 return True
             elif other.colType == 'circle':
 
@@ -83,15 +112,15 @@ class Collision:
 
         for v in range(4):
             extend[v][0],extend[v][1]= self.get_matrix(self, extend[v])
-
         return extend
 
     def get_matrix(self,vec):
         dx,dy = vec[0]-self.target.x, vec[1]-self.target.y
-        tx = dx * math.cos(self.target.rad)-dy*math.sin(self.target.rad)
+        #dx, dy = vec[0] , vec[1]
+        tx = dx * math.cos(self.target.rad) - dy*math.sin(self.target.rad)
         ty = dx * math.sin(self.target.rad) + dy*math.cos(self.target.rad)
-        vec[0]=vec[0]+tx
-        vec[1]=vec[1]+ty
+        vec[0]=self.target.x+tx
+        vec[1]=self.target.y+ty
         return vec[0],vec[1]
 
 
@@ -117,4 +146,4 @@ def isAttackRange(player, enemy,want):
     else:
         return False
 
-def
+

@@ -24,13 +24,14 @@ class enemy:
         self.collision = None
         self.colType = 'box'
         self.w,self.h = w,h
+        self.crush = False
 
         self.count = enemy._COUNT
         enemy._COUNT += 1#id & count
 
         self.rad = sRad
         self.rotForce = sRs*MOVE_TIME * math.pi/60
-        self.fwForce = sFs*MOVE_TIME
+        self.fwForce = sFs*MOVE_TIME *0
         self.ai = sAi
 
 
@@ -47,6 +48,8 @@ class enemy:
             self.image = loading_state.loadingImage().object_enemy_image[self.name]
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
+        if self.collision != None:
+            self.collision.draw()
 
         #self.collision.draw()
     def update(self):

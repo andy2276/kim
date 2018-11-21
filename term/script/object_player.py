@@ -104,6 +104,7 @@ class Player:
         self.collision = None
         self.colType = 'box'
         self.w, self.h = w, h
+        self.crush = False
 
 
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
@@ -111,11 +112,12 @@ class Player:
     def draw(self):
         self.body.draw()
         self.barrel.draw()
-        #if self.collision != None:
-         #   self.collision.draw()
+        if self.collision != None:
+            self.collision.draw()
     def update(self):
 
         self.x, self.y = self.body.update()
+        self.rad = self.body.rad
         self.barrel.update(self.x, self.y)
         #print("player ",self.x)
         if self.collision != None:
