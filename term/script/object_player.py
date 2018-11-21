@@ -2,6 +2,7 @@ from pico2d import *
 import math
 
 MOVE_TIME = 1/60
+BARREL_GUNPORT = 16
 
 #-------Tank Body---------
 class Body:
@@ -63,17 +64,29 @@ class Barrel:
         self.mx,self.my = 0, 0
         self.rad = 0.0
         self.rotSpeed = prs/10 * math.pi/60
-        if Barrel.image == None: Barrel.image = load_image('../res/object/character/player_barrel_pix2.png')
+
+        self.gpx,self.gpy =self.x ,self.y
+
+        if Barrel.image == None:
+            Barrel.image = load_image('../res/object/character/player_barrel_pix2.png')
+            self.im = load_image('../res/object/character/po.png')
 
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        self.rad = math.atan2(self.y - self.my,self.x - self.mx)
+        self.im.draw(self.gpx,self.gpx)
+
         #self.collision.draw()
 
     def update(self, px, py):
+        self.rad = math.atan2(self.y - self.my, self.x - self.mx)
 
-        #print(self.rad)
+
+
+
+
         self.x , self.y = px, py
+        dx = 
+
 
 
     def handle_event(self,keys):
@@ -88,7 +101,11 @@ class Player:
         self.name = sName
         self.play = 'player'
         self.x, self.y = sX, sY
+        self.visualR = h / 2
 
+
+
+        #--------------------------------
         self.x = get_canvas_width() // 2
         self.y = get_canvas_height() // 2
 
@@ -105,7 +122,6 @@ class Player:
         self.colType = 'box'
         self.w, self.h = w, h
         self.crush = False
-
 
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 

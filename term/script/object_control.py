@@ -39,11 +39,17 @@ def update():
     global player,enemy
     player.update()
     for e in enemyList:
-        e.found = collider.isSearchRange(player,e,0)
+        e.found = collider.isInRange(player,e,e.searchR,False)
+        #print(e.found)
         if e.found:
-            e.tx,e.ty,e.dist = collider.isSearchRange(player,e,1)
-            e.state = 'found'
-            e.collision.isCollider(player)
+            e.attack = collider.isInRange(player, e, e.attackR, False)
+            if e.attack:
+                e.tx, e.ty, e.dist = collider.isInRange(player, e, e.attackR, True)
+                e.state = 'attack'
+            else:
+                e.tx,e.ty,e.dist = collider.isInRange(player,e,e.searchR,True)
+                e.state = 'found'
+            #e.collision.isCollider(player)
         e.update()
 
 

@@ -1,7 +1,11 @@
 from pico2d import *
 import math
 
+
+SEARCH_RANGE = 300
+
 colliderFlag = True
+
 
 # v2    v1
 #     o
@@ -14,8 +18,8 @@ def ptInArea(x, y, pts):
         xi, yi = pts[i][0], pts[i][1];
         xj, yj = pts[j][0], pts[j][1];
 
-        intersects = ((yi > y) != (yj > y)) and \
-                     (x < (xj - xi) * (y - yi) / (yj - yi) + xi)
+        intersects = ((yi >= y) != (yj >= y)) and \
+                     (x <= (xj - xi) * (y - yi) / (yj - yi) + xi)
         if intersects: inside = not inside;
         j = i
     return inside;
@@ -54,20 +58,24 @@ class Collision:
                 for v in range(4):
                     self.target.crush = ptInArea(other.collision.vector[v][0],
                                                  other.collision.vector[v][1], self.vector)
-                    if self.target.crush == True:
-                        break
+                    if self.target.crush == True: break
                 if self.target.crush == False:
                     self.target.crush = ptInArea(other.x,other.y,self.vector)
 
                 if colliderFlag:
                     if self.target.crush:
                         print("in!!",self.target.name)
-
                 return True
             elif other.colType == 'circle':
+                eV = []
+                temp=Collision.get_rotExtendBox(self,other)
+                for v in range(4):
+                    eV.append(temp[v])
+
+
 
                 print(other.colType)
-                pass
+
         elif self.target.colType == 'circle':
             if other.colType == 'box':
                 pass
@@ -124,26 +132,40 @@ class Collision:
         return vec[0],vec[1]
 
 
-def isSearchRange(player, enemy,want):
-    #return true, UnI - enemy.searchR return false only false
-    UnI = math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2)
+#def isSearchRange(player, enemy,want):
+ #   #return true, UnI - enemy.searchR return false only false
+  #  UnI = math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2)
+#
+ #   if UnI - enemy.searchR <= 0:
+  #      if want == 1:
+   #         return player.x,player.y,enemy.searchR - UnI
+    #    return True
+#    else:
+ #       return False
+#def isSearchRange(target, enemy,info,range):
+ #   #return true, UnI - enemy.searchR return false only false
+  #  UnI =(target.x - enemy.x) ** 2 + (target.y - enemy.y) ** 2
+   # if  (target.visualR**2)+ (range**2) <= UnI:
+    #    if info:
+     #       return target.x,target.y,range-math.sqrt(UnI)
+      #  return True
+#    else:
+ #       return False
+def isInRange(tar,me,range,info):
+    dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
+    if range == 0:
+        if (tar.visualR + me.visualR)**2 <= dist:
+            if info:
+                return tar.x,tar.y,math.sqrt(dist)
+            return True
 
-    if UnI - enemy.searchR <= 0:
-        if want == 1:
-            return player.x,player.y,enemy.searchR - UnI
-        return True
     else:
-        return False
+        if range**2 >= dist:
+            if info:
+                return tar.x,tar.y,math.sqrt(dist)
+            return True
+    return False
 
 
-
-def isAttackRange(player, enemy,want):
-    UnI = math.sqrt((player.x - enemy.x) ** 2 + (player.y - enemy.y) ** 2)
-    if UnI - enemy.attackR <= 0:
-        if want == 1:
-            return player.x, player.y, enemy.attackR - UnI
-        return True
-    else:
-        return False
 
 

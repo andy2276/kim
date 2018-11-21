@@ -5,11 +5,12 @@ import random
 import loading_state
 
 MOVE_TIME = 1/60
+MOVE_FREEZE = 1
 
 class enemy:
     _class = ["bagic_enemy"]
     _RANGE = {
-        'bagic_enemy':{"search":150,"attack":30}
+        'bagic_enemy':{"search":300,"attack":150,"safe":120}
     }
     _STATE = {'stay','recon','found','move','attack'}
     _COUNT = 1
@@ -17,6 +18,7 @@ class enemy:
         self.name = sName
         self.play = 'enemy'
         self.x, self.y = sX,sY
+        self.visualR = w / 2
 
         self.tx,self.ty = 0,0
 
@@ -31,7 +33,7 @@ class enemy:
 
         self.rad = sRad
         self.rotForce = sRs*MOVE_TIME * math.pi/60
-        self.fwForce = sFs*MOVE_TIME *0
+        self.fwForce = sFs*MOVE_TIME * MOVE_FREEZE
         self.ai = sAi
 
 
@@ -41,8 +43,9 @@ class enemy:
 
         self.dist = 0
 
-        self.searchR = enemy._RANGE[self.name]["search"]
+        self.searchR = enemy._RANGE[self.name]["search"]#반지름임
         self.attackR = enemy._RANGE[self.name]["attack"]
+        self.safeR = enemy._RANGE[self.name]["safe"]
 
         if self.name in enemy._class:
             self.image = loading_state.loadingImage().object_enemy_image[self.name]
@@ -80,7 +83,7 @@ class enemy:
            # return
 
 
-        if -1<=self.x - self.tx<=1:#근사치
+        if -2<=self.x - self.tx<=2:#근사치
             self.state = 'stay'
             return
         if self.found :
@@ -108,9 +111,14 @@ class enemy:
         self.y += math.sin(self.rad) * self.fwForce
 
     def attack(self):
-        if  -1 <= self.dist -self.attackR <= 1:
-            #print("attack",self.dist)
-            return
+        if self.attackR >= self.dist:
+            print("coWha!!")
+            if self.safeR >= self.dist:
+                self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
+                self.x -= math.cos(self.rad) * self.fwForce
+                self.y -= math.sin(self.rad) * self.fwForce
+
+        return
 
 
 
