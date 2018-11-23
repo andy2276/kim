@@ -4,7 +4,7 @@ import math
 
 SEARCH_RANGE = 300
 
-colliderFlag = True
+colliderFlag = False
 
 
 # v2    v1

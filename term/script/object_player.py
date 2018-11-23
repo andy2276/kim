@@ -59,36 +59,36 @@ class Barrel:
     def __init__(self,px,py,prs):
         self.x,self.y = px,py
 
-        self.tx,self.ty = 0,0
+        self.tx,self.ty = 0 ,0
 
         self.mx,self.my = 0, 0
         self.rad = 0.0
         self.rotSpeed = prs/10 * math.pi/60
 
-        self.gpx, self.gpy =self.x-BARREL_GUNPORT ,self.y
-
         if Barrel.image == None:
             Barrel.image = load_image('../res/object/character/player_barrel_pix2.png')
             self.im = load_image('../res/object/character/po.png')
-
+         #   self.im2 = self.im
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        self.im.draw(self.gpx,self.gpy)
+        self.im.draw(self.tx,self.ty)
+        #self.im2.draw(374,369)
+
 
         #self.collision.draw()
 
     def update(self, px, py):
         self.rad = math.atan2(self.y - self.my, self.x - self.mx)
 
+        dx = BARREL_GUNPORT*math.cos(self.rad) - math.sin(self.rad)
+        dy = BARREL_GUNPORT*math.sin(self.rad) + math.cos(self.rad)
 
-
-
-
-
-
-
+        self.tx = self.x + dx*-1
+        self.ty = self.y + dy*-1
 
         self.x , self.y = px, py
+
+        #print(self.tx,self.ty)
 
 
 
