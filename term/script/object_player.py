@@ -56,6 +56,7 @@ class Body:
 #-------Tank Barrel---------
 class Barrel:
     image = None
+    colBox = None
     def __init__(self,px,py,prs):
         self.x,self.y = px,py
 
@@ -67,7 +68,9 @@ class Barrel:
 
         if Barrel.image == None:
             Barrel.image = load_image('../res/object/character/player_barrel_pix2.png')
-            self.im = load_image('../res/object/character/po.png')
+            #self.im = load_image('../res/object/character/po.png')
+            colBox = load_image("../res/object/character/player_box.png")
+
          #   self.im2 = self.im
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)

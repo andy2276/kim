@@ -14,6 +14,7 @@ class enemy:
     }
     _STATE = {'stay','recon','found','move','attack'}
     _COUNT = 1
+
     def __init__(self,sName,sX,sY,sRad,sRs,sFs,sAi,w,h):
         self.name = sName
         self.play = 'enemy'

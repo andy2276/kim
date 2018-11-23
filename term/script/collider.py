@@ -26,7 +26,7 @@ def ptInArea(x, y, pts):
 
 class Collision:
     def __init__(self,object):
-
+        if object == None:
         self.target = object
         if colliderFlag:
             if self.target.play == 'player':
@@ -130,7 +130,8 @@ class Collision:
         vec[0]=self.target.x+tx
         vec[1]=self.target.y+ty
         return vec[0],vec[1]
-
+    def set_tempCollision(self,obj):
+        self.target = obj
 
 #def isSearchRange(player, enemy,want):
  #   #return true, UnI - enemy.searchR return false only false
@@ -167,5 +168,5 @@ def isInRange(tar,me,range,info):
     return False
 
 
-
+#무조건 플레이어의 입장에서 계산을 하자.
 
