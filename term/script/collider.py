@@ -27,21 +27,23 @@ def ptInArea(x, y, pts):
 class Collision:
     def __init__(self,object):
         if object == None:
-        self.target = object
-        if colliderFlag:
-            if self.target.play == 'player':
-                self.image = load_image("../res/object/character/player_box.png")
-            elif self.target.play == 'enemy':
-                self.image = load_image("../res/object/enemy/bagic_enemy_box.png")
-            self.im = load_image("../res/object/character/po.png")
-        if self.target.colType =='box':
-            self.vector = [[0,0],[0,0],[0,0],[0,0]]
-        elif self.target.colType =='circle':
-            self.r = self.target.w/2
+            self.name = 'default'
+            self.target,self.colBox = None,None
+            self.vector =  [[0,0],[0,0],[0,0],[0,0]]
+            self.r = 0
+        else:
+            self.target = object
+            if colliderFlag:
+                self.colBox = self.target.colBox
+                self.im = load_image("../res/object/character/po.png")
+            if self.target.colType =='box':
+                self.vector = [[0,0],[0,0],[0,0],[0,0]]
+            elif self.target.colType =='circle':
+                self.r = self.target.w/2
 
     def draw(self):
         if colliderFlag:
-            self.image.composite_draw(self.target.rad,"",self.target.x,self.target.y)
+            self.colBox.composite_draw(self.target.rad,"",self.target.x,self.target.y)
             for v in range(4):
                 self.im.draw(self.vector[v][0],self.vector[v][1])
         #print(self.target.name,self.vector)
@@ -130,6 +132,7 @@ class Collision:
         vec[0]=self.target.x+tx
         vec[1]=self.target.y+ty
         return vec[0],vec[1]
+
     def set_tempCollision(self,obj):
         self.target = obj
 

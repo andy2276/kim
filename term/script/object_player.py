@@ -1,9 +1,9 @@
 from pico2d import *
 import math
-
+from loading_state import loadingImages
 MOVE_TIME = 1/60
 BARREL_GUNPORT = 106
-
+print(loadingImages.object_player_image[])
 #-------Tank Body---------
 class Body:
     KeyEvent = [SDLK_a, SDLK_d, SDLK_w, SDLK_s]
@@ -19,7 +19,8 @@ class Body:
         self.key = {}
         for k in Body.KeyEvent :
             self.key[k] = False
-        if Body.image ==None : Body.image = load_image("../res/object/character/player_body_pix2.png")
+        if Body.image ==None :
+            Body.image = loadingImages.object_player_image["player_body"]
 
     def draw(self):
         self.image.composite_draw(self.rad, "" , self.x, self.y)
@@ -56,7 +57,6 @@ class Body:
 #-------Tank Barrel---------
 class Barrel:
     image = None
-    colBox = None
     def __init__(self,px,py,prs):
         self.x,self.y = px,py
 
@@ -67,14 +67,14 @@ class Barrel:
         self.rotSpeed = prs/10 * math.pi/60
 
         if Barrel.image == None:
-            Barrel.image = load_image('../res/object/character/player_barrel_pix2.png')
+            Barrel.image = loadingImages.object_player_image["player.barrel"]
             #self.im = load_image('../res/object/character/po.png')
-            colBox = load_image("../res/object/character/player_box.png")
+
 
          #   self.im2 = self.im
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        self.im.draw(self.tx,self.ty)
+        #self.im.draw(self.tx,self.ty)
         #self.im2.draw(374,369)
 
 
@@ -104,6 +104,7 @@ class Barrel:
 
 #-------Tank Body+Barrel---------
 class Player:
+    colBox = None
     def __init__(self, sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs,w,h):
         self.name = sName
         self.play = 'player'
@@ -129,6 +130,8 @@ class Player:
         self.colType = 'box'
         self.w, self.h = w, h
         self.crush = False
+        if Player.colBox == None:
+            self.colBox = loadingImages.images.object_enemy_colBox_image['player_colBox']
 
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 

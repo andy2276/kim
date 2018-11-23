@@ -11,20 +11,29 @@
 from pico2d import *
 import game_framework as gf
 import json
-import math
+import object_control
 
 global loadimage
 global glStartTime
+loadingImages = None
+loadCount = 0
 
 class loadingImage:
     def __init__(self):
         self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
-        self.object_player_image ={
+
+        self.object_player_image = {
             "player_body":load_image("../res/object/character/player_body_pix2.png"),
             "player_barrel": load_image('../res/object/character/player_barrel_pix2.png')
         }
+        self.object_player_colBox_image = {
+            "player_colBox": load_image("../res/object/character/player_box.png")
+        }
         self.object_enemy_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
+        }
+        self.object_enemy_colBox_image = {
+            "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
         }
 
 
@@ -40,11 +49,17 @@ class loadingState:
         op.close()
 
 
+
+
+
+
 def enter():
-    #global loadimage = loadingImage()
-    #global loadstate = loadingState()
-    pass
-   
+    global loadCount,loadingImages
+    loadingImages = loadingImage()
+    print(loadingImages.object_player_image)
+    loadCount +=1
+
+
 
 def exit():
    pass
@@ -52,13 +67,19 @@ def exit():
 
 
 def draw():
-    clear_canvas()
+    global loadCount, loadingImages
+    loadingImages.loading_state_image.draw(get_canvas_width()/2,get_canvas_height()/2)
 
-    update_canvas()
-    pass
 
 def update():
-    pass
+    global loadCount, loadingImages
+    clear_canvas()
+    delay(0.1)
+    handle_events()
+    #if loadCount == 1:
+     #   gf.push_state(object_control)
+    update_canvas()
+
 def handle_events():
     events = get_events()
     for key in events:
