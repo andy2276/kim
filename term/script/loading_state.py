@@ -13,28 +13,24 @@ import game_framework as gf
 import json
 import object_control
 
-global loadimage
-global glStartTime
-loadingImages = None
-loadCount = 0
-
-class loadingImage:
-    def __init__(self):
-        self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
-
-        self.object_player_image = {
-            "player_body":load_image("../res/object/character/player_body_pix2.png"),
-            "player_barrel": load_image('../res/object/character/player_barrel_pix2.png')
-        }
-        self.object_player_colBox_image = {
-            "player_colBox": load_image("../res/object/character/player_box.png")
-        }
-        self.object_enemy_image = {
-            "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
-        }
-        self.object_enemy_colBox_image = {
-            "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
-        }
+C_WIDTH, C_HIEGHT = 1200,800
+# class loadingImage:
+#     def __init__(self):
+#         self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
+#
+#         self.object_player_image = {
+#             "player_body": load_image("../res/object/character/player_body_pix2.png"),
+#             "player_barrel": load_image('../res/object/character/player_barrel_pix2.png')
+#         }
+#         self.object_player_colBox_image = {
+#             "player_colBox": load_image("../res/object/character/player_box.png")
+#         }
+#         self.object_enemy_image = {
+#             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
+#         }
+#         self.object_enemy_colBox_image = {
+#             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
+#         }
 
 
 class loadingState:
@@ -48,16 +44,33 @@ class loadingState:
         
         op.close()
 
+loadImages = None
 
+
+class LoadingImage:
+    def __init__(self):
+        self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
+
+        self.object_player_image = {"player_body": load_image("../res/object/character/player_body_pix2.png"),
+            "player_barrel": load_image('../res/object/character/player_barrel_pix2.png')
+        }
+        self.object_player_colBox_image = {
+            "player_colBox": load_image("../res/object/character/player_box.png")
+        }
+        self.object_enemy_image = {
+            "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
+        }
+        self.object_enemy_colBox_image = {
+            "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
+        }
 
 
 
 
 def enter():
-    global loadCount,loadingImages
-    loadingImages = loadingImage()
-    print(loadingImages.object_player_image)
-    loadCount +=1
+    global loadImages
+    loadImages = LoadingImage()
+    print("in Loading State!")
 
 
 
@@ -67,18 +80,23 @@ def exit():
 
 
 def draw():
-    global loadCount, loadingImages
-    loadingImages.loading_state_image.draw(get_canvas_width()/2,get_canvas_height()/2)
+    global loadImages
+    clear_canvas()
+
+
+    loadImages.loading_state_image.draw(get_canvas_width()/2,get_canvas_height()/2)
+
+
+    update_canvas()
+
+
+
 
 
 def update():
-    global loadCount, loadingImages
-    clear_canvas()
-    delay(0.1)
+
     handle_events()
-    #if loadCount == 1:
-     #   gf.push_state(object_control)
-    update_canvas()
+
 
 def handle_events():
     events = get_events()
@@ -95,7 +113,7 @@ def resume():
 if __name__ == '__main__':
     import sys
     glCurrentModule = sys.modules[__name__]	
-    open_canvas()
+    open_canvas(C_WIDTH, C_HIEGHT)
     gf.run(glCurrentModule)
     close_canvas()
 

@@ -1,9 +1,9 @@
 from pico2d import *
 import math
-from loading_state import loadingImages
+from loading_state import loadImages
 MOVE_TIME = 1/60
 BARREL_GUNPORT = 106
-print(loadingImages.object_player_image[])
+
 #-------Tank Body---------
 class Body:
     KeyEvent = [SDLK_a, SDLK_d, SDLK_w, SDLK_s]
@@ -20,7 +20,7 @@ class Body:
         for k in Body.KeyEvent :
             self.key[k] = False
         if Body.image ==None :
-            Body.image = loadingImages.object_player_image["player_body"]
+            Body.image = loadImages.object_player_image["player_body"]
 
     def draw(self):
         self.image.composite_draw(self.rad, "" , self.x, self.y)
@@ -67,7 +67,7 @@ class Barrel:
         self.rotSpeed = prs/10 * math.pi/60
 
         if Barrel.image == None:
-            Barrel.image = loadingImages.object_player_image["player.barrel"]
+            Barrel.image = loadImages.object_player_image["player.barrel"]
             #self.im = load_image('../res/object/character/po.png')
 
 
@@ -131,7 +131,7 @@ class Player:
         self.w, self.h = w, h
         self.crush = False
         if Player.colBox == None:
-            self.colBox = loadingImages.images.object_enemy_colBox_image['player_colBox']
+            self.colBox = loadImages.images.object_enemy_colBox_image['player_colBox']
 
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 

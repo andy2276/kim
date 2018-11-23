@@ -2,7 +2,7 @@ from pico2d import *
 
 import math
 import random
-from loading_state import loadingImages
+from loading_state import loadImages
 
 MOVE_TIME = 1/60
 MOVE_FREEZE = 1
@@ -49,8 +49,8 @@ class enemy:
         self.safeR = enemy._RANGE[self.name]["safe"]
 
         if self.name in enemy._class:
-            self.image = loadingImages.object_enemy_image[self.name]
-            self.colBox = loadingImages.object_enemy_colBox_image[self.name]
+            self.image = loadImages.object_enemy_image[self.name]
+            self.colBox = loadImages.object_enemy_colBox_image[self.name]
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
         if self.collision != None:
