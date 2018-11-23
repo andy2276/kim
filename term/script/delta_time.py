@@ -6,16 +6,20 @@ flowTime = 0.0
 currTime = 0.0
 preTime = 0.0
 
-def deltaTime(isDelay):
+def deltaTime(isDelay=False,delayTime = -1.0):
     global flowTime, currTime, preTime
     # if preTime == 0.0:
     if isDelay :
         t.sleep(1/60)
+    elif delayTime != -1.0:
+        t.sleep(delayTime)
     currTime = t.time()
     flowTime = currTime - preTime
     preTime = currTime
     if flowTime==currTime==preTime:
-        return 0.01
+        return 0.03
     return flowTime
 
 
+for i in range(60):
+    print(deltaTime(True))
