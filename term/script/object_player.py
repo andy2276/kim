@@ -1,8 +1,10 @@
 from pico2d import *
 import math
-from loading_state import loadImages
+#from loading_state import loadImages
+import loading_state
 MOVE_TIME = 1/60
 BARREL_GUNPORT = 106
+
 
 #-------Tank Body---------
 class Body:

@@ -2,10 +2,12 @@ from pico2d import *
 
 import math
 import random
-from loading_state import loadImages
+from loading_state from
 
 MOVE_TIME = 1/60
 MOVE_FREEZE = 1
+
+
 
 class enemy:
     _class = ["bagic_enemy"]
