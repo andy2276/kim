@@ -20,6 +20,6 @@ def deltaTime(isDelay=False,delayTime = -1.0):
         return 0.03
     return flowTime
 
-
-for i in range(60):
-    print(deltaTime(True))
+def testYourFPS():
+    for i in range(60):
+        print(deltaTime(True))

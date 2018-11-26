@@ -11,6 +11,7 @@
 from pico2d import *
 import game_framework as gf
 import json
+import delta_time
 import object_control
 
 C_WIDTH, C_HIEGHT = 1200,800
@@ -37,7 +38,7 @@ class loadingState:
     def __init__(self):
         op= open('object.json')
         data = json.load(op)
-        
+
         self.player = data["player"][0]
         #self.enemy = data[][]
 
