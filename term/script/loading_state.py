@@ -15,23 +15,6 @@ import delta_time
 import object_control
 
 C_WIDTH, C_HIEGHT = 1200,800
-# class loadingImage:
-#     def __init__(self):
-#         self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
-#
-#         self.object_player_image = {
-#             "player_body": load_image("../res/object/character/player_body_pix2.png"),
-#             "player_barrel": load_image('../res/object/character/player_barrel_pix2.png')
-#         }
-#         self.object_player_colBox_image = {
-#             "player_colBox": load_image("../res/object/character/player_box.png")
-#         }
-#         self.object_enemy_image = {
-#             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
-#         }
-#         self.object_enemy_colBox_image = {
-#             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
-#         }
 
 
 class loadingState:

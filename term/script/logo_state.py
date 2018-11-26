@@ -13,41 +13,28 @@ from pico2d import *
 import game_framework as gf
 #third import next module
 import loading_state
-#fourth import need module
-import time
-#fifth initializing module variables(for using to any modul)
 
-#sixth initializing global variables(for only using this module)
+import delta_time as tm
 
-global glLogoImage,glStartTime
+logo = None
+flowTime = 0.0
 
-#seventh define class
-
-#eighth define function
-
-#ninth redefine game_framework's function
 def enter():
-	global glLogoImage,glStartTime
-	glStartTime = time.time()
-	glLogoImage = load_image('../res/ui/logo_title/kpu_credit.png')
+	global logo
+	logo = load_image('../res/ui/logo_title/kpu_credit.png')
 
 def exit():
-	global glLogoImage
-	del glLogoImage
+	global logo
+	del logo
 
 def draw():
 	clear_canvas()
-	glLogoImage.draw(400, 300)
+	logo.draw(get_canvas_width()/2, get_canvas_width()/2)
 	update_canvas()
 
 def update():
-        global glStartTime
-        lcMidTime = time.time() - glStartTime
-        if lcMidTime >= 0.5:
-                gf.change_state(loading_state)
-                return
-        delay(0.02)
-	
+	global logo,flowTime
+	gf.change_state(loading_state) if flowTime >= 60.0
 
 def handle_events():
 	pass
