@@ -6,6 +6,5 @@ import game_framework as gf
 import logo_state
 
 #start this module's script
-open_canvas()
+
 gf.run(logo_state)
-close_canvas()

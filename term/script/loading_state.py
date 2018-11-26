@@ -15,7 +15,7 @@ import delta_time
 import object_control
 
 C_WIDTH, C_HIEGHT = 1200,800
-
+CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 
 class loadingState:
     def __init__(self):
@@ -29,11 +29,12 @@ class loadingState:
         op.close()
 
 loadImages = None
-
+loadCount = 0
 
 class LoadingImage:
     def __init__(self):
-        self.loading_state_image = load_image('../res/ui/logo_title/loading_image_pix.png')
+        self.loading_state_image = {"backGround":load_image('../res/ui/logo_title/loading_image_pix.png'),
+         "loadingBar": load_image('../res/ui/logo_title/loading_bar.png')}
 
         self.object_player_image = {"player_body": load_image("../res/object/character/player_body_pix2.png"),
             "player_barrel": load_image('../res/object/character/player_barrel_pix2.png')
@@ -47,29 +48,29 @@ class LoadingImage:
         self.object_enemy_colBox_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
         }
-
+        self.imageCount = 7
 
 
 
 def enter():
-    global loadImages
+    global loadImages,loadCount
+    open_canvas(C_WIDTH, C_HIEGHT)
     loadImages = LoadingImage()
-    print("in Loading State!")
-
-
+    loadCount =0
 
 def exit():
-   pass
+    close_canvas()
+    pass
 
 
 
 def draw():
-    global loadImages
+    global loadImages,loadCount
     clear_canvas()
-
-
-    loadImages.loading_state_image.draw(get_canvas_width()/2,get_canvas_height()/2)
-
+    loadImages.loading_state_image["backGround"].draw(CH_HALF+200,CH_HALF)
+    loadImages.loading_state_image["loadingBar"].clip_draw(0, 35, 450, 35,CH_HALF+200, CH_HALF-300)
+    loadImages.loading_state_image["loadingBar"].clip_draw(0, 0, 10 * loadCount, 35, CH_HALF-25 + (10 * loadCount) / 2,
+                                                           CH_HALF - 300)
 
     update_canvas()
 
@@ -78,8 +79,12 @@ def draw():
 
 
 def update():
+    global loadImages, loadCount
+    loadCount += 5 if loadCount <=42 else 0
 
     handle_events()
+    if loadCount <=42:
+        gf.push_state(object_control)
 
 
 def handle_events():

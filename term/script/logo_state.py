@@ -14,30 +14,49 @@ import game_framework as gf
 #third import next module
 import loading_state
 
-import delta_time as tm
 
 logo = None
+loadingBar = None
 flowTime = 0.0
+test = 0
 
 def enter():
 	global logo
+	open_canvas()
 	logo = load_image('../res/ui/logo_title/kpu_credit.png')
 
+
+
 def exit():
+	close_canvas()
 	global logo
 	del logo
 
 def draw():
+	global logo
 	clear_canvas()
-	logo.draw(get_canvas_width()/2, get_canvas_width()/2)
+	logo.draw(get_canvas_width()/2, get_canvas_width()/2-100)
 	update_canvas()
 
 def update():
 	global logo,flowTime
-	gf.change_state(loading_state) if flowTime >= 60.0
+
+	if flowTime >=3.0:
+		gf.change_state(loading_state)
+		handle_events()
+	else :
+		delay(0.1)
+		flowTime += 1.0
+
+
 
 def handle_events():
-	pass
+	events = get_events()
+	for key in events:
+		if key.type == SDL_QUIT:
+			gf.quit()
+		elif (key.type, key.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
+			gf.pop_state()
 
 def pause():
 	pass

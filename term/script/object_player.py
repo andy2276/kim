@@ -1,7 +1,6 @@
 from pico2d import *
 import math
-#from loading_state import loadImages
-import loading_state
+import loading_state as lo
 MOVE_TIME = 1/60
 BARREL_GUNPORT = 106
 
@@ -22,7 +21,7 @@ class Body:
         for k in Body.KeyEvent :
             self.key[k] = False
         if Body.image ==None :
-            Body.image = loadImages.object_player_image["player_body"]
+            Body.image = lo.loadImages.object_player_image["player_body"]
 
     def draw(self):
         self.image.composite_draw(self.rad, "" , self.x, self.y)
@@ -69,14 +68,14 @@ class Barrel:
         self.rotSpeed = prs/10 * math.pi/60
 
         if Barrel.image == None:
-            Barrel.image = loadImages.object_player_image["player.barrel"]
-            #self.im = load_image('../res/object/character/po.png')
+            Barrel.image =  lo.loadImages.object_player_image["player_barrel"]
+            self.colAim = load_image('../res/object/character/po.png')
 
 
          #   self.im2 = self.im
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        #self.im.draw(self.tx,self.ty)
+        self.colAim.draw(self.tx,self.ty)
         #self.im2.draw(374,369)
 
 
@@ -101,7 +100,7 @@ class Barrel:
     def handle_event(self,keys):
         if keys.type == SDL_MOUSEMOTION:
             #print(keys.x,600- keys.y)
-            self.mx, self.my = keys.x, 600 - keys.y
+            self.mx, self.my = keys.x, lo.C_HIEGHT - keys.y
             #print(self.mx, self.my)
 
 #-------Tank Body+Barrel---------
@@ -133,7 +132,7 @@ class Player:
         self.w, self.h = w, h
         self.crush = False
         if Player.colBox == None:
-            self.colBox = loadImages.images.object_enemy_colBox_image['player_colBox']
+            self.colBox =  lo.loadImages.object_player_colBox_image['player_colBox']
 
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 

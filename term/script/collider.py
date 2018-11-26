@@ -4,7 +4,7 @@ import math
 
 SEARCH_RANGE = 300
 
-colliderFlag = False
+colliderFlag = True
 
 
 # v2    v1
@@ -34,6 +34,7 @@ class Collision:
         else:
             self.target = object
             if colliderFlag:
+                self.collisionFlag = colliderFlag
                 self.colBox = self.target.colBox
                 self.im = load_image("../res/object/character/po.png")
             if self.target.colType =='box':
