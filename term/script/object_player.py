@@ -60,8 +60,10 @@ class Barrel:
     image = None
     def __init__(self,px,py,prs):
         self.x,self.y = px,py
+        self.gpx,self.gpy = 0 ,0
 
-        self.tx,self.ty = 0 ,0
+        self.tx,self.ty = 0,0
+        self.attack = False
 
         self.mx,self.my = 0, 0
         self.rad = 0.0
@@ -75,7 +77,7 @@ class Barrel:
          #   self.im2 = self.im
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        self.colAim.draw(self.tx,self.ty)
+        self.colAim.draw(self.gpx,self.gpy)
         #self.im2.draw(374,369)
 
 
@@ -87,8 +89,8 @@ class Barrel:
         dx = BARREL_GUNPORT*math.cos(self.rad) - math.sin(self.rad)
         dy = BARREL_GUNPORT*math.sin(self.rad) + math.cos(self.rad)
 
-        self.tx = self.x + dx*-1
-        self.ty = self.y + dy*-1
+        self.gpx = self.x + dx*-1
+        self.gpy = self.y + dy*-1
 
         self.x , self.y = px, py
 
@@ -99,9 +101,13 @@ class Barrel:
 
     def handle_event(self,keys):
         if keys.type == SDL_MOUSEMOTION:
-            #print(keys.x,600- keys.y)
             self.mx, self.my = keys.x, lo.C_HIEGHT - keys.y
-            #print(self.mx, self.my)
+        if keys.button == SDL_BUTTON_LEFT:
+            self.tx,self.ty =  keys.x, lo.C_HIEGHT - keys.y
+            self.attack == True
+            print(self.tx,self.ty,self.rad)
+
+
 
 #-------Tank Body+Barrel---------
 class Player:

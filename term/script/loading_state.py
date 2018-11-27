@@ -11,25 +11,16 @@
 from pico2d import *
 import game_framework as gf
 import json
-import delta_time
+
 import object_control
 
 C_WIDTH, C_HIEGHT = 1200,800
 CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 
-class loadingState:
+class LoadingState:
     def __init__(self):
-        op= open('object.json')
-        data = json.load(op)
-
-        self.player = data["player"][0]
-        #self.enemy = data[][]
-
-        
-        op.close()
-
-loadImages = None
-loadCount = 0
+        self.player = None
+        self.enemy = None
 
 class LoadingImage:
     def __init__(self):
@@ -53,12 +44,23 @@ class LoadingImage:
         }
         self.imageCount = 7
 
-
+loadImages = None
+loadState = None
+loadCount = 0
 
 def enter():
-    global loadImages,loadCount
+    global loadImages,loadState,loadCount
     open_canvas(C_WIDTH, C_HIEGHT)
     loadImages = LoadingImage()
+    loadState = LoadingState()
+
+    op = open("object.json")
+    datas = json.load(op)
+    loadState.player = datas["player"]
+    loadState.enemy = datas["enemy"]
+
+    op.close()
+
     loadCount =0
 
 def exit():
@@ -104,7 +106,7 @@ def resume():
 #start to this module
 if __name__ == '__main__':
     import sys
-    glCurrentModule = sys.modules[__name__]	
+    glCurrentModule = sys.modules[__name__]
     open_canvas(C_WIDTH, C_HIEGHT)
     gf.run(glCurrentModule)
     close_canvas()

@@ -9,7 +9,7 @@ class projectile:
         self.name = 'superClass'
         self.x,self.y =0,0
         self.rad = 0.0
-        self.paly = 'enemy'
+        self.play = 'enemy'
         self.fwSpeed = 0.0
         self.visualR = 0
         self.collision = None
@@ -23,7 +23,7 @@ class projectile:
         dist = MOVE_TIME*self.fwSpeed
         self.x += math.cos(self.rad)*dist
         self.y += math.sin(self.rad)*dist
-        print(self.x,self.y)
+        print(self.x,self.y,self.rad)
         if self.crush :
             print("boom!!")
 
@@ -31,11 +31,12 @@ class projectile:
         pass
 
 class missile(projectile):
-    def __init__(self,sN,sX,sY,sRad,sPlay,sFs,sVr,sCt,sW,sH):
+    def __init__(self,sN = 'noname',sX = 0,sY = 0,sRad = math.pi/180,sPlay = 'no',sFs = 0,
+                 sVr= 0,sCt = 'box',sW = 0,sH = 0):
         self.name = sN
         self.x,self.y = sX,sY
         self.rad = sRad
-        self.paly = sPlay
+        self.play = sPlay
         self.fwSpeed = sFs
         self.visualR = sVr
         self.collision = None
@@ -44,9 +45,5 @@ class missile(projectile):
         self.crush = False
 
 
-test = 30
-a = missile('missile_bagic',0,0,test*math.pi/180,'player',10,10,'circle',20,20)
-for i in range(60):
-    a.update()
 
-print(math.degrees(test*math.pi/180))
+

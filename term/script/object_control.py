@@ -1,7 +1,7 @@
 from pico2d import *
 
 import game_framework as gf
-import json
+import loading_state as lo
 import object_player
 import object_enemy
 import random
@@ -12,12 +12,12 @@ enemyList = []
 
 def enter():
     global player,enemy
-    op = open('object.json')
-    data = json.load(op)
-    d = data['player'][1]
-    player = object_player.Player(d["name"],d["x"],d,["hp"],d["rad"],d["rotateSpeed"],
-                                  d["fowardSpeed"],d["backSpeed"],d["width"],d["high"])
-    op.close()
+    selectPlayer = 1
+
+    p = lo.loadState.player[selectPlayer]
+    player = object_player.Player(p["name"],p['x'],p['y'],p['hp'],p['rad'],p['rotateSpeed'],p['fowardSpeed'],
+                                  p['backSpeed'],p['width'],p['high'])
+
     player.collision = collider.Collision(player)
     for i in range(3):
         enemy = object_enemy.enemy("bagic_enemy",random.randint(100,500),300,90,10,10,0,58,78)
@@ -73,9 +73,14 @@ def resume():
 
 
 
+
+
+
+
 if __name__ == '__main__':
     import sys
     glCurrentModule = sys.modules[__name__]
-    open_canvas()
+    open_canvas(1200,800)
+
     gf.run(glCurrentModule)
     close_canvas()

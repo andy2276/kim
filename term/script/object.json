@@ -10,6 +10,8 @@
 			"rotateSpeed":0.1,
 			"fowardSpeed":10,
 			"backSpeed":5
+			"width":78,
+			"high":58
 		},
 		{
 			"name":"super_player",
@@ -34,6 +36,18 @@
 			"rad":90,
 			"rotateForce":0.1,
 			"SpeedForce":10,
+			"ai":0,
+			"width":58,
+			"high":75
+		},
+		{
+			"name":"middle_enemy",
+			"x":0,
+			"y":0,
+			"hp":200,
+			"rad":90,
+			"rotateForce":0.2,
+			"SpeedForce":20,
 			"ai":0,
 			"width":58,
 			"high":75
