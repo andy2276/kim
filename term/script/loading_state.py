@@ -48,6 +48,9 @@ class LoadingImage:
         self.object_enemy_colBox_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
         }
+        self.object_projectile_image = {
+            "missile_bagic":load_image('../res/object/projectile/missile_bagic.png')
+        }
         self.imageCount = 7
 
 
