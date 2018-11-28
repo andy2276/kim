@@ -60,7 +60,8 @@ class enemy:
 
         #self.collision.draw()
     def update(self):
-
+        if self.crush:
+            print("boom!!burn and burn")
         if self.state == 'stay':
             enemy.stay(self)
         elif self.state == 'recon':

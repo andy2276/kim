@@ -24,11 +24,25 @@ def ptInArea(x, y, pts):
         j = i
     return inside;
 
+def isInRange(tar,me,range,info):
+    dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
+    if range == 0:
+        if (tar.visualR + me.visualR)**2 <= dist:
+            if info:
+                return tar.x,tar.y,math.sqrt(dist)
+            return True
+    else:
+        if range**2 >= dist:
+            if info:
+                return tar.x,tar.y,math.sqrt(dist)
+            return True
+    return False
+
 class Collision:
     def __init__(self,object):
         if object == None:
             self.name = 'default'
-            self.target,self.colBox = None,None
+            self.target,self.colBox = None, None
             self.vector =  [[0,0],[0,0],[0,0],[0,0]]
             self.r = 0
         else:
@@ -66,27 +80,37 @@ class Collision:
                 if self.target.crush == False:
                     self.target.crush = ptInArea(other.x,other.y,self.vector)
 
+
                 if colliderFlag:
                     if self.target.crush:
                         print("in!!",self.target.name)
-                return True
+                return self.target.crush
             elif other.colType == 'circle':
                 eV = []
                 temp=Collision.get_rotExtendBox(self,other)
                 for v in range(4):
                     eV.append(temp[v])
 
+                if ptInArea(other.x,other.y,eV):
+                    print("my",self.target.colType,"you",other.colType)
 
-
-                print(other.colType)
-
+                return self.target.crush
         elif self.target.colType == 'circle':
             if other.colType == 'box':
-                pass
+                eV = []
+                temp = Collision.get_rotExtendOtherBox(self,other)
+                for v in range(4):
+                    eV.append(temp[v])
+                self.target.crush = ptInArea(self.target.x,self.target.y,eV)
+                #if self.target.crush :
+                    #print("my", self.target.colType, "you", other.colType)
+                return ptInArea(self.target.x,self.target.y,eV)
             elif other.colType == 'circle':
-                UnI = math.sqrt((self.target.x - other.x) ** 2 + (self.target.y - other.y) ** 2)
-                if UnI > self.r + other.collision.r: False
-
+                dist = (self.target.x - other.x) ** 2 + (self.target.y - other.y) ** 2
+                if (self.target.r + other.r)**2 <= dist:
+                    self.target.crush = False
+                    return False
+                self.target.crush = True
                 return True
         else:print("this object is None type")
 
@@ -107,23 +131,44 @@ class Collision:
         Collision.update_rotBox(self)
 
         return
+
     def get_rotExtendBox(self,object):
         extend = Collision.get_initBox(self)
 
-        extend[0][0] += object.Collision.r
-        extend[0][1] += object.Collision.r
+        extend[0][0] += object.r
+        extend[0][1] += object.r
 
-        extend[1][0] -= object.Collision.r
-        extend[1][1] += object.Collision.r
+        extend[1][0] -= object.r
+        extend[1][1] += object.r
 
-        extend[2][0] -= object.Collision.r
-        extend[2][1] -= object.Collision.r
+        extend[2][0] -= object.r
+        extend[2][1] -= object.r
 
-        extend[3][0] += object.Collision.r
-        extend[3][1] -= object.Collision.r
+        extend[3][0] += object.r
+        extend[3][1] -= object.r
 
         for v in range(4):
-            extend[v][0],extend[v][1]= self.get_matrix(self, extend[v])
+            extend[v][0],extend[v][1]= self.get_matrix( extend[v])
+        return extend
+
+    def get_rotExtendOtherBox(self, object):
+        extend = Collision.get_initBox(object.collision)
+
+        extend[0][0] += self.r
+        extend[0][1] += self.r
+
+        extend[1][0] -= self.r
+        extend[1][1] += self.r
+
+        extend[2][0] -= self.r
+        extend[2][1] -= self.r
+
+        extend[3][0] += self.r
+        extend[3][1] -= self.r
+
+        for v in range(4):
+            extend[v][0], extend[v][1] = object.collision.get_matrix(extend[v])
+
         return extend
 
     def get_matrix(self,vec):
@@ -157,19 +202,7 @@ class Collision:
       #  return True
 #    else:
  #       return False
-def isInRange(tar,me,range,info):
-    dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
-    if range == 0:
-        if (tar.visualR + me.visualR)**2 <= dist:
-            if info:
-                return tar.x,tar.y,math.sqrt(dist)
-            return True
-    else:
-        if range**2 >= dist:
-            if info:
-                return tar.x,tar.y,math.sqrt(dist)
-            return True
-    return False
+
 
 
 #무조건 플레이어의 입장에서 계산을 하자.

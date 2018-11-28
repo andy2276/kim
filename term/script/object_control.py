@@ -41,6 +41,7 @@ def enemyUpdate():
             if e.attack:
                 e.tx, e.ty, e.dist = collider.isInRange(player, e, e.attackR, True)
                 e.state = 'attack'
+                #print("???!!!!!")
             else:
                 e.tx,e.ty,e.dist = collider.isInRange(player,e,e.searchR,True)
                 e.state = 'found'
@@ -48,12 +49,37 @@ def enemyUpdate():
         e.update()
 
 def projectileUpdate():
-    global player, enemy
+    global player, enemy, projectile
+    if player.barrel.attack:
+        player.barrel.attack = False
+        missiles=object_projectile.missile(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
+                                           "player",300,20,"circle",10,10)
+        missiles.collision = collider.Collision(missiles)
+        projectile.append(missiles)
+
+    for m in projectile:
+        m.update()
+        if m.x <= 0 or m.x >= get_canvas_width() or \
+                m.y <= 0 or m.y >= get_canvas_height():
+            projectile.remove(m)
 
 
-
-
-
+    #test----------
+    for m in projectile:
+        for e in enemyList:
+            if m.collision.isCollider(e):
+                if m.play != e.play:
+                    enemyList.remove(e)
+                    projectile.remove(m)
+                    break#리스트 반복을 시키면 안된다.
+    #test-----------
+def playerAttackEnemy():
+    global player, enemy, projectile
+    for m in projectile:
+        for e in enemyList:
+            if m.play == player.play:
+                if m.collision.isCollider(e):
+                    break
 
 def enter():
     global player,enemy
@@ -77,20 +103,10 @@ def draw():
 def update():
     global player, enemy, projectile
     player.update()
-    if player.barrel.attack:
-        player.barrel.attack = False
-        missiles=object_projectile.missile(player.name,player.barrel.gpx,player.barrel.gpy,player.barrel.rad,
-                                           "player",100,20,"circle",10,10)
-        print("ok!")
-        missiles.collision = collider.Collision(missiles)
-        projectile.append(missiles)
+    projectileUpdate()
     enemyUpdate()
-    print(len(projectile))
-    for m in projectile:
-        m.update()
-        if m.x <= 0 or m.x >= get_canvas_width() or\
-                m.y <= 0 or m.y >= get_canvas_height():
-            projectile.remove(m)
+    #print(len(projectile))
+
 
 
 

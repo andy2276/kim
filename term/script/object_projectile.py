@@ -22,7 +22,7 @@ class projectile:
 
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        print(self.x,self.y)
+        #print(self.x,self.y)
 
 
     def update(self):
@@ -37,8 +37,8 @@ class projectile:
         pass
 
 class missile(projectile):
-    def __init__(self,sN = 'noname',sX = 0,sY = 0,sRad = math.pi/180,sPlay = 'no',sFs = 0,
-                 sVr= 0,sCt = 'box',sW = 0,sH = 0):
+
+    def __init__(self,sN = 'noname',sX = 0,sY = 0,sRad = math.pi/180,sPlay = 'no',sFs = 0,sVr= 0,sCt = 'circle',sW = 0,sH = 0):
         self.name = sN
         self.x,self.y = sX,sY
         self.rad = sRad
@@ -50,6 +50,7 @@ class missile(projectile):
         self.colType = sCt
         self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
         self.w,self.h = sW,sH
+        self.r = self.w/2
         self.crush = False
 
         self.image = lo.loadImages.object_projectile_image['missile']

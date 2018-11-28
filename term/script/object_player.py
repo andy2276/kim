@@ -102,10 +102,10 @@ class Barrel:
     def handle_event(self,keys):
         if keys.type == SDL_MOUSEMOTION:
             self.mx, self.my = keys.x, lo.C_HIEGHT - keys.y
-        if keys.button == SDL_BUTTON_LEFT:
+        if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
             self.tx,self.ty =  keys.x, lo.C_HIEGHT - keys.y
             self.attack = True
-            print(self.tx,self.ty,self.rad)
+            #print(self.tx,self.ty,self.rad)
 
 
 
