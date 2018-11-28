@@ -23,6 +23,12 @@ class enemy:
         self.x, self.y = sX,sY
         self.visualR = w / 2
 
+        self.hp =100
+        self.damage = 10
+        self.attackCool = 1/120
+        self.attackDelay = 1.0
+        self.attackIdle = 0.0
+
         self.tx,self.ty = 0,0
 
         # this place is Collider
@@ -117,14 +123,22 @@ class enemy:
 
     def attack(self):
         if self.attackR >= self.dist:
-            #print("coWha!!")
+            enemy.setAttackRad(self)
             if self.safeR >= self.dist:
+                self.attack = False
                 self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
                 self.x -= math.cos(self.rad) * self.fwForce
                 self.y -= math.sin(self.rad) * self.fwForce
+                if self.safeR <= self.dist:
+                    self.attack = True
 
+            if self.attack:
+                #print(self.count,"cowha!!!")
+                pass
         return
 
+    def setAttackRad(self):
+        self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
 
 
 

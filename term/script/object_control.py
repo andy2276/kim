@@ -8,11 +8,13 @@ import object_projectile
 import random
 import collider
 
+MOVE_TIME = 1/60
 enemyList = []
 projectile = []
 player = None
 enemy = None
 
+test = 0.0
 
 def playerEnter(selectPlayer):
     global player
@@ -49,13 +51,23 @@ def enemyUpdate():
         e.update()
 
 def projectileUpdate():
-    global player, enemy, projectile
+    global player, enemy, projectile,test
     if player.barrel.attack:
         player.barrel.attack = False
         missiles=object_projectile.missile(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
                                            "player",300,20,"circle",10,10)
         missiles.collision = collider.Collision(missiles)
         projectile.append(missiles)
+    for e in enemyList:
+        if e.state == 'attack':
+            e.attackIdle += e.attackCool
+            if e.attackIdle >=e.attackDelay:
+                missiles = object_projectile.missile(e.name, e.x, e.y, e.rad,"enemy",
+                                                     100, 20, "circle", 10, 10)
+                missiles.collision = collider.Collision(missiles)
+                projectile.append(missiles)
+                e.attackIdle = 0.0
+
 
     for m in projectile:
         m.update()
@@ -64,7 +76,7 @@ def projectileUpdate():
             projectile.remove(m)
 
 
-    #test----------
+    #playerAttackToEnemy
     for m in projectile:
         for e in enemyList:
             if m.collision.isCollider(e):
@@ -72,8 +84,21 @@ def projectileUpdate():
                     enemyList.remove(e)
                     projectile.remove(m)
                     break#리스트 반복을 시키면 안된다.
+
+    #enemyAttackToPlayer
+    for m in projectile:
+        for e in enemyList:
+            if m.collision.isCollider(player):
+                if m.play == "enemy":
+                    player.hp -= e.damage
+                    projectile.remove(m)
+                    print(player.hp)
+                    break
+
+
+
     #test-----------
-def playerAttackEnemy():
+def attackOnject():
     global player, enemy, projectile
     for m in projectile:
         for e in enemyList:

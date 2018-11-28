@@ -21,17 +21,23 @@ class projectile:
         self.image = None
 
     def draw(self):
-        self.image.composite_draw(self.rad,"",self.x,self.y)
+        if self.play == "player":
+            self.image.composite_draw(self.rad,"",self.x,self.y)
+        else:
+            self.image.composite_draw(self.rad + math.pi, "", self.x, self.y)
         #print(self.x,self.y)
 
 
     def update(self):
         dist = MOVE_TIME*self.fwSpeed
-        self.x += math.cos(self.rad)*dist*-1
-        self.y += math.sin(self.rad)*dist*-1
+        if self.play == "player":
+            self.x += math.cos(self.rad)*dist*-1
+            self.y += math.sin(self.rad)*dist*-1
+        else:
+            self.x += math.cos(self.rad) * dist
+            self.y += math.sin(self.rad) * dist
         #print(self.x,self.y,self.rad)
-        if self.crush :
-            print("boom!!")
+
 
     def handle_event(self):
         pass
