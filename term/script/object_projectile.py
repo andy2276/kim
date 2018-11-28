@@ -13,17 +13,23 @@ class projectile:
         self.fwSpeed = 0.0
         self.visualR = 0
         self.collision = None
+        self.colBox = None
         self.coltype = 'circle'
         self.w,self.h = 0,0
         self.crush = False
 
+        self.image = None
+
     def draw(self):
-       lo.loadImages.object_projectile_image[self.name].draw(self.x,self.y)
+        self.image.composite_draw(self.rad,"",self.x,self.y)
+        print(self.x,self.y)
+
+
     def update(self):
         dist = MOVE_TIME*self.fwSpeed
-        self.x += math.cos(self.rad)*dist
-        self.y += math.sin(self.rad)*dist
-        print(self.x,self.y,self.rad)
+        self.x += math.cos(self.rad)*dist*-1
+        self.y += math.sin(self.rad)*dist*-1
+        #print(self.x,self.y,self.rad)
         if self.crush :
             print("boom!!")
 
@@ -39,10 +45,15 @@ class missile(projectile):
         self.play = sPlay
         self.fwSpeed = sFs
         self.visualR = sVr
+
         self.collision = None
-        self.coltype = sCt
+        self.colType = sCt
+        self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
         self.w,self.h = sW,sH
         self.crush = False
+
+        self.image = lo.loadImages.object_projectile_image['missile']
+
 
 
 

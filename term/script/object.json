@@ -9,7 +9,7 @@
 			"rad":90,
 			"rotateSpeed":0.1,
 			"fowardSpeed":10,
-			"backSpeed":5
+			"backSpeed":5,
 			"width":78,
 			"high":58
 		},

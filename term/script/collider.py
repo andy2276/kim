@@ -35,7 +35,8 @@ class Collision:
             self.target = object
             if colliderFlag:
                 self.collisionFlag = colliderFlag
-                self.colBox = self.target.colBox
+                if self.target.colBox != None:
+                    self.colBox = self.target.colBox
                 self.im = load_image("../res/object/character/po.png")
             if self.target.colType =='box':
                 self.vector = [[0,0],[0,0],[0,0],[0,0]]
@@ -163,7 +164,6 @@ def isInRange(tar,me,range,info):
             if info:
                 return tar.x,tar.y,math.sqrt(dist)
             return True
-
     else:
         if range**2 >= dist:
             if info:

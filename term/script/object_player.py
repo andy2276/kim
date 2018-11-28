@@ -104,7 +104,7 @@ class Barrel:
             self.mx, self.my = keys.x, lo.C_HIEGHT - keys.y
         if keys.button == SDL_BUTTON_LEFT:
             self.tx,self.ty =  keys.x, lo.C_HIEGHT - keys.y
-            self.attack == True
+            self.attack = True
             print(self.tx,self.ty,self.rad)
 
 

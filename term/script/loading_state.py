@@ -19,8 +19,13 @@ CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 
 class LoadingState:
     def __init__(self):
-        self.player = None
-        self.enemy = None
+        op = open("object.json")
+        datas = json.load(op)
+        self.player = datas["player"]
+        self.enemy = datas["enemy"]
+
+        op.close()
+
 
 class LoadingImage:
     def __init__(self):
@@ -40,7 +45,8 @@ class LoadingImage:
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
         }
         self.object_projectile_image = {
-            "missile_bagic":load_image('../res/object/projectile/missile_bagic.png')
+            "missile_bagic":load_image('../res/object/projectile/missile_bagic.png'),
+            "missile":load_image('../res/object/projectile/missile.png'),
         }
         self.imageCount = 7
 
@@ -53,13 +59,6 @@ def enter():
     open_canvas(C_WIDTH, C_HIEGHT)
     loadImages = LoadingImage()
     loadState = LoadingState()
-
-    op = open("object.json")
-    datas = json.load(op)
-    loadState.player = datas["player"]
-    loadState.enemy = datas["enemy"]
-
-    op.close()
 
     loadCount =0
 
