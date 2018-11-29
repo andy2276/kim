@@ -147,10 +147,9 @@ class enemy:
             print("blocked!!!")
 
     def anotherPoint(self,nrad):
-        if self.dir == 1:
-            self.tx2 = math.cos(nrad) - math.sin(nrad)
-            self.ty2 = math.sin(nrad) + math.cos(nrad)
-        else:
+        self.tx2 = math.cos(nrad) - math.sin(nrad)
+        self.ty2 = math.sin(nrad) + math.cos(nrad)
+
 
 
 

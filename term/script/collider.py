@@ -28,36 +28,22 @@ def isInRange(tar,me,range,info):
     dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
     if range == 0:
         if (tar.visualR + me.visualR)**2 <= dist:
-<<<<<<< HEAD
-            if info == 1:
-                return tar.x, tar.y, math.sqrt(dist)
-            return True
-    else:
-        if range**2 >= dist:
-            if info == 1:
-                return tar.x, tar.y, math.sqrt(dist)
-=======
-            if info:
-                return tar.x,tar.y,math.sqrt(dist)
-            return True
-    else:
-        if range**2 >= dist:
-            if info:
-                return tar.x,tar.y,math.sqrt(dist)
->>>>>>> parent of 088aff0... what the non-iterable boolen?!
-            return True
 
+            if info == 1:
+                return tar.x, tar.y, math.sqrt(dist)
+            return True
+    else:
+        if range**2 >= dist:
+            if info:
+                return tar.x,tar.y,math.sqrt(dist)
+            return True
     return False
-<<<<<<< HEAD
+
 def isBlocked(tar,me):
     if me.collision.isCollider(tar):
         dx , dy , dist = isInRange(tar,me,0,1)
         nrad = math.asin(me.visualR/dist)
         print(nrad)
-
-=======
->>>>>>> parent of 088aff0... what the non-iterable boolen?!
-
 
 
 
