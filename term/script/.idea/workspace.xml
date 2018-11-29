@@ -13,6 +13,54 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/loading_state.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="994">
+                    <caret line="57" column="41" lean-forward="true" selection-start-line="57" selection-start-column="41" selection-end-line="57" selection-end-column="41" />
+                    <folding>
+                      <element signature="e#554#574#0" expanded="true" />
+                      <marker date="1543334476435" expanded="true" signature="931:2033" ph="..." />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/object_control.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="323">
+                    <caret line="56" column="33" lean-forward="true" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
+                    <folding>
+                      <element signature="e#0#20#0" expanded="true" />
+                      <marker date="1543511288729" expanded="true" signature="621:1019" ph="..." />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/object_player.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1425">
+                    <caret line="92" column="33" lean-forward="true" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
   <component name="FUSProjectUsageTrigger">
     <session id="1586185706">
       <usages-collector id="statistics.lifecycle.project">
@@ -89,7 +137,11 @@
     <session id="-1850358084">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+<<<<<<< HEAD
           <entry key="project.closed" value="31" />
+=======
+          <entry key="project.closed" value="29" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="8" />
@@ -102,22 +154,38 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+<<<<<<< HEAD
           <entry key="py" value="107" />
+=======
+          <entry key="py" value="102" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+<<<<<<< HEAD
           <entry key="Python" value="107" />
+=======
+          <entry key="Python" value="102" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="py" value="24935" />
+=======
+          <entry key="py" value="24413" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="Python" value="24935" />
+=======
+          <entry key="Python" value="24413" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
         </counts>
       </usages-collector>
     </session>
@@ -131,6 +199,19 @@
               <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#21#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/collider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <marker date="1543508701114" expanded="true" signature="884:888" ph="..." />
+                <marker date="1543508701114" expanded="true" signature="2029:2034" ph="..." />
               </folding>
             </state>
           </provider>
@@ -177,6 +258,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/collider.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -191,6 +273,8 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/delta_time.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -203,11 +287,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/object_enemy.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="2147">
               <caret line="117" column="39" lean-forward="true" selection-start-line="117" selection-start-column="39" selection-end-line="117" selection-end-column="39" />
+=======
+            <state relative-caret-position="402">
+              <caret line="150" column="23" lean-forward="true" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="23" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -258,9 +347,15 @@
         <option value="$PROJECT_DIR$/object_structure.py" />
         <option value="$PROJECT_DIR$/object_projectile.py" />
         <option value="$PROJECT_DIR$/lab.py" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/object_enemy.py" />
         <option value="$PROJECT_DIR$/collider.py" />
         <option value="$PROJECT_DIR$/object_control.py" />
+=======
+        <option value="$PROJECT_DIR$/collider.py" />
+        <option value="$PROJECT_DIR$/object_control.py" />
+        <option value="$PROJECT_DIR$/object_enemy.py" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
       </list>
     </option>
   </component>
@@ -468,14 +563,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="47" y="6" width="737" height="874" extended-state="0" />
+    <frame x="47" y="6" width="737" height="874" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20886981" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32947975" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.28552097" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28552097" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39944905" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -627,7 +723,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="114">
+=======
+        <state relative-caret-position="190">
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#21#41#0" expanded="true" />
@@ -637,8 +737,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/object_projectile.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="931">
           <caret line="51" column="26" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+=======
+        <state relative-caret-position="958">
+          <caret line="51" column="26" lean-forward="true" selection-start-line="51" selection-start-column="26" selection-end-line="51" selection-end-column="26" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <marker date="1543431678114" expanded="true" signature="666:667" ph="..." />
@@ -649,6 +754,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/object_structure.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -656,16 +762,35 @@
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <marker date="1543487184251" expanded="true" signature="93:98" ph="..." />
+=======
+    <entry file="file://$PROJECT_DIR$/collider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <marker date="1543508701114" expanded="true" signature="884:888" ph="..." />
+            <marker date="1543508701114" expanded="true" signature="2029:2034" ph="..." />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/lab.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="3" selection-start-line="3" selection-end-line="3" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/loading_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="994">
+          <caret line="57" column="41" lean-forward="true" selection-start-line="57" selection-start-column="41" selection-end-line="57" selection-end-column="41" />
+          <folding>
+            <element signature="e#554#574#0" expanded="true" />
+            <marker date="1543334476435" expanded="true" signature="931:2033" ph="..." />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           </folding>
         </state>
       </provider>
@@ -680,6 +805,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/object_enemy.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2147">
@@ -691,6 +817,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/loading_state.py">
+=======
+    <entry file="file://$PROJECT_DIR$/lab.py">
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1007">
           <caret line="57" column="41" lean-forward="true" selection-start-line="57" selection-start-column="41" selection-end-line="57" selection-end-column="41" />
@@ -701,25 +830,44 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/object_player.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1710">
           <caret line="92" column="33" lean-forward="true" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+=======
+    <entry file="file://$PROJECT_DIR$/delta_time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding>
+            <marker date="1543250284057" expanded="true" signature="142:143" ph="..." />
+          </folding>
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/collider.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="387">
           <caret line="38" selection-start-line="38" selection-end-line="38" />
           <folding>
             <marker date="1543515418206" expanded="true" signature="921:1073" ph="..." />
             <marker date="1543515418206" expanded="true" signature="1069:1073" ph="..." />
             <marker date="1543515418206" expanded="true" signature="2214:2219" ph="..." />
+=======
+        <state relative-caret-position="323">
+          <caret line="56" column="33" lean-forward="true" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+            <marker date="1543511288729" expanded="true" signature="621:1019" ph="..." />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/object_control.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
@@ -727,7 +875,22 @@
           <folding>
             <element signature="e#0#20#0" expanded="true" />
             <marker date="1543515590860" expanded="true" signature="621:1020" ph="..." />
+=======
+    <entry file="file://$PROJECT_DIR$/object_enemy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="150" column="23" lean-forward="true" selection-start-line="150" selection-start-column="23" selection-end-line="150" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+>>>>>>> parent of 088aff0... what the non-iterable boolen?!
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/object_player.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="92" column="33" lean-forward="true" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
         </state>
       </provider>
     </entry>
