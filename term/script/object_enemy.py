@@ -32,7 +32,7 @@ class enemy:
         self.tx,self.ty = 0,0
         self.tx2,self.ty2 = 0,0
         self.dir = 0
-        self.blocked = False
+        self.blocked = 0
 
         # this place is Collider
         self.collision = None
@@ -143,14 +143,16 @@ class enemy:
     def setAttackRad(self):
         self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
         self.dir = 1 if self.x*self.ty - self.tx*self.y > 0 else -1
-        if self.blocked:
-            print("blocked!!!")
+        if self.blocked == 1:
+            print("blocked!!!",self.x,self.y,self.tx2,self.ty2)
 
     def anotherPoint(self,nrad):
-        if self.dir == 1:
-            self.tx2 = math.cos(nrad) - math.sin(nrad)
-            self.ty2 = math.sin(nrad) + math.cos(nrad)
-        else:
+        self.tx2 = math.cos(nrad) - math.sin(nrad)
+        self.ty2 = math.sin(nrad) + math.cos(nrad)
+
+        self.tx2 += self.x
+        self.ty2 += self.y
+
 
 
 

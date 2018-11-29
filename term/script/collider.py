@@ -28,15 +28,21 @@ def isInRange(tar,me,range,info):
     dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
     if range == 0:
         if (tar.visualR + me.visualR)**2 <= dist:
-            if info:
+            if info == True:
                 return tar.x,tar.y,math.sqrt(dist)
             return True
     else:
         if range**2 >= dist:
-            if info:
+            if info == True:
                 return tar.x,tar.y,math.sqrt(dist)
             return True
     return False
+def isBlocked(tar,me):
+    if me.collision.isCollider(tar):
+        dx , dy , dist = isInRange(tar,me,0,False)
+        nrad = math.asin(me.visualR/dist)
+        print(nrad)
+
 
 
 
@@ -187,6 +193,8 @@ class Collision:
 
     def set_tempCollision(self,obj):
         self.target = obj
+
+
 
 
 

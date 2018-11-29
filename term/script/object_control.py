@@ -26,7 +26,7 @@ def playerEnter(selectPlayer):
 def enemyEnter(selectEnemy):
     global enemy,enemyList
     p = lo.loadState.enemy[selectEnemy]
-    for i in range(3):
+    for i in range(10):
         rd = random.randint(200, 500)
         enemy = object_enemy.enemy(p["name"], p["x"] + rd, p["y"] + rd, p['rad'], p["rotateForce"], p['SpeedForce'],
                                    p["ai"], p["width"], p['high'])
@@ -50,14 +50,7 @@ def enemyUpdate():
             #e.collision.isCollider(player)
         for ae in enemyList:
             if e.count != ae.count:
-                if e.collision.isCollider(ae):
-                    e.blocked = True
-                    tx,ty,dist=collider.isInRange(ae,e,0,True)
-                    nrad = math.asin(e.visualR/dist)
-                    print(2*nrad)
-
-
-
+                collider.isBlocked(ae,e)
 
         e.update()
 
