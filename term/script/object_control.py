@@ -51,9 +51,11 @@ def enemyUpdate():
         for ae in enemyList:
             if e.count != ae.count:
                 if e.collision.isCollider(ae):
+                    e.blocked = True
                     tx,ty,dist=collider.isInRange(ae,e,0,True)
                     nrad = math.asin(e.visualR/dist)
-                    print(nrad)
+                    print(2*nrad)
+
 
 
 
