@@ -108,7 +108,7 @@ def attackOnject():
 
 def enter():
     global player,enemy
-    playerEnter(1)
+    playerEnter(0)
     enemyEnter(0)
 
 def exit():
