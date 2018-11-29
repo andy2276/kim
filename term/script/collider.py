@@ -4,7 +4,7 @@ import math
 
 SEARCH_RANGE = 300
 
-colliderFlag = True
+colliderFlag = False
 
 
 # v2    v1
@@ -37,6 +37,9 @@ def isInRange(tar,me,range,info):
                 return tar.x,tar.y,math.sqrt(dist)
             return True
     return False
+
+
+
 
 class Collision:
     def __init__(self,object):
@@ -76,10 +79,12 @@ class Collision:
                 for v in range(4):
                     self.target.crush = ptInArea(other.collision.vector[v][0],
                                                  other.collision.vector[v][1], self.vector)
-                    if self.target.crush == True: break
+                    if self.target.crush == True:
+                        #print("box crush!!")
+                        break
+
                 if self.target.crush == False:
                     self.target.crush = ptInArea(other.x,other.y,self.vector)
-
 
                 if colliderFlag:
                     if self.target.crush:
@@ -91,8 +96,8 @@ class Collision:
                 for v in range(4):
                     eV.append(temp[v])
 
-                if ptInArea(other.x,other.y,eV):
-                    print("my",self.target.colType,"you",other.colType)
+                #if ptInArea(other.x,other.y,eV):
+                    #print(self.target.name,"my",self.target.colType,"you",other.colType)
 
                 return self.target.crush
         elif self.target.colType == 'circle':
@@ -103,7 +108,7 @@ class Collision:
                     eV.append(temp[v])
                 self.target.crush = ptInArea(self.target.x,self.target.y,eV)
                 #if self.target.crush :
-                    #print("my", self.target.colType, "you", other.colType)
+                    #print(self.target.crush, self.target.name, "my", self.target.colType, "you", other.colType)
                 return ptInArea(self.target.x,self.target.y,eV)
             elif other.colType == 'circle':
                 dist = (self.target.x - other.x) ** 2 + (self.target.y - other.y) ** 2
@@ -182,6 +187,9 @@ class Collision:
 
     def set_tempCollision(self,obj):
         self.target = obj
+
+
+
 
 #def isSearchRange(player, enemy,want):
  #   #return true, UnI - enemy.searchR return false only false

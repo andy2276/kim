@@ -30,6 +30,8 @@ class enemy:
         self.attackIdle = 0.0
 
         self.tx,self.ty = 0,0
+        self.tx2,self.ty2 = 0,0
+        self.dir = 0
 
         # this place is Collider
         self.collision = None
@@ -66,8 +68,8 @@ class enemy:
 
         #self.collision.draw()
     def update(self):
-        if self.crush:
-            print("boom!!burn and burn")
+
+
         if self.state == 'stay':
             enemy.stay(self)
         elif self.state == 'recon':

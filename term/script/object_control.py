@@ -26,7 +26,7 @@ def playerEnter(selectPlayer):
 def enemyEnter(selectEnemy):
     global enemy,enemyList
     p = lo.loadState.enemy[selectEnemy]
-    for i in range(10):
+    for i in range(3):
         rd = random.randint(200, 500)
         enemy = object_enemy.enemy(p["name"], p["x"] + rd, p["y"] + rd, p['rad'], p["rotateForce"], p['SpeedForce'],
                                    p["ai"], p["width"], p['high'])
@@ -43,24 +43,36 @@ def enemyUpdate():
             if e.attack:
                 e.tx, e.ty, e.dist = collider.isInRange(player, e, e.attackR, True)
                 e.state = 'attack'
-                #print("???!!!!!")
+
             else:
                 e.tx,e.ty,e.dist = collider.isInRange(player,e,e.searchR,True)
                 e.state = 'found'
             #e.collision.isCollider(player)
+        for ae in enemyList:
+            if e.count != ae.count:
+                if e.collision.isCollider(ae):
+                    tx,ty,dist=collider.isInRange(ae,e,0,True)
+                    nrad = math.asin(e.visualR/dist)
+                    print(nrad)
+
+
+
         e.update()
+
+
 
 def projectileUpdate():
     global player, enemy, projectile,test
     if player.barrel.attack:
         player.barrel.attack = False
         missiles=object_projectile.missile(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
-                                           "player",300,20,"circle",10,10)
+                                           "player",300,5,"circle",10,10)
         missiles.collision = collider.Collision(missiles)
         projectile.append(missiles)
     for e in enemyList:
         if e.state == 'attack':
             e.attackIdle += e.attackCool
+            #enmey attack delay
             if e.attackIdle >=e.attackDelay:
                 missiles = object_projectile.missile(e.name, e.x, e.y, e.rad,"enemy",
                                                      100, 20, "circle", 10, 10)
@@ -95,6 +107,11 @@ def projectileUpdate():
                     print(player.hp)
                     break
 
+    for e in enemyList:
+        for a in enemyList:
+            if e.count != a.count:
+                if e.collision.isCollider(a):
+                    collider.isInRange(e,a,0,True)
 
 
     #test-----------
@@ -108,7 +125,7 @@ def attackOnject():
 
 def enter():
     global player,enemy
-    playerEnter(0)
+    playerEnter(1)
     enemyEnter(0)
 
 def exit():

@@ -19,9 +19,9 @@
 			"y":0,
 			"hp":10000,
 			"rad":90,
-			"rotateSpeed":2,
-			"fowardSpeed":50,
-			"backSpeed":25,
+			"rotateSpeed":5,
+			"fowardSpeed":100,
+			"backSpeed":50,
 			"width":78,
 			"high":58
 		}
