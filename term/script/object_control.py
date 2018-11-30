@@ -26,16 +26,22 @@ def playerEnter(selectPlayer):
 def enemyEnter(selectEnemy):
     global enemy,enemyList
     p = lo.loadState.enemy[selectEnemy]
-    for i in range(10):
-        rd = random.randint(200, 500)
-        enemy = object_enemy.enemy(p["name"], p["x"] + rd, p["y"] + rd, p['rad'], p["rotateForce"], p['SpeedForce'],
+
+    plus = 10
+
+    for i in range(plus):
+        rd = random.randint(1, plus)
+        print(i)
+        enemy = object_enemy.enemy(p["name"], p["x"] + 200, p["y"] + (i*50)+20, p['rad'], p["rotateForce"], p['SpeedForce'],
                                    p["ai"], p["width"], p['high'])
+        plus += 50
         enemy.collision = collider.Collision(enemy)
         enemyList.append(enemy)
 
 def enemyUpdate():
     global player, enemy
     for e in enemyList:
+
         e.found = collider.isInRange(player,e,e.searchR,False)
         #print(e.found)
         if e.found:
@@ -51,10 +57,11 @@ def enemyUpdate():
         for ae in enemyList:
             if e.count != ae.count:
                 if e.collision.isCollider(ae):
-                    e.blocked = True
-                    tx,ty,dist=collider.isInRange(ae,e,0,True)
-                    nrad = math.asin(e.visualR/dist)
-                    print(2*nrad)
+                    e.blocked = collider.isBlocked(ae,e)
+                    dist = math.sqrt((ae.x - e.x) ** 2 + (ae.y - e.y) ** 2)
+                    tx,ty,dist = collider.isInRange(ae,e,0,True)
+                    #print(math.asin(e.visualR/dist))
+
 
 
 
@@ -109,11 +116,27 @@ def projectileUpdate():
                     print(player.hp)
                     break
 
+
+
+def checkOverlap():
+    global player, enemy, projectile
+
     for e in enemyList:
         for a in enemyList:
-            if e.count != a.count:
-                if e.collision.isCollider(a):
-                    collider.isInRange(e,a,0,True)
+            if e != a:
+                if collider.isInRange(a,e,e.visualR+10,False):
+                    dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
+                    if e.visualR <= dist:
+                        nrad = math.asin(e.visualR/dist)
+
+
+
+
+                        print(nrad)
+
+
+
+
 
 
     #test-----------
@@ -146,6 +169,7 @@ def draw():
 
 def update():
     global player, enemy, projectile
+    checkOverlap()
     player.update()
     projectileUpdate()
     enemyUpdate()

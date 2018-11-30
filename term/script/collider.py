@@ -25,11 +25,12 @@ def ptInArea(x, y, pts):
     return inside;
 
 def isInRange(tar,me,range,info):
+    #여기부분을 다시고치는데, 다른 자료는 건들지 않게 만들자.
     dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
     if range == 0:
         if (tar.visualR + me.visualR)**2 <= dist:
 
-            if info == 1:
+            if info:
                 return tar.x, tar.y, math.sqrt(dist)
             return True
     else:
@@ -37,13 +38,13 @@ def isInRange(tar,me,range,info):
             if info:
                 return tar.x,tar.y,math.sqrt(dist)
             return True
+    if info:
+        return tar.x, tar.y, math.sqrt(dist)
     return False
 
 def isBlocked(tar,me):
-    if me.collision.isCollider(tar):
-        dx , dy , dist = isInRange(tar,me,0,1)
-        nrad = math.asin(me.visualR/dist)
-        print(nrad)
+    me.blocked = me.collision.isCollider(tar)
+
 
 
 
