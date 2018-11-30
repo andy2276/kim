@@ -69,8 +69,6 @@ class enemy:
 
         #self.collision.draw()
     def update(self):
-
-
         if self.state == 'stay':
             enemy.stay(self)
         elif self.state == 'recon':
@@ -130,11 +128,11 @@ class enemy:
             if self.safeR >= self.dist:
                 self.attack = False
                 enemy.setAttackRad(self)
+                #self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
                 self.x -= math.cos(self.rad) * self.fwForce
                 self.y -= math.sin(self.rad) * self.fwForce
                 if self.safeR <= self.dist:
                     self.attack = True
-
             if self.attack:
                 #print(self.count,"cowha!!!")
                 pass
@@ -144,11 +142,15 @@ class enemy:
         #print("제발!!!!!!!",self.blocked)
         if self.blocked:
             self.rad = math.atan2(self.ty2 - self.y, self.tx2 - self.x)
+            if (self.x*self.ty2 - self.y*self.tx2) > 0: self.dir = 1
+            else: self.dir = -1
             print("blocked!!!")
         else:
             #print("mytarget")
             self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
-        self.dir = 1 if self.x*self.ty - self.tx*self.y > 0 else -1
+            if (self.x*self.ty - self.y*self.tx) > 0: self.dir = 1
+            else: self.dir = -1
+
 
 
 

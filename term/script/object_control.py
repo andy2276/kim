@@ -118,30 +118,40 @@ def projectileUpdate():
 def checkOverlap():
     global player, enemy, projectile,test
 
-    if test == None:
-        test = load_image('../res/object/character/po.png')
-    for e in enemyList:
 
+    for e in enemyList:
         for a in enemyList:
             if e != a:
-                if collider.isInRange(a,e,e.visualR+10,False):
-                    a.blocked = True
-
+                if collider.isInRange(a,e,e.visualR+1,False):
                     dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
-                    if e.visualR <= dist:
-
+                    if e.visualR+1 <= dist:
+                        a.blocked = True
                         #print(e.blocked)
                         nrad = math.asin(e.visualR/dist)
-
-                        e.tx2 = math.cos(2*nrad)+e.x
-                        e.ty2 = math.sin(2*nrad)+e.y
-
-
+                        e.tx2 = (math.cos(2*nrad)+e.x)*e.visualR
+                        e.ty2 = (math.sin(2*nrad)+e.y)*e.visualR
+                    else:
+                        nrad = math.atan2(a.y - e.y, a.x - e.x)
+                        e.x -= math.cos(nrad) * e.fwForce
+                        e.y -= math.sin(nrad) * e.fwForce
                 else:
                     e.blocked = False
+    # for e in enemyList:
+    #     for a in enemyList:
+    #         dist = math.sqrt((e.x - a.x) ** 2 + (e.y - a.y) ** 2)
+    #         if collider.isInRange(a,e,0,False):
+    #             dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
+    #             bt = dist- (e.visualR+a.visualR)/2
+    #             nrad = math.atan2(a.y - e.y, a.x - e.x)
+    #             # e.x -= math.cos(nrad) * e.fwForce
+    #             # e.y -= math.sin(nrad) * e.fwForce
+    #             #
+    #             # a.x -= math.cos(nrad) * a.fwForce
+    #             # a.y -= math.sin(nrad) * a.fwForce
 
-    for e in enemyList:
-        print(e.blocked)
+
+
+
 
 
 
@@ -164,11 +174,15 @@ def exit():
 	pass
 
 def draw():
-    global player,enemy,projectile
+    global player,enemy,projectile,test
+    if test == None:
+        test = load_image('../res/object/character/po.png')
     clear_canvas()
     player.draw()
+
     for e in enemyList:
         e.draw()
+        test.draw(e.tx2,e.ty2)
 
     for m in projectile:
         m.draw()
