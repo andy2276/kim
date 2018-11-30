@@ -14,7 +14,7 @@ projectile = []
 player = None
 enemy = None
 
-test = 0.0
+test = None
 
 def playerEnter(selectPlayer):
     global player
@@ -27,19 +27,20 @@ def enemyEnter(selectEnemy):
     global enemy,enemyList
     p = lo.loadState.enemy[selectEnemy]
 
-    plus = 10
+    plus = 5
 
     for i in range(plus):
         rd = random.randint(1, plus)
         print(i)
-        enemy = object_enemy.enemy(p["name"], p["x"] + 200, p["y"] + (i*50)+20, p['rad'], p["rotateForce"], p['SpeedForce'],
+        enemy = object_enemy.enemy(p["name"], p["x"] + (i*40)+200, p["y"] + (i*50)+200, p['rad'], p["rotateForce"], p['SpeedForce'],
                                    p["ai"], p["width"], p['high'])
         plus += 50
         enemy.collision = collider.Collision(enemy)
         enemyList.append(enemy)
 
 def enemyUpdate():
-    global player, enemy
+    global player, enemy,test
+
     for e in enemyList:
 
         e.found = collider.isInRange(player,e,e.searchR,False)
@@ -119,20 +120,24 @@ def projectileUpdate():
 
 
 def checkOverlap():
-    global player, enemy, projectile
-
+    global player, enemy, projectile,test
+    if test == None:
+        test = load_image('../res/object/character/po.png')
     for e in enemyList:
         for a in enemyList:
             if e != a:
                 if collider.isInRange(a,e,e.visualR+10,False):
+                    e.fwForce = 0
                     dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
                     if e.visualR <= dist:
                         nrad = math.asin(e.visualR/dist)
+                        e.tx2 = math.cos(2*nrad)+e.x
+                        e.ty2 = math.sin(2*nrad)+e.y
+
+                        test.draw(e.tx2,e.ty2)
 
 
-
-
-                        print(nrad)
+                        print(math.degrees(nrad),e.x,e.y," , ",e.tx2,e.ty2)
 
 
 
