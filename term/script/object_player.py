@@ -118,8 +118,6 @@ class Player:
         self.x, self.y = sX, sY
         self.visualR = h / 2
 
-
-
         #--------------------------------
         self.x = get_canvas_width() // 2
         self.y = get_canvas_height() // 2

@@ -21,7 +21,7 @@ class enemy:
         self.name = sName
         self.play = 'enemy'
         self.x, self.y = sX,sY
-        self.visualR = w / 2
+        self.visualR = w / 2 +5
 
         self.hp =100
         self.damage = 10
