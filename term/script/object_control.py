@@ -27,11 +27,11 @@ def enemyEnter(selectEnemy):
     global enemy,enemyList
     p = lo.loadState.enemy[selectEnemy]
 
-    plus = 5
+    plus = 10
 
     for i in range(plus):
         rd = random.randint(1, plus)
-        print(i)
+        #print(i)
         enemy = object_enemy.enemy(p["name"], p["x"] + (i*40)+200, p["y"] + (i*50)+200, p['rad'], p["rotateForce"], p['SpeedForce'],
                                    p["ai"], p["width"], p['high'])
         plus += 50
@@ -42,7 +42,7 @@ def enemyUpdate():
     global player, enemy,test
 
     for e in enemyList:
-
+        #print(e.state,e.blocked)
         e.found = collider.isInRange(player,e,e.searchR,False)
         #print(e.found)
         if e.found:
@@ -62,11 +62,7 @@ def enemyUpdate():
                     dist = math.sqrt((ae.x - e.x) ** 2 + (ae.y - e.y) ** 2)
                     tx,ty,dist = collider.isInRange(ae,e,0,True)
                     #print(math.asin(e.visualR/dist))
-
-
-
-
-
+        checkOverlap()
         e.update()
 
 
@@ -114,32 +110,38 @@ def projectileUpdate():
                 if m.play == "enemy":
                     player.hp -= e.damage
                     projectile.remove(m)
-                    print(player.hp)
+                    #print(player.hp)
                     break
 
 
 
 def checkOverlap():
     global player, enemy, projectile,test
+
     if test == None:
         test = load_image('../res/object/character/po.png')
     for e in enemyList:
+
         for a in enemyList:
             if e != a:
                 if collider.isInRange(a,e,e.visualR+10,False):
-                    e.fwForce = 0
+                    a.blocked = True
+
                     dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
                     if e.visualR <= dist:
+
+                        #print(e.blocked)
                         nrad = math.asin(e.visualR/dist)
+
                         e.tx2 = math.cos(2*nrad)+e.x
                         e.ty2 = math.sin(2*nrad)+e.y
 
-                        test.draw(e.tx2,e.ty2)
 
+                else:
+                    e.blocked = False
 
-                        print(math.degrees(nrad),e.x,e.y," , ",e.tx2,e.ty2)
-
-
+    for e in enemyList:
+        print(e.blocked)
 
 
 
@@ -167,6 +169,7 @@ def draw():
     player.draw()
     for e in enemyList:
         e.draw()
+
     for m in projectile:
         m.draw()
     update_canvas()
@@ -174,7 +177,7 @@ def draw():
 
 def update():
     global player, enemy, projectile
-    checkOverlap()
+
     player.update()
     projectileUpdate()
     enemyUpdate()

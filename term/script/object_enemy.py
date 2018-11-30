@@ -101,7 +101,7 @@ class enemy:
             self.state = 'stay'
             return
         if self.found :
-            print('found you!')
+            print('found you!!!!!!!!!!')
             self.state = 'found'
             return
 
@@ -129,7 +129,7 @@ class enemy:
             enemy.setAttackRad(self)
             if self.safeR >= self.dist:
                 self.attack = False
-                self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
+                enemy.setAttackRad(self)
                 self.x -= math.cos(self.rad) * self.fwForce
                 self.y -= math.sin(self.rad) * self.fwForce
                 if self.safeR <= self.dist:
@@ -141,10 +141,16 @@ class enemy:
         return
 
     def setAttackRad(self):
-        self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
-        self.dir = 1 if self.x*self.ty - self.tx*self.y > 0 else -1
+        #print("제발!!!!!!!",self.blocked)
         if self.blocked:
+            self.rad = math.atan2(self.ty2 - self.y, self.tx2 - self.x)
             print("blocked!!!")
+        else:
+            #print("mytarget")
+            self.rad = math.atan2(self.ty - self.y, self.tx - self.x)
+        self.dir = 1 if self.x*self.ty - self.tx*self.y > 0 else -1
+
+
 
     def anotherPoint(self,nrad):
         self.tx2 = math.cos(nrad) - math.sin(nrad)
