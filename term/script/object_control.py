@@ -71,7 +71,7 @@ def projectileUpdate():
     global player, enemy, projectile,test
     if player.barrel.attack:
         player.barrel.attack = False
-        missiles=object_projectile.missile(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
+        missiles=object_projectile.cannonball(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
                                            "player",300,5,"circle",10,10)
         missiles.collision = collider.Collision(missiles)
         projectile.append(missiles)
@@ -122,9 +122,9 @@ def checkOverlap():
     for e in enemyList:
         for a in enemyList:
             if e != a:
-                if collider.isInRange(a,e,e.visualR+1,False):
+                if collider.isInRange(a,e,e.visualR+5,False):
                     dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
-                    if e.visualR+1 <= dist:
+                    if e.visualR+5 <= dist:
                         a.blocked = True
                         #print(e.blocked)
                         nrad = math.asin(e.visualR/dist)

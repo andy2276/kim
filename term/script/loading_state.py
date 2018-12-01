@@ -45,8 +45,13 @@ class LoadingImage:
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
         }
         self.object_projectile_image = {
-            "missile_bagic":load_image('../res/object/projectile/missile_bagic.png'),
-            "missile":load_image('../res/object/projectile/missile.png'),
+            "cannonball":load_image('../res/object/projectile/cannonball.png'),
+            "missile":load_image('../res/object/projectile/missile.png')
+        }
+        self.object_structure_image = {
+        }
+        self.map_terrain_image = {
+
         }
         self.imageCount = 7
 
@@ -84,10 +89,11 @@ def draw():
 
 def update():
     global loadImages, loadCount
-    loadCount += 5 if loadCount <=42 else 0
-
+    loadCount += 5 if loadCount <=47 else 0
+    print(loadCount)
+    delay(1/60)
     handle_events()
-    if loadCount <=42:
+    if loadCount >=47:
         gf.push_state(object_control)
 
 

@@ -18,7 +18,8 @@ class structure:
         self.visualR = self.r
 
     def draw(self):
-        pass
+        lo.loadImages.
+
     def update(self):
         pass
     def handle_event(self):
