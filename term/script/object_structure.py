@@ -10,15 +10,16 @@ class structure:
         self.x,self.y = sX,sY
         self.w,self.h = sW,sH
         self.play = sP
-        self.imageNum = sImgN
+        self.imageNumX = sImgN
+        self.imageNumY = sImgN
         self.collision = None
         self.colType = sColType
         self.crush = False
         self.r = sR
         self.visualR = self.r
 
-    def draw(self):
-        lo.loadImages.
+    # def draw(self):
+    #     lo.loadImages.
 
     def update(self):
         pass

@@ -7,11 +7,12 @@
 #//--------/seventh,eighth,ninth : define/---------------------------------//
 #//---------------------/Notice End/-----------------------------------------//
 
+#blocks 15X15!!
 
 from pico2d import *
 import game_framework as gf
 import json
-
+import delta_time
 import object_control
 
 C_WIDTH, C_HIEGHT = 1200,800
@@ -48,7 +49,7 @@ class LoadingImage:
             "cannonball":load_image('../res/object/projectile/cannonball.png'),
             "missile":load_image('../res/object/projectile/missile.png')
         }
-        self.object_structure_image = {
+        self.object_structure_image = {"blocks":load_image("../res/object/structure/structure_block.png")
         }
         self.map_terrain_image = {
 
@@ -58,12 +59,21 @@ class LoadingImage:
 loadImages = None
 loadState = None
 loadCount = 0
+loadBlocks = []
 
 def enter():
-    global loadImages,loadState,loadCount
+    global loadImages,loadState,loadCount,loadBlocks
     open_canvas(C_WIDTH, C_HIEGHT)
     loadImages = LoadingImage()
     loadState = LoadingState()
+
+    initBox = []
+    for y in range(15):
+        for x in range(15):
+            initBox.append((loadImages.object_structure_image["blocks"]).clip_image(10*x,10*y,10,10))
+
+        loadBlocks.append(initBox)
+        initBox = []
 
     loadCount =0
 
@@ -84,13 +94,31 @@ def draw():
     update_canvas()
 
 
-
-
-
 def update():
-    global loadImages, loadCount
+    global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks
     loadCount += 5 if loadCount <=47 else 0
-    print(loadCount)
+
+   #  #----------------------
+   #  if loadImages == None:
+   #      loadImages = LoadingImage()
+   #
+   #      loadCount = curTime - allTime
+   #      allTime = curTime
+   #  if loadState == None:
+   #      loadState = LoadingState()
+   #
+   #
+   #
+   #
+   #
+   #
+   #
+   #
+   #
+   #
+   #
+   #
+   # #---------------------
     delay(1/60)
     handle_events()
     if loadCount >=47:

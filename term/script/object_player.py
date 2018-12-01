@@ -1,7 +1,8 @@
 from pico2d import *
 import math
 import loading_state as lo
-MOVE_TIME = 1/60
+
+MOVE_TIME = 0
 BARREL_GUNPORT = 106
 
 
@@ -13,7 +14,7 @@ class Body:
         self.x ,self.y =px,py
 
         self.rotSpeed= prs/10 * math.pi/60
-        self.fwSpeed = pfs*MOVE_TIME*2
+        self.fwSpeed = pfs*MOVE_TIME
         self.bkSpeed = pbs*MOVE_TIME
         #print(self.fwSpeed,self.bkSpeed)
         self.rad = prad

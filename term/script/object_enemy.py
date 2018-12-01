@@ -4,7 +4,8 @@ import math
 import random
 import loading_state as lo
 
-MOVE_TIME = 1/60
+
+MOVE_TIME = 0
 MOVE_FREEZE = 1
 
 

@@ -7,8 +7,9 @@ import object_enemy
 import object_projectile
 import random
 import collider
+import delta_time
+MOVE_TIME = delta_time.deltaTime()
 
-MOVE_TIME = 1/60
 enemyList = []
 projectile = []
 player = None
@@ -17,16 +18,19 @@ enemy = None
 test = None
 
 def playerEnter(selectPlayer):
-    global player
+    global player,MOVE_TIME
     p = lo.loadState.player[selectPlayer]
+    object_player.MOVE_TIME = MOVE_TIME
     player = object_player.Player(p["name"], p['x'], p['y'], p['hp'], p['rad'], p['rotateSpeed'], p['fowardSpeed'],
                                   p['backSpeed'], p['width'], p['high'])
     player.collision = collider.Collision(player)
 
-def enemyEnter(selectEnemy):
-    global enemy,enemyList
-    p = lo.loadState.enemy[selectEnemy]
 
+def enemyEnter(selectEnemy):
+    global enemy,enemyList,MOVE_TIME
+
+    p = lo.loadState.enemy[selectEnemy]
+    object_enemy.MOVE_TIME = MOVE_TIME
     plus = 10
 
     for i in range(plus):
@@ -136,6 +140,11 @@ def checkOverlap():
                         e.y -= math.sin(nrad) * e.fwForce
                 else:
                     e.blocked = False
+
+
+
+
+
     # for e in enemyList:
     #     for a in enemyList:
     #         dist = math.sqrt((e.x - a.x) ** 2 + (e.y - a.y) ** 2)
@@ -191,7 +200,7 @@ def draw():
 
 def update():
     global player, enemy, projectile
-
+    #print(delta_time.get_fps())
     player.update()
     projectileUpdate()
     enemyUpdate()

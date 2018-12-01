@@ -1,22 +1,35 @@
 import time
 
-FIRST_TIME = time.gmtime().tm_sec
-time.sleep(1/60)
+FIRST_TIME = time.time()
+
 
 flowTime = 0.0
 curTime = 0.0
-preTime = time.gmtime().tm_sec
+preTime = FIRST_TIME
+updateCount = 0.0
+
+delayTime = 1/60
+
+def set_delay(option):
+    global delayTime
+    delayTime = option
 
 def deltaTime():
-    global flowTime,curTime,preTime
-
+    global flowTime,curTime,preTime,delayTime,updateCount
     curTime = time.time()
-    flowTime = curTime - preTime
+    time.sleep(delayTime)
+    frame = curTime - preTime
     preTime = curTime
+    flowTime += frame
+    updateCount += 0.01
+    return frame
+
+def get_fps():
+    if flowTime == 0:
+        print("err!!!")
+        return
+    else:
+        return ((updateCount*100)/flowTime)
 
 
-# for i in range(100000):
-#     deltaTime()
-#     print(i,flowTime)
 
-print(preTime-FIRST_TIME)
