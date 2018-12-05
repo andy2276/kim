@@ -4,6 +4,8 @@ import loading_state as lo
 
 MOVE_TIME = 1/60
 
+TESTINGGAME = False
+
 class projectile:
     def __init__(self):
         self.name = 'superClass'
@@ -45,6 +47,7 @@ class projectile:
 class missile(projectile):
 
     def __init__(self,sN = 'noname',sX = 0,sY = 0,sRad = math.pi/180,sPlay = 'no',sFs = 0,sVr= 0,sCt = 'circle',sW = 0,sH = 0):
+        global TESTINGGAME
         self.name = sN
         self.x,self.y = sX,sY
         self.rad = sRad
@@ -54,7 +57,8 @@ class missile(projectile):
 
         self.collision = None
         self.colType = sCt
-        self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
+        if TESTINGGAME:
+            self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
         self.w,self.h = sW,sH
         self.r = self.w/2
         self.crush = False
@@ -71,7 +75,8 @@ class cannonball(projectile):
 
         self.collision = None
         self.colType = sCt
-        self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
+        if TESTINGGAME:
+            self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
         self.w,self.h = sW,sH
         self.r = self.w/2
         self.crush = False

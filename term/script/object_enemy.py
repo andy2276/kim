@@ -8,7 +8,7 @@ import loading_state as lo
 MOVE_TIME = 0
 MOVE_FREEZE = 1
 
-
+TESTINGGAME = False
 
 class enemy:
     _class = ["bagic_enemy"]
@@ -62,7 +62,10 @@ class enemy:
 
         if self.name in enemy._class:
             self.image =  lo.loadImages.object_enemy_image[self.name]
+
+        if TESTINGGAME:
             self.colBox =  lo.loadImages.object_enemy_colBox_image[self.name]
+
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
         if self.collision != None:
@@ -148,7 +151,7 @@ class enemy:
             self.rad = math.atan2(self.ty2 - self.y, self.tx2 - self.x)
             if (self.x*self.ty2 - self.y*self.tx2) > 0: self.dir = 1
             else: self.dir = -1
-            print("blocked!!!")
+            #print("blocked!!!")
         else:
             #print("mytarget")
             self.rad = math.atan2(self.ty - self.y, self.tx - self.x)

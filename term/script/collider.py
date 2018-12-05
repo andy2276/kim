@@ -3,8 +3,7 @@ import math
 
 
 SEARCH_RANGE = 300
-
-colliderFlag = False
+TESTINGGAME = False
 
 
 # v2    v1
@@ -58,18 +57,18 @@ class Collision:
             self.r = 0
         else:
             self.target = object
-            if colliderFlag:
-                self.collisionFlag = colliderFlag
+            if TESTINGGAME:
+                self.collisionFlag = TESTINGGAME
                 if self.target.colBox != None:
                     self.colBox = self.target.colBox
-                self.im = load_image("../res/object/character/po.png")
+                    self.im = load_image("../res/object/character/po.png")
             if self.target.colType =='box':
                 self.vector = [[0,0],[0,0],[0,0],[0,0]]
             elif self.target.colType =='circle':
                 self.r = self.target.w/2
 
     def draw(self):
-        if colliderFlag:
+        if TESTINGGAME:
             self.colBox.composite_draw(self.target.rad,"",self.target.x,self.target.y)
             for v in range(4):
                 self.im.draw(self.vector[v][0],self.vector[v][1])
@@ -94,7 +93,7 @@ class Collision:
                 if self.target.crush == False:
                     self.target.crush = ptInArea(other.x,other.y,self.vector)
 
-                if colliderFlag:
+                if TESTINGGAME:
                     if self.target.crush:
                         print("in!!",self.target.name)
                 return self.target.crush

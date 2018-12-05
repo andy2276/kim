@@ -9,7 +9,11 @@ import object_structure
 import random
 import collider
 import delta_time
+
+TESTINGGAME = False
+
 MOVE_TIME = delta_time.deltaTime()
+
 
 enemyList = []
 projectile = []

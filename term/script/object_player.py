@@ -5,6 +5,7 @@ import loading_state as lo
 MOVE_TIME = 0
 BARREL_GUNPORT = 106
 
+TESTINGGAME = False
 
 #-------Tank Body---------
 class Body:
@@ -73,13 +74,15 @@ class Barrel:
 
         if Barrel.image == None:
             Barrel.image =  lo.loadImages.object_player_image["player_barrel"]
-            self.colAim = load_image('../res/object/character/po.png')
+            if TESTINGGAME:
+                self.colAim = load_image('../res/object/character/po.png')
 
 
          #   self.im2 = self.im
     def draw(self):
         self.image.composite_draw(self.rad,"",self.x,self.y)
-        self.colAim.draw(self.gpx,self.gpy)
+        if TESTINGGAME:
+            self.colAim.draw(self.gpx,self.gpy)
         #self.im2.draw(374,369)
 
 

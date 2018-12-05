@@ -2,7 +2,6 @@ import time
 
 FIRST_TIME = time.time()
 
-
 flowTime = 0.0
 curTime = 0.0
 preTime = FIRST_TIME
@@ -30,6 +29,9 @@ def get_fps():
         return
     else:
         return ((updateCount*100)/flowTime)
-
+def startDeltaTime():
+    deltaTime()
+    print("Time init!")
+    return
 
 

@@ -9,27 +9,37 @@
 
 #blocks 15X15!!
 
+TESTINGGAME = False
+
 from pico2d import *
 import game_framework as gf
 import json
 import delta_time
-import object_control
+
+delta_time.startDeltaTime()
 
 C_WIDTH, C_HIEGHT = 1200,800
 CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 
 class LoadingState:
     def __init__(self):
+        global TESTINGGAME
+        test = open("testOption.json")
+        data = json.load(test)
+        if 1 == data["test"]:
+           TESTINGGAME = True
+        test.close()
         op = open("object.json")
         datas = json.load(op)
         self.player = datas["player"]
         self.enemy = datas["enemy"]
-
         op.close()
+
 
 
 class LoadingImage:
     def __init__(self):
+        global TESTINGGAME
         self.loading_state_image = {"backGround":load_image('../res/ui/logo_title/loading_image_pix.png'),
          "loadingBar": load_image('../res/ui/logo_title/loading_bar.png')}
 
@@ -42,7 +52,8 @@ class LoadingImage:
         self.object_enemy_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy.png')
         }
-        self.object_enemy_colBox_image = {
+        if TESTINGGAME:
+            self.object_enemy_colBox_image = {
             "bagic_enemy": load_image('../res/object/enemy/bagic_enemy_box.png')
         }
         self.object_projectile_image = {
@@ -103,7 +114,7 @@ def draw():
 
 
 def update():
-    global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks
+    global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks,TESTINGGAME
     loadCount += 5 if loadCount <=47 else 0
 
    #  #----------------------
@@ -130,7 +141,13 @@ def update():
     delay(1/60)
     handle_events()
     if loadCount >=47:
-        gf.push_state(object_control)
+        if TESTINGGAME:
+            import object_control
+            object_control.TESTINGGAME = TESTINGGAME
+            gf.push_state(object_control)
+        else:
+            import DB
+            gf.push_state(DB)
 
 
 def handle_events():

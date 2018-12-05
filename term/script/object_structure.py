@@ -4,6 +4,8 @@ import math
 import  random
 import loading_state as lo
 
+TESTINGGAME = True
+
 class structure:
     def __init__(self,sN,sX,sY,sW,sH,sP,sImgN,sColType,sR):
         self.name = sN
