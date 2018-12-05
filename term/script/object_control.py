@@ -14,6 +14,8 @@ MOVE_TIME = delta_time.deltaTime()
 enemyList = []
 projectile = []
 structure = []
+
+mapNum = []
 player = None
 enemy = None
 
@@ -45,10 +47,22 @@ def enemyEnter(selectEnemy):
         enemyList.append(enemy)
 def structureEnter():
     global structure
-    st = object_structure.Box("test",80,80,10,10,"NPC",0,"Box",5)
-    st.collision = collider.Collision(st)
-    structure.append(st)
+    for i in range(5):
+        st = object_structure.Box("test",80*i,80*i,10,10,"NPC",0,"Box",5)
+        st.collision = collider.Collision(st)
+        structure.append(st)
+def mapEnter():
+    global mapNum
+    for i in range(72):
+        mapNum.append((random.randint(0,2),random.randint(0,2)))
 
+
+def mapDraw():
+    global mapNum
+    for y in range(12):
+        for x in range(6):
+            i,j=mapNum[(y*6)+x]
+            lo.loadTerrain[i][j].draw((y*150)+75,(x*150)+75)
 
 def enemyUpdate():
     global player, enemy,test
@@ -62,7 +76,6 @@ def enemyUpdate():
             if e.attack:
                 e.tx, e.ty, e.dist = collider.isInRange(player, e, e.attackR, True)
                 e.state = 'attack'
-
             else:
                 e.tx,e.ty,e.dist = collider.isInRange(player,e,e.searchR,True)
                 e.state = 'found'
@@ -74,7 +87,7 @@ def enemyUpdate():
                     dist = math.sqrt((ae.x - e.x) ** 2 + (ae.y - e.y) ** 2)
                     tx,ty,dist = collider.isInRange(ae,e,0,True)
                     #print(math.asin(e.visualR/dist))
-        checkOverlap()
+        EnemyCheckOverlap()
         e.update()
 
 
@@ -127,10 +140,8 @@ def projectileUpdate():
 
 
 
-def checkOverlap():
+def EnemyCheckOverlap():
     global player, enemy, projectile,test
-
-
     for e in enemyList:
         for a in enemyList:
             if e != a:
@@ -148,6 +159,20 @@ def checkOverlap():
                         e.y -= math.sin(nrad) * e.fwForce
                 else:
                     e.blocked = False
+
+                    #원형에 대해서 만든것.
+        crushXY = 0
+        for s in structure:
+            #print(collider.haveCollision(s))
+            if e.collision.isCollider(s):
+                for i in range(4):
+                    if collider.ptInArea(e.collision.vector[i][0],e.collision.vector[i][1],s.collision.vector):
+                        crushXY = i
+                        break
+                print(e.count,e.collision.vector[crushXY][0],e.collision.vector[crushXY][1])
+
+
+
 
 
 
@@ -184,22 +209,25 @@ def attackOnject():
 
 def enter():
     global player,enemy
+    mapEnter()
     playerEnter(1)
     enemyEnter(0)
+    structureEnter()
 
 def exit():
 	pass
 
 def draw():
-    global player,enemy,projectile,test
-    if test == None:
-        test = load_image('../res/object/character/po.png')
+    global player,enemy,projectile,structure
     clear_canvas()
+    mapDraw()
     player.draw()
+    for s in structure:
+        s.draw()
 
     for e in enemyList:
         e.draw()
-        test.draw(e.tx2,e.ty2)
+
 
     for m in projectile:
         m.draw()

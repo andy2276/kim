@@ -24,6 +24,7 @@ def ptInArea(x, y, pts):
         j = i
     return inside;
 
+
 def isInRange(tar,me,range,info):
     #여기부분을 다시고치는데, 다른 자료는 건들지 않게 만들자.
     dist = (tar.x - me.x) ** 2 + (tar.y - me.y) ** 2
@@ -194,6 +195,9 @@ class Collision:
 
     def set_tempCollision(self,obj):
         self.target = obj
+
+def haveCollision(obj):
+        return True if obj.collision != None else False
 
 
 

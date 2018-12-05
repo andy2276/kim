@@ -49,9 +49,9 @@ class LoadingImage:
             "cannonball":load_image('../res/object/projectile/cannonball.png'),
             "missile":load_image('../res/object/projectile/missile.png')
         }
-        self.object_structure_image = {"blocks":load_image("../res/object/structure/structure_block.png")
+        self.object_structure_image = {"blocks":load_image("../res/object/structure/structure_block_fix.png")
         }
-        self.map_terrain_image = {
+        self.map_terrain_image = {"base":load_image("../res/object/structure/base_fix.png")
 
         }
         self.imageCount = 7
@@ -61,19 +61,27 @@ loadState = None
 loadCount = 0
 loadBlocks = []
 
+loadTerrain = []
+
 def enter():
-    global loadImages,loadState,loadCount,loadBlocks
+    global loadImages,loadState,loadCount,loadBlocks,loadTerrain
     open_canvas(C_WIDTH, C_HIEGHT)
     loadImages = LoadingImage()
     loadState = LoadingState()
 
     initBox = []
+    initMap = []
     for y in range(15):
         for x in range(15):
-            initBox.append((loadImages.object_structure_image["blocks"]).clip_image(10*x,10*y,10,10))
-
+            initBox.append((loadImages.object_structure_image["blocks"]).clip_image(100*x,100*y,100,100))
         loadBlocks.append(initBox)
         initBox = []
+
+    for y in range(3):
+        for x in range(3):
+            initMap.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
+        loadTerrain.append(initMap)
+        initMap = []
 
     loadCount =0
 

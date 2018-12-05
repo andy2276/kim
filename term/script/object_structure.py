@@ -19,7 +19,7 @@ class structure:
         self.visualR = self.r
 
     def draw(self):
-
+        lo.loadBlocks[self.imageNumY][self.imageNumX].draw(self.x,self.y)
 
     def update(self):
         pass

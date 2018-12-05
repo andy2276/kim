@@ -1,18 +1,18 @@
 import math
 from pico2d import *
-import delta_time as dt
+# import delta_time as dt
+#
+#
+# print(math.asin(3/5))
+# print(math.atan2(3,4))
+# print(math.degrees(math.atan2(3,4)))
+#
+#
+#
+#
 
 
-print(math.asin(3/5))
-print(math.atan2(3,4))
-print(math.degrees(math.atan2(3,4)))
-
-
-
-
-
-
-allTime= get_time()
+# allTime= get_time()
 
 
 # for i in range(60):
@@ -25,11 +25,13 @@ allTime= get_time()
 #
 # print("프레임",60.0/allTime)
 
-
-for i in range(180):
-    print(dt.deltaTime())
-
-
-print(dt.get_fps())
-
-print("me!!!!",1/60)
+#
+# for i in range(180):
+#     print(dt.deltaTime())
+#
+#
+# print(dt.get_fps())
+#
+# print("me!!!!",1/60)
+for i in range(15):
+    print(150*i//5)
