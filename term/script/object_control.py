@@ -47,8 +47,8 @@ def enemyEnter(selectEnemy):
         enemyList.append(enemy)
 def structureEnter():
     global structure
-    for i in range(5):
-        st = object_structure.Box("test",80*i,80*i,10,10,"NPC",0,"Box",5)
+    for i in range(1):
+        st = object_structure.Box("test",50+500,500,100,100,"NPC",0,"box",100)
         st.collision = collider.Collision(st)
         structure.append(st)
 def mapEnter():
@@ -106,7 +106,7 @@ def projectileUpdate():
             #enmey attack delay
             if e.attackIdle >=e.attackDelay:
                 missiles = object_projectile.missile(e.name, e.x, e.y, e.rad,"enemy",
-                                                     100, 20, "circle", 10, 10)
+                                                     100, 20, "box", 10, 10)
                 missiles.collision = collider.Collision(missiles)
                 projectile.append(missiles)
                 e.attackIdle = 0.0
@@ -141,7 +141,7 @@ def projectileUpdate():
 
 
 def EnemyCheckOverlap():
-    global player, enemy, projectile,test
+    global player, enemyList, projectile,structure
     for e in enemyList:
         for a in enemyList:
             if e != a:
@@ -160,38 +160,31 @@ def EnemyCheckOverlap():
                 else:
                     e.blocked = False
 
-                    #원형에 대해서 만든것.
-        crushXY = 0
-        for s in structure:
-            #print(collider.haveCollision(s))
-            if e.collision.isCollider(s):
-                for i in range(4):
-                    if collider.ptInArea(e.collision.vector[i][0],e.collision.vector[i][1],s.collision.vector):
-                        crushXY = i
-                        break
-                print(e.count,e.collision.vector[crushXY][0],e.collision.vector[crushXY][1])
 
+    structureCheckOverlap()
 
-
-
-
-
-
-
-    # for e in enemyList:
-    #     for a in enemyList:
-    #         dist = math.sqrt((e.x - a.x) ** 2 + (e.y - a.y) ** 2)
-    #         if collider.isInRange(a,e,0,False):
-    #             dist=math.sqrt((e.x- a.x)**2 + (e.y- a.y)**2)
-    #             bt = dist- (e.visualR+a.visualR)/2
-    #             nrad = math.atan2(a.y - e.y, a.x - e.x)
-    #             # e.x -= math.cos(nrad) * e.fwForce
-    #             # e.y -= math.sin(nrad) * e.fwForce
-    #             #
-    #             # a.x -= math.cos(nrad) * a.fwForce
-    #             # a.y -= math.sin(nrad) * a.fwForce
-
-
+def structureCheckOverlap():
+    global player, enemyList, projectile,structure
+    for s in structure:
+        for e in enemyList:
+            if s.collision.isCollider(e):
+                nrad = math.atan2(s.y - e.y, s.x - e.x)
+                e.x -= math.cos(nrad)
+                e.y -= math.sin(nrad)
+                if s.collision.vector[0][0] <= e.tx and e.tx <=s.collision.vector[2][0]:
+                    if s.collision.vector[0][1]<=e.ty and e.ty <=s.collision.vector[2][1]:
+                        dist = math.sqrt((e.x - s.x) ** 2 + (e.y - s.y) ** 2)
+                        math.asin(e.visualR / dist)
+                        e.tx2 = (math.cos(2 * nrad) + e.x) * e.visualR
+                        e.ty2 = (math.sin(2 * nrad) + e.y) * e.visualR
+                e.blocked = True
+        if s.collision.isCollider(player):
+            player.body.canGo = 0
+            if player.body.canGo == 0:
+                nrad = math.atan2(s.y - e.y, s.x - e.x)
+                player.x -= math.cos(nrad)
+                player.y -= math.sin(nrad)
+        else: player.body.canGo= 1
 
 
 
@@ -237,6 +230,7 @@ def draw():
 def update():
     global player, enemy, projectile
     #print(delta_time.get_fps())
+
     player.update()
     projectileUpdate()
     enemyUpdate()

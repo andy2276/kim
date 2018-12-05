@@ -13,9 +13,10 @@ class Body:
     def __init__(self,px,py,prad,prs,pfs,pbs):
         self.x ,self.y =px,py
 
+        self.canGo = 1
         self.rotSpeed= prs/10 * math.pi/60
-        self.fwSpeed = pfs*MOVE_TIME
-        self.bkSpeed = pbs*MOVE_TIME
+        self.fwSpeed = pfs*MOVE_TIME*self.canGo
+        self.bkSpeed = pbs*MOVE_TIME*self.canGo
         #print(self.fwSpeed,self.bkSpeed)
         self.rad = prad
         self.key = {}
@@ -45,8 +46,8 @@ class Body:
             elif self.key[SDLK_s]:
                 mv = self.bkSpeed
 
-            self.x += mov * mv * math.cos(self.rad)
-            self.y += mov * mv * math.sin(self.rad)
+            self.x += mov * mv * math.cos(self.rad)*self.canGo
+            self.y += mov * mv * math.sin(self.rad)*self.canGo
 
 
         return self.x, self.y
@@ -123,11 +124,13 @@ class Player:
         self.x = get_canvas_width() // 2
         self.y = get_canvas_height() // 2
 
+
         self.hp = sHp
         self.rad = math.pi/(180/sRad)
         self.rotSpeed = sPrs
         self.bodyFwSpeed = sPfs
         self.bodyBkSpeed = sPbs
+
 
         self.body = Body(self.x,self.y,self.rad,self.rotSpeed,self.bodyFwSpeed,self.bodyBkSpeed)
         self.barrel = Barrel(self.x,self.y,self.rotSpeed)

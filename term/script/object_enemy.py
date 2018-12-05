@@ -87,6 +87,9 @@ class enemy:
     def stay(self):
         self.tx = math.fabs(self.x + random.randint(-50,50))
         self.ty =  math.fabs(self.y + random.randint(-50,50))
+        if self.blocked:
+            self.tx = math.fabs(self.x + random.randint(-100, 100))
+            self.ty = math.fabs(self.y + random.randint(-100, 100))
         #print("test",self.x,self.y,self.tx,self.ty)
         self.state = 'recon'
     def reconnaissance(self):

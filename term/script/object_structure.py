@@ -9,6 +9,7 @@ class structure:
         self.name = sN
         self.x,self.y = sX,sY
         self.w,self.h = sW,sH
+        self.rad = 0
         self.play = sP
         self.imageNumX = sImgN%10
         self.imageNumY = sImgN//10
@@ -31,6 +32,7 @@ class Box(structure):
         self.name = sN
         self.x, self.y = sX, sY
         self.w, self.h = sW, sH
+        self.rad = 0
         self.play = sP
         if sImgN == 0:
             self.imageNumX = 0

@@ -125,6 +125,7 @@ class Collision:
                     return False
                 self.target.crush = True
                 return True
+
         else:print("this object is None type")
 
     def get_initBox(self):
@@ -198,6 +199,7 @@ class Collision:
 
 def haveCollision(obj):
         return True if obj.collision != None else False
+
 
 
 
