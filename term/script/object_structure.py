@@ -18,8 +18,8 @@ class structure:
         self.r = sR
         self.visualR = self.r
 
-    # def draw(self):
-    #     lo.loadImages.
+    def draw(self):
+
 
     def update(self):
         pass
