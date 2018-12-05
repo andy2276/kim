@@ -5,6 +5,7 @@ import loading_state as lo
 import object_player
 import object_enemy
 import object_projectile
+import object_structure
 import random
 import collider
 import delta_time
@@ -12,6 +13,7 @@ MOVE_TIME = delta_time.deltaTime()
 
 enemyList = []
 projectile = []
+structure = []
 player = None
 enemy = None
 
@@ -41,6 +43,12 @@ def enemyEnter(selectEnemy):
         plus += 50
         enemy.collision = collider.Collision(enemy)
         enemyList.append(enemy)
+def structureEnter():
+    global structure
+    st = object_structure.Box("test",80,80,10,10,"NPC",0,"Box",5)
+    st.collision = collider.Collision(st)
+    structure.append(st)
+
 
 def enemyUpdate():
     global player, enemy,test

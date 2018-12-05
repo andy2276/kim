@@ -10,8 +10,8 @@ class structure:
         self.x,self.y = sX,sY
         self.w,self.h = sW,sH
         self.play = sP
-        self.imageNumX = sImgN
-        self.imageNumY = sImgN
+        self.imageNumX = sImgN%10
+        self.imageNumY = sImgN//10
         self.collision = None
         self.colType = sColType
         self.crush = False
@@ -32,7 +32,12 @@ class Box(structure):
         self.x, self.y = sX, sY
         self.w, self.h = sW, sH
         self.play = sP
-        self.imageNum = sImgN
+        if sImgN == 0:
+            self.imageNumX = 0
+            self.imageNumY = 0
+        else:
+            self.imageNumX = sImgN % 10
+            self.imageNumY = sImgN // 10
         self.collision = None
         self.colType = sColType
         self.crush = False
