@@ -5,6 +5,9 @@ import random
 import loading_state as lo
 
 
+global TESTINGGAME,MOVE_FREEZE,TESTINGGAME
+
+
 MOVE_TIME = 0
 
 MOVE_FREEZE = 1

@@ -67,6 +67,9 @@ class LoadingImage:
         self.object_structure_image = {"blocks":load_image("../res/object/structure/structure_block_fix.png")
         }
         self.map_terrain_image = {"base":load_image("../res/object/structure/base_fix.png")
+        }
+        self.main_menu_image = {"background":load_image("../res/ui/main/background.png")
+
 
         }
         self.imageCount = 7

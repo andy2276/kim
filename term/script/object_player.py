@@ -2,10 +2,17 @@ from pico2d import *
 import math
 import loading_state as lo
 
+
+
+global TESTINGGAME,MOVE_TIME,BARREL_GUNPORT
+
+
+TESTINGGAME= False
 MOVE_TIME = 0
+
 BARREL_GUNPORT = 106
 
-TESTINGGAME = False
+
 
 #-------Tank Body---------
 class Body:
@@ -90,7 +97,7 @@ class Barrel:
 
     def update(self, px, py):
         self.rad = math.atan2(self.y - self.my, self.x - self.mx)
-        print("player",MOVE_TIME)
+        #print("player",MOVE_TIME)
         dx = BARREL_GUNPORT*math.cos(self.rad) - math.sin(self.rad)
         dy = BARREL_GUNPORT*math.sin(self.rad) + math.cos(self.rad)
 

@@ -10,6 +10,10 @@ import random
 import collider
 import delta_time
 
+
+
+global TESTINGGAME,DELAYTIME,MOVE_TIME
+
 TESTINGGAME = False
 DELAYTIME = lo.TIMEDELAY
 

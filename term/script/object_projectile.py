@@ -2,6 +2,9 @@ from pico2d import *
 import math
 import loading_state as lo
 
+
+global MOVE_TIME,TESTINGGAME
+
 MOVE_TIME = 1/60
 
 TESTINGGAME = False
