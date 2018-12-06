@@ -11,8 +11,11 @@ import collider
 import delta_time
 
 TESTINGGAME = False
+DELAYTIME = lo.TIMEDELAY
 
-MOVE_TIME = delta_time.deltaTime()
+delta_time.set_delay(DELAYTIME)
+delta_time.startDeltaTime()
+MOVE_TIME = 0
 
 
 
@@ -75,7 +78,7 @@ def mapDraw():
             lo.loadTerrain[i][j].draw((y*150)+75,(x*150)+75)
 
 def enemyUpdate():
-    global player, enemy,test
+    global player, enemy,test,MOVE_TIME
 
     for e in enemyList:
         #print(e.state,e.blocked)
@@ -103,14 +106,16 @@ def enemyUpdate():
 
 
 def projectileUpdate():
-    global player, enemy, projectile,test
+    global player, enemy, projectile,test,MOVE_TIME
     if player.barrel.attack:
         player.barrel.attack = False
         missiles=object_projectile.cannonball(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
                                            "player",300,5,"circle",10,10)
         missiles.collision = collider.Collision(missiles)
         projectile.append(missiles)
+
     for e in enemyList:
+        e.attackCool = MOVE_TIME
         if e.state == 'attack':
             e.attackIdle += e.attackCool
             #enmey attack delay
@@ -197,6 +202,18 @@ def structureCheckOverlap():
         else: player.body.canGo= 1
 
 
+def timeUpdate():
+    global MOVE_TIME
+    print(MOVE_TIME)
+    MOVE_TIME = delta_time.deltaTime()
+
+    #print(MOVE_TIME)
+    object_player.MOVE_TIME = MOVE_TIME
+    #print("player done")
+    object_enemy.MOVE_TIME = MOVE_TIME
+    #print("enemy done")
+    object_projectile.MOVE_TIME = MOVE_TIME
+    #print("prohectile done")
 
 
 
@@ -213,7 +230,7 @@ def attackOnject():
 def enter():
     global player,enemy
     mapEnter()
-    playerEnter(1)
+    playerEnter(0)
     enemyEnter(0)
     structureEnter()
 
@@ -227,11 +244,8 @@ def draw():
     player.draw()
     for s in structure:
         s.draw()
-
     for e in enemyList:
         e.draw()
-
-
     for m in projectile:
         m.draw()
     update_canvas()
@@ -240,7 +254,7 @@ def draw():
 def update():
     global player, enemy, projectile,MOVE_TIME
     #print(delta_time.get_fps())
-    MOVE_TIME = delta_time.deltaTime()
+    timeUpdate()
 
     player.update()
     projectileUpdate()

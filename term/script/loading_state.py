@@ -17,19 +17,21 @@ import json
 import delta_time
 
 TESTINGGAME = False
+TIMEDELAY = 1/60
 
-delta_time.startDeltaTime()
+
 
 C_WIDTH, C_HIEGHT = 1200,800
 CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 
 class LoadingState:
     def __init__(self):
-        global TESTINGGAME
+        global TESTINGGAME,TIMEDELAY
         test = open("testOption.json")
         data = json.load(test)
         if 1 == data["test"]:
            TESTINGGAME = True
+        TIMEDELAY = data["delayTime"]
         test.close()
         op = open("object.json")
         datas = json.load(op)
@@ -119,7 +121,6 @@ def draw():
 def update():
     global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks,TESTINGGAME
     loadCount += 5 if loadCount <=47 else 0
-
    #  #----------------------
    #  if loadImages == None:
    #      loadImages = LoadingImage()

@@ -7,8 +7,8 @@
 			"y":0,
 			"hp":100,
 			"rad":90,
-			"rotateSpeed":0.1,
-			"fowardSpeed":10,
+			"rotateSpeed":4,
+			"fowardSpeed":100,
 			"backSpeed":5,
 			"width":78,
 			"high":58
@@ -19,7 +19,7 @@
 			"y":0,
 			"hp":10000,
 			"rad":90,
-			"rotateSpeed":5,
+			"rotateSpeed":10,
 			"fowardSpeed":100,
 			"backSpeed":50,
 			"width":78,
@@ -35,7 +35,7 @@
 			"hp":100,
 			"rad":90,
 			"rotateForce":0.1,
-			"SpeedForce":10,
+			"SpeedForce":30,
 			"ai":0,
 			"width":56,
 			"high":75
@@ -52,5 +52,17 @@
 			"width":58,
 			"high":75
 		}
+	],
+	"projectile":
+	[
+		{
+			"name":"cannonball",
+			"speed":500,
+			"radius":5,
+			"colType":"circle",
+			"width":10,
+			"high":10
+		}
+	
 	]
 }

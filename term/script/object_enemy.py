@@ -74,6 +74,7 @@ class enemy:
 
         #self.collision.draw()
     def update(self):
+        #print(MOVE_TIME)
         if self.state == 'stay':
             enemy.stay(self)
         elif self.state == 'recon':
@@ -107,7 +108,7 @@ class enemy:
             self.state = 'stay'
             return
         if self.found :
-            print('found you!!!!!!!!!!')
+            #print('found you!!!!!!!!!!')
             self.state = 'found'
             return
 
@@ -141,9 +142,6 @@ class enemy:
                 self.y -= math.sin(self.rad) * self.fwForce
                 if self.safeR <= self.dist:
                     self.attack = True
-            if self.attack:
-                #print(self.count,"cowha!!!")
-                pass
         return
 
     def setAttackRad(self):

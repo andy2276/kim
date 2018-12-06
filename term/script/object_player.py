@@ -90,7 +90,7 @@ class Barrel:
 
     def update(self, px, py):
         self.rad = math.atan2(self.y - self.my, self.x - self.mx)
-
+        print("player",MOVE_TIME)
         dx = BARREL_GUNPORT*math.cos(self.rad) - math.sin(self.rad)
         dy = BARREL_GUNPORT*math.sin(self.rad) + math.cos(self.rad)
 
