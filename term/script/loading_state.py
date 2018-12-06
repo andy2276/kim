@@ -14,6 +14,7 @@
 from pico2d import *
 import game_framework as gf
 import json
+import menu
 import delta_time
 
 TESTINGGAME = False
@@ -76,6 +77,7 @@ class LoadingImage:
             "battleUI":load_image("../res/ui/main/battleUI.png"),
             "selectUI":load_image("../res/ui/main/selectUI.png")
         }
+
         self.imageCount = 7
 
 loadImages = None
@@ -114,7 +116,7 @@ class UI:
     def handle_event(self,keys):
         #print(self.left,self.right,self.bottom,self.top,keys.x,C_HIEGHT-keys.y)
         #print(keys.x,keys.y- C_HIEGHT)
-    
+
         if self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top:
             self.handOn = True
         elif False == (self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top):
@@ -154,11 +156,23 @@ class selectUI(UI):
         # self.clickOff = True
         self.eventOn = False
 
+        self.k = 0
+
         self.left, self.bottom = self.x - self.w / 2, self.y - self.h / 2
         self.right, self.top = self.x + self.w / 2, self.y + self.h / 2
         self.widthRange = self.right - self.left
         self.highRange = self.top - self.bottom
 
+    def draw(self):
+        global loadImages
+        if self.handOn:
+            self.k = 1
+            if self.eventOn:
+                self.k = 2
+        else:self.k = 0
+
+
+        loadImages.main_menu_image[self.name].clip_draw(self.k*self.w,self.imageNum*self.h,self.w,self.h, self.x, self.y)
 
 def enter():
     global loadImages,loadState,loadCount,loadBlocks,loadTerrain
@@ -236,7 +250,7 @@ def update():
         #     import DB
         #     gf.push_state(DB)
         import  object_control
-        gf.push_state(object_control)
+        gf.push_state(menu)
 
 
 def handle_events():
