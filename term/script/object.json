@@ -8,7 +8,7 @@
 			"hp":100,
 			"rad":90,
 			"rotateSpeed":4,
-			"fowardSpeed":100,
+			"fowardSpeed":10,
 			"backSpeed":5,
 			"width":78,
 			"high":58

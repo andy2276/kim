@@ -3,7 +3,8 @@ import math
 import loading_state as lo
 
 
-global MOVE_TIME,TESTINGGAME
+# global MOVE_TIME,TESTINGGAME
+global MOVE_TIME
 
 MOVE_TIME = 1/60
 

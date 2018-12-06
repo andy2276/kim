@@ -4,7 +4,7 @@ import loading_state as lo
 
 
 
-global TESTINGGAME,MOVE_TIME,BARREL_GUNPORT
+# global TESTINGGAME,MOVE_TIME,BARREL_GUNPORT
 
 
 TESTINGGAME= False

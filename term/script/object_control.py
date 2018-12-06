@@ -12,13 +12,14 @@ import delta_time
 
 
 
-global TESTINGGAME,DELAYTIME,MOVE_TIME
+# global TESTINGGAME,DELAYTIME,MOVE_TIME
 
 TESTINGGAME = False
 DELAYTIME = lo.TIMEDELAY
 
 delta_time.set_delay(DELAYTIME)
 delta_time.startDeltaTime()
+global MOVE_TIME
 MOVE_TIME = 0
 
 

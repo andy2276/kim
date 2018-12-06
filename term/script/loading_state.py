@@ -17,17 +17,17 @@ import json
 import menu
 import delta_time
 
+# global TESTINGGAME,TIMEDELAY,C_WIDTH,C_HIEGHT,CW_HALF,CH_HALF,loadImages,loadState,loadCount,loadBlocks
+
+global MOVE_TIME
+
+
+
 TESTINGGAME = False
 TIMEDELAY = 1/60
 
-
-
 C_WIDTH, C_HIEGHT = 1200,800
 CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
-
-
-
-
 
 class LoadingState:
     def __init__(self):
@@ -73,9 +73,11 @@ class LoadingImage:
         }
         self.map_terrain_image = {"base":load_image("../res/object/structure/base_fix.png")
         }
-        self.main_menu_image = {"background":load_image("../res/ui/main/background.png"),
+        self.main_menu_image = {"background":load_image("../res/ui/main/background_fix.png"),
             "battleUI":load_image("../res/ui/main/battleUI.png"),
-            "selectUI":load_image("../res/ui/main/selectUI.png")
+            "selectUI":load_image("../res/ui/main/selectUI.png"),
+            "mainFont":load_image("../res/ui/main/mainFont_fix.png")
+
         }
 
         self.imageCount = 7
@@ -116,22 +118,22 @@ class UI:
     def handle_event(self,keys):
         #print(self.left,self.right,self.bottom,self.top,keys.x,C_HIEGHT-keys.y)
         #print(keys.x,keys.y- C_HIEGHT)
+        if keys.x != None:
+            if self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top:
+                self.handOn = True
+            elif False == (self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top):
+                self.handOn = False
+                return
 
-        if self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top:
-            self.handOn = True
-        elif False == (self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top):
-            self.handOn = False
-            return
+            if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
+                self.clickOn = True
+            else:
+                self.clickOn = False
 
-        if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
-            self.clickOn = True
-        else:
-            self.clickOn = False
-
-        if self.clickOn and self.handOn:
-                self.eventOn = True
-        elif (self.clickOn and self.handOn) == False:
-            self.eventOn = False
+            if self.clickOn and self.handOn:
+                    self.eventOn = True
+            elif (self.clickOn and self.handOn) == False:
+                self.eventOn = False
 
 
         # print(self.handOn,self.clickOn,self.eventOn)
