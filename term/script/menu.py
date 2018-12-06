@@ -11,6 +11,7 @@ import loading_state as lo
 
 
 def enter():
+
     pass
 
 
@@ -37,8 +38,6 @@ def handle_events():
             gf.quit()
         elif (key.type, key.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             gf.pop_state()
-        else:
-            player.handle_event(key)
 
 
 def pause():

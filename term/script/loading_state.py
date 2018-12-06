@@ -24,6 +24,10 @@ TIMEDELAY = 1/60
 C_WIDTH, C_HIEGHT = 1200,800
 CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 
+
+
+
+
 class LoadingState:
     def __init__(self):
         global TESTINGGAME,TIMEDELAY
@@ -68,9 +72,9 @@ class LoadingImage:
         }
         self.map_terrain_image = {"base":load_image("../res/object/structure/base_fix.png")
         }
-        self.main_menu_image = {"background":load_image("../res/ui/main/background.png")
-
-
+        self.main_menu_image = {"background":load_image("../res/ui/main/background.png"),
+            "battleUI":load_image("../res/ui/main/battleUI.png"),
+            "selectUI":load_image("../res/ui/main/selectUI.png")
         }
         self.imageCount = 7
 
@@ -80,6 +84,81 @@ loadCount = 0
 loadBlocks = []
 
 loadTerrain = []
+class UI:
+    def __init__(self,sN, sX, sY, sW, sH, sImgN):
+
+        self.name = sN
+        self.x, self.y = sX, sY
+        self.w, self.h = sW, sH
+
+        self.imageNum = sImgN
+
+        self.handOn = False
+        self.clickOn = False
+        #self.clickOff = True
+        self.eventOn = False
+
+        self.left,self.bottom = self.x- self.w/2,self.y - self.h/2
+        self.right,self.top = self.x + self.w/2,self.y+self.h/2
+        self.widthRange = self.right - self.left
+        self.highRange = self.top - self.bottom
+
+
+    def draw(self):
+        global loadImages
+        loadImages.main_menu_image[self.name].draw(self.x,self.y)
+
+    def update(self):
+        pass
+
+    def handle_event(self,keys):
+        #print(self.left,self.right,self.bottom,self.top,keys.x,C_HIEGHT-keys.y)
+        #print(keys.x,keys.y- C_HIEGHT)
+    
+        if self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top:
+            self.handOn = True
+        elif False == (self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top):
+            self.handOn = False
+            return
+
+        if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
+            self.clickOn = True
+        else:
+            self.clickOn = False
+
+        if self.clickOn and self.handOn:
+                self.eventOn = True
+        elif (self.clickOn and self.handOn) == False:
+            self.eventOn = False
+
+
+        # print(self.handOn,self.clickOn,self.eventOn)
+        # if self.handOn:
+        #     print("hangOn!!")
+        # if self.clickOn:
+        #     print("clickOn!!")
+        # if self. eventOn:
+        #     print("eventOn!!")
+
+
+class selectUI(UI):
+    def __init__(self,sN, sX, sY, sW, sH, sImgN):
+        self.name = sN
+        self.x, self.y = sX, sY
+        self.w, self.h = sW, sH
+
+        self.imageNum = sImgN
+
+        self.handOn = False
+        self.clickOn = False
+        # self.clickOff = True
+        self.eventOn = False
+
+        self.left, self.bottom = self.x - self.w / 2, self.y - self.h / 2
+        self.right, self.top = self.x + self.w / 2, self.y + self.h / 2
+        self.widthRange = self.right - self.left
+        self.highRange = self.top - self.bottom
+
 
 def enter():
     global loadImages,loadState,loadCount,loadBlocks,loadTerrain

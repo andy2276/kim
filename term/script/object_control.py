@@ -208,7 +208,7 @@ def structureCheckOverlap():
 
 def timeUpdate():
     global MOVE_TIME
-    print(MOVE_TIME)
+    #print(MOVE_TIME)
     MOVE_TIME = delta_time.deltaTime()
 
     #print(MOVE_TIME)
@@ -232,8 +232,12 @@ def attackOnject():
                     break
 
 def enter():
-    global player,enemy
+    global player,enemy,test
     mapEnter()
+
+    test = lo.UI("battleUI",1100,50,200,100,0)
+
+
     playerEnter(0)
     enemyEnter(0)
     structureEnter()
@@ -242,10 +246,11 @@ def exit():
 	pass
 
 def draw():
-    global player,enemy,projectile,structure
+    global player,enemy,projectile,structure,test
     clear_canvas()
     mapDraw()
     player.draw()
+    test.draw()
     for s in structure:
         s.draw()
     for e in enemyList:
@@ -256,10 +261,12 @@ def draw():
 
 
 def update():
-    global player, enemy, projectile,MOVE_TIME
+    global player, enemy, projectile,MOVE_TIME,test
     #print(delta_time.get_fps())
     timeUpdate()
-
+    #print(test.handOn,test.clickOn,test.eventOn)
+    if test.eventOn:
+        print("event On!!!")
     player.update()
     projectileUpdate()
     enemyUpdate()
@@ -270,13 +277,14 @@ def update():
 
 
 def handle_events():
-    global player,barrel
+    global player,barrel,test
     events = get_events()
     for key in events:
         if key.type == SDL_QUIT: gf.quit()
         elif (key.type,key.key) == (SDL_KEYDOWN, SDLK_ESCAPE): gf.pop_state()
         else:
             player.handle_event(key)
+            test.handle_event(key)
 
 def pause():
 	pass
