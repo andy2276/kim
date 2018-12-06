@@ -7,6 +7,9 @@ import math
 class stageInfo:
     def __init__(self):
         self.selectPlayer = 0
+        self.playerCurHp = 0
+        self.playerCurMagnize = 0
+
 
 
 
