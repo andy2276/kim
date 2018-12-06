@@ -9,12 +9,14 @@
 
 #blocks 15X15!!
 
-TESTINGGAME = False
+
 
 from pico2d import *
 import game_framework as gf
 import json
 import delta_time
+
+TESTINGGAME = False
 
 delta_time.startDeltaTime()
 

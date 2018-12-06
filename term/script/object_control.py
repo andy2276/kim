@@ -15,6 +15,7 @@ TESTINGGAME = False
 MOVE_TIME = delta_time.deltaTime()
 
 
+
 enemyList = []
 projectile = []
 structure = []
@@ -28,6 +29,7 @@ test = None
 def playerEnter(selectPlayer):
     global player,MOVE_TIME
     p = lo.loadState.player[selectPlayer]
+    MOVE_TIME = delta_time.deltaTime()
     object_player.MOVE_TIME = MOVE_TIME
     player = object_player.Player(p["name"], p['x'], p['y'], p['hp'], p['rad'], p['rotateSpeed'], p['fowardSpeed'],
                                   p['backSpeed'], p['width'], p['high'])
@@ -38,7 +40,9 @@ def enemyEnter(selectEnemy):
     global enemy,enemyList,MOVE_TIME
 
     p = lo.loadState.enemy[selectEnemy]
+    MOVE_TIME = delta_time.deltaTime()
     object_enemy.MOVE_TIME = MOVE_TIME
+
     plus = 10
 
     for i in range(plus):
@@ -232,8 +236,9 @@ def draw():
 
 
 def update():
-    global player, enemy, projectile
+    global player, enemy, projectile,MOVE_TIME
     #print(delta_time.get_fps())
+    MOVE_TIME = delta_time.deltaTime()
 
     player.update()
     projectileUpdate()

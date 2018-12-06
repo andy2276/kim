@@ -6,6 +6,7 @@ import loading_state as lo
 
 
 MOVE_TIME = 0
+
 MOVE_FREEZE = 1
 
 TESTINGGAME = False
