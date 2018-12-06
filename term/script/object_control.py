@@ -31,6 +31,7 @@ def playerEnter(selectPlayer):
     p = lo.loadState.player[selectPlayer]
     MOVE_TIME = delta_time.deltaTime()
     object_player.MOVE_TIME = MOVE_TIME
+    object_player.TESTINGGAME = TESTINGGAME
     player = object_player.Player(p["name"], p['x'], p['y'], p['hp'], p['rad'], p['rotateSpeed'], p['fowardSpeed'],
                                   p['backSpeed'], p['width'], p['high'])
     player.collision = collider.Collision(player)
@@ -42,7 +43,7 @@ def enemyEnter(selectEnemy):
     p = lo.loadState.enemy[selectEnemy]
     MOVE_TIME = delta_time.deltaTime()
     object_enemy.MOVE_TIME = MOVE_TIME
-
+    object_enemy.TESTINGGAME = TESTINGGAME
     plus = 10
 
     for i in range(plus):
@@ -55,6 +56,7 @@ def enemyEnter(selectEnemy):
         enemyList.append(enemy)
 def structureEnter():
     global structure
+    object_structure.TESTINGGAME = TESTINGGAME
     for i in range(1):
         st = object_structure.Box("test",50+500,500,100,100,"NPC",0,"box",100)
         st.collision = collider.Collision(st)

@@ -79,8 +79,9 @@ loadTerrain = []
 def enter():
     global loadImages,loadState,loadCount,loadBlocks,loadTerrain
     open_canvas(C_WIDTH, C_HIEGHT)
-    loadImages = LoadingImage()
     loadState = LoadingState()
+    loadImages = LoadingImage()
+
 
     initBox = []
     initMap = []
@@ -143,13 +144,16 @@ def update():
     delay(1/60)
     handle_events()
     if loadCount >=47:
-        if TESTINGGAME:
-            import object_control
-            object_control.TESTINGGAME = TESTINGGAME
-            gf.push_state(object_control)
-        else:
-            import DB
-            gf.push_state(DB)
+        # if TESTINGGAME:
+        #     import object_control
+        #     object_control.TESTINGGAME = TESTINGGAME
+        #
+        #     gf.push_state(object_control)
+        # else:
+        #     import DB
+        #     gf.push_state(DB)
+        import  object_control
+        gf.push_state(object_control)
 
 
 def handle_events():
