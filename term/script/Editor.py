@@ -13,6 +13,8 @@ map = []
 customMap = []
 rekeys = []
 
+toggle  = False
+toggleInKey = 0
 
 
 # 나의 앵글을 정수로 몫을 뽑는데 90도로 나누면 몇사분면인지 나온다.
@@ -62,7 +64,7 @@ def update():
    pass
 
 def handle_events():
-    global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys
+    global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey
     events = get_events()
     for key in events:
         if key.type == SDL_QUIT: gf.quit()
@@ -106,13 +108,42 @@ def handle_events():
                     mapMaker.y += mapMaker.h
 
             if key.key == SDLK_q:
-                rekeys.append((mapMaker.x,mapMaker.y,mapMaker.mapType))
+                if toggle:
+                    toggleInKey = 1
+                rekeys.append((mapMaker.x, mapMaker.y, mapMaker.mapType))
+                for m in rekeys:
+                    x, y, n = m
+                    if mapMaker.x != x and mapMaker.y != y and mapMaker.mapType != n:
+                        print("ok!")
+                        rekeys.append((mapMaker.x,mapMaker.y,mapMaker.mapType))
+                    elif mapMaker.x == x and mapMaker.y == y and mapMaker.mapType != n:
+                        print("겹친다!")
+                        idx = rekeys.index(m)
+                        rekeys.insert(idx,(mapMaker.x,mapMaker.y,mapMaker.mapType))
+                        rekeys.remove(m)
+                        break
+
+                toggleInKey = 1
             elif key.key == SDLK_w:
-                pass
+                for m in rekeys:
+                    x,y,n = m
+                    if mapMaker.x == x and mapMaker.y == y:
+                        rekeys.remove(m)
+                        break
+                if toggle:
+                    toggleInKey = 2
             elif key.key == SDLK_e:
-                pass
+                if toggle:
+                    toggleInKey = 0
+                    toggle = False
+                elif toggle == False:
+                    toggle = True
             elif key.key == SDLK_r:
                 pass
+
+
+
+
 
 
 
