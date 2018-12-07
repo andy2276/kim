@@ -61,7 +61,39 @@ def draw():
 
 
 def update():
-   pass
+    global toggle,toggleInKey,mapMaker,rekeys
+    if toggle:
+        px, py, pn = mapMaker.x, mapMaker.y, mapMaker.mapType
+        if toggleInKey == 1:
+            if rekeys == []:
+                rekeys.append((px, py, pn))
+            else:
+                troble = False
+                for m in rekeys:
+                    x, y, n = m
+                    if px == x and py == y:
+                        troble = True
+                        if pn == n:
+                            print("is same!")
+                            break
+                        elif pn != n:
+                            print("is change!")
+                            rekeys.append((px, py, pn))
+                            rekeys.remove(m)
+                            break
+                if troble == False:
+                    rekeys.append((px, py, pn))
+        elif toggleInKey == 2:
+            for m in rekeys:
+                x, y, _ = m
+                if mapMaker.x == x and mapMaker.y == y:
+                    rekeys.remove(m)
+                    break
+
+
+
+
+
 
 def handle_events():
     global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey
@@ -112,34 +144,44 @@ def handle_events():
                     toggleInKey = 1
                 else:toggleInKey= 0
 
-                createMap = (mapMaker.x, mapMaker.y, mapMaker.mapType)
+                px,py,pn = mapMaker.x, mapMaker.y, mapMaker.mapType
+
                 if rekeys == []:
-                    rekeys.append(createMap)
+                    rekeys.append((px,py,pn))
                 else:
+                    troble = False
                     for m in rekeys:
                         x,y,n = m
-                        if (mapMaker.x == x and mapMaker.y == y):
-                            if mapMaker.mapType != n:
-                                rekeys.remove(m)
-                                rekeys.append(createMap)
+                        if px == x and py == y :
+                            troble = True
+                            if pn == n:
+                                print("is same!")
                                 break
-                        elif (mapMaker.x != x and mapMaker.y != y):
-                            rekeys.append(createMap)
+                            elif pn != n:
+                                print("is change!")
+                                rekeys.append((px, py, pn))
+                                rekeys.remove(m)
+                                break
+                    if troble == False:
+                        rekeys.append((px, py, pn))
+
 
             elif key.key == SDLK_w:
                 for m in rekeys:
-                    x,y,n = m
+                    x,y,_ = m
                     if mapMaker.x == x and mapMaker.y == y:
                         rekeys.remove(m)
                         break
                 if toggle:
                     toggleInKey = 2
             elif key.key == SDLK_e:
+
                 if toggle:
                     toggleInKey = 0
                     toggle = False
                 elif toggle == False:
                     toggle = True
+                print("toggle is ", toggle,"toggle in key is ",toggleInKey)
             elif key.key == SDLK_r:
                 pass
     count = 0
