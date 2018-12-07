@@ -110,20 +110,22 @@ def handle_events():
             if key.key == SDLK_q:
                 if toggle:
                     toggleInKey = 1
-                rekeys.append((mapMaker.x, mapMaker.y, mapMaker.mapType))
-                for m in rekeys:
-                    x, y, n = m
-                    if mapMaker.x != x and mapMaker.y != y and mapMaker.mapType != n:
-                        print("ok!")
-                        rekeys.append((mapMaker.x,mapMaker.y,mapMaker.mapType))
-                    elif mapMaker.x == x and mapMaker.y == y and mapMaker.mapType != n:
-                        print("겹친다!")
-                        idx = rekeys.index(m)
-                        rekeys.insert(idx,(mapMaker.x,mapMaker.y,mapMaker.mapType))
-                        rekeys.remove(m)
-                        break
+                else:toggleInKey= 0
 
-                toggleInKey = 1
+                createMap = (mapMaker.x, mapMaker.y, mapMaker.mapType)
+                if rekeys == []:
+                    rekeys.append(createMap)
+                else:
+                    for m in rekeys:
+                        x,y,n = m
+                        if (mapMaker.x == x and mapMaker.y == y):
+                            if mapMaker.mapType != n:
+                                rekeys.remove(m)
+                                rekeys.append(createMap)
+                                break
+                        elif (mapMaker.x != x and mapMaker.y != y):
+                            rekeys.append(createMap)
+
             elif key.key == SDLK_w:
                 for m in rekeys:
                     x,y,n = m
@@ -140,6 +142,10 @@ def handle_events():
                     toggle = True
             elif key.key == SDLK_r:
                 pass
+    count = 0
+    for i in rekeys:
+        count +=1
+        print(count)
 
 
 
