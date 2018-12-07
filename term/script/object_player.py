@@ -23,8 +23,8 @@ class Body:
 
         self.canGo = 1
         self.rotSpeed= prs/10 * math.pi/60
-        self.fwSpeed = pfs*MOVE_TIME*self.canGo
-        self.bkSpeed = pbs*MOVE_TIME*self.canGo
+        self.fwSpeed = pfs
+        self.bkSpeed = pbs
         #print(self.fwSpeed,self.bkSpeed)
         self.rad = prad
         self.key = {}
@@ -50,12 +50,12 @@ class Body:
         if mov !=0:
             mv = None
             if self.key[SDLK_w]:
-                mv = self.fwSpeed
+                mv = self.fwSpeed*MOVE_TIME* self.canGo
             elif self.key[SDLK_s]:
-                mv = self.bkSpeed
+                mv = self.bkSpeed*MOVE_TIME* self.canGo
 
-            self.x += mov * mv * math.cos(self.rad)*self.canGo
-            self.y += mov * mv * math.sin(self.rad)*self.canGo
+            self.x += mov * mv * math.cos(self.rad)
+            self.y += mov * mv * math.sin(self.rad)
 
 
         return self.x, self.y

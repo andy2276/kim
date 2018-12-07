@@ -298,6 +298,6 @@ if __name__ == '__main__':
     import sys
     glCurrentModule = sys.modules[__name__]
     open_canvas(1200,800)
-
+    import game_framework as gf
     gf.run(glCurrentModule)
     close_canvas()
