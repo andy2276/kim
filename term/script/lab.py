@@ -10,7 +10,7 @@ from pico2d import *
 #
 #
 #
-print(-143%2)
+print((int)(43.3%4))
 
 # allTime= get_time()
 

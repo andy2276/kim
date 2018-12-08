@@ -1,5 +1,6 @@
 from pico2d import *
 
+print("welcom to object_constrol")
 import game_framework as gf
 import loading_state as lo
 import object_player
@@ -13,27 +14,35 @@ import delta_time
 
 
 # global TESTINGGAME,DELAYTIME,MOVE_TIME
-
+#testVar
 TESTINGGAME = False
-DELAYTIME = lo.TIMEDELAY
+#timeVar
+DELAYTIME = 1/120
 
 delta_time.set_delay(DELAYTIME)
 delta_time.startDeltaTime()
 global MOVE_TIME
 MOVE_TIME = 0
-
-
-
+#createVar
 enemyList = []
 projectile = []
 structure = []
-
 mapNum = []
 player = None
 enemy = None
-
 test = None
 
+#interface var to DB
+#player
+playerSelect = 0
+playerCurHp = 0
+playerCurMagnize = 0
+
+#stage
+enemyCount =0
+bagicCount = 0
+middleCount =0
+bossCount = 0
 def playerEnter(selectPlayer):
     global player,MOVE_TIME
     p = lo.loadState.player[selectPlayer]
@@ -45,21 +54,18 @@ def playerEnter(selectPlayer):
     player.collision = collider.Collision(player)
 
 
-def enemyEnter(selectEnemy):
+def enemyEnter(selectEnemy,countEnenmy):
     global enemy,enemyList,MOVE_TIME
-
     p = lo.loadState.enemy[selectEnemy]
     MOVE_TIME = delta_time.deltaTime()
     object_enemy.MOVE_TIME = MOVE_TIME
     object_enemy.TESTINGGAME = TESTINGGAME
     plus = 10
 
-    for i in range(plus):
-        rd = random.randint(1, plus)
+    for i in range(countEnenmy):
         #print(i)
         enemy = object_enemy.enemy(p["name"], p["x"] + (i*40)+200, p["y"] + (i*50)+200, p['rad'], p["rotateForce"], p['SpeedForce'],
-                                   p["ai"], p["width"], p['high'])
-        plus += 50
+                                   p["ai"], p["width"], p['high'],p["attackDelay"])
         enemy.collision = collider.Collision(enemy)
         enemyList.append(enemy)
 def structureEnter():
@@ -105,13 +111,27 @@ def enemyUpdate():
                     dist = math.sqrt((ae.x - e.x) ** 2 + (ae.y - e.y) ** 2)
                     tx,ty,dist = collider.isInRange(ae,e,0,True)
                     #print(math.asin(e.visualR/dist))
+
+            e.attackCool = MOVE_TIME
+            if e.state == 'attack':
+                e.attackIdle += e.attackCool
+                # enmey attack delay
+                if e.attackIdle >= e.attackDelay:
+
+                    missiles = object_projectile.missile(e.name, e.x, e.y, e.rad, "enemy",
+                                                         100, 20, "box", 10, 10)
+                    missiles.collision = collider.Collision(missiles)
+                    projectile.append(missiles)
+                    e.attackIdle = 0.0
+
+
         EnemyCheckOverlap()
         e.update()
 
 
 
 def projectileUpdate():
-    global player, enemy, projectile,test,MOVE_TIME
+    global player, enemy, projectile,test,MOVE_TIME,structure
     if player.barrel.attack:
         player.barrel.attack = False
         missiles=object_projectile.cannonball(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
@@ -119,24 +139,18 @@ def projectileUpdate():
         missiles.collision = collider.Collision(missiles)
         projectile.append(missiles)
 
-    for e in enemyList:
-        e.attackCool = MOVE_TIME
-        if e.state == 'attack':
-            e.attackIdle += e.attackCool
-            #enmey attack delay
-            if e.attackIdle >=e.attackDelay:
-                missiles = object_projectile.missile(e.name, e.x, e.y, e.rad,"enemy",
-                                                     100, 20, "box", 10, 10)
-                missiles.collision = collider.Collision(missiles)
-                projectile.append(missiles)
-                e.attackIdle = 0.0
-
-
     for m in projectile:
         m.update()
         if m.x <= 0 or m.x >= get_canvas_width() or \
                 m.y <= 0 or m.y >= get_canvas_height():
             projectile.remove(m)
+            break
+    for s in structure:
+        for m in projectile:
+            if m.collision.isCollider(s):
+                projectile.remove(m)
+                break
+
 
 
     #playerAttackToEnemy
@@ -147,9 +161,6 @@ def projectileUpdate():
                     enemyList.remove(e)
                     projectile.remove(m)
                     break#리스트 반복을 시키면 안된다.
-
-    #enemyAttackToPlayer
-    for m in projectile:
         for e in enemyList:
             if m.collision.isCollider(player):
                 if m.play == "enemy":
@@ -232,15 +243,26 @@ def attackOnject():
                 if m.collision.isCollider(e):
                     break
 
+
+
+
+
+
+
+
 def enter():
-    global player,enemy,test
-    mapEnter()
+    global player,enemy,test,playerSelect,bagicCount,middleCount,bossCount
+
+    #mapEnter()
 
     test = lo.UI("battleUI",1100,50,200,100,0)
-
-
-    playerEnter(0)
-    enemyEnter(0)
+    playerEnter(playerSelect)
+    if bagicCount != 0:
+        enemyEnter(0,bagicCount)
+    if middleCount != 0:
+        enemyEnter(1, bagicCount)
+    if bossCount !=0 :
+        enemyEnter(2,bossCount)
     structureEnter()
 
 def exit():
@@ -248,8 +270,8 @@ def exit():
 
 def draw():
     global player,enemy,projectile,structure,test
-    clear_canvas()
-    mapDraw()
+
+    #mapDraw()
     player.draw()
     test.draw()
     for s in structure:
@@ -258,7 +280,7 @@ def draw():
         e.draw()
     for m in projectile:
         m.draw()
-    update_canvas()
+
 
 
 def update():

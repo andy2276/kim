@@ -1,11 +1,13 @@
-{
-	"stage1":
+[
 	{	
-		"Map":0,
+		"stageNum":0,
+		"mapNum":0,
 		"structure":4,
-		"EnemyCount":10,
-		"bagic_enemy":7,
-		"middle_enemy":3
-
+		"enemyCount":10,
+		"enemySelect":0,
+		"bagic_enemy":10,
+		"middle_enemy":0,
+		"boss_enemy":0
+		
 	}
-}
+]

@@ -38,7 +38,8 @@
 			"SpeedForce":30,
 			"ai":0,
 			"width":56,
-			"high":75
+			"high":75,
+			"attackDelay":8.0
 		},
 		{
 			"name":"middle_enemy",
@@ -50,7 +51,8 @@
 			"SpeedForce":20,
 			"ai":0,
 			"width":58,
-			"high":75
+			"high":75,
+			"attackDelay":3.0
 		}
 	],
 	"projectile":

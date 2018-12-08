@@ -10,11 +10,11 @@
 #blocks 15X15!!
 
 
-
+print("welcom to loading_state!!")
 from pico2d import *
 import game_framework as gf
 import json
-import menu
+
 import delta_time
 
 # global TESTINGGAME,TIMEDELAY,C_WIDTH,C_HIEGHT,CW_HALF,CH_HALF,loadImages,loadState,loadCount,loadBlocks
@@ -24,7 +24,7 @@ global MOVE_TIME
 
 
 TESTINGGAME = False
-TIMEDELAY = 1/60
+TIMEDELAY = 0
 
 C_WIDTH, C_HIEGHT = 1200,800
 CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
@@ -32,16 +32,22 @@ CW_HALF,CH_HALF = C_WIDTH/2, C_HIEGHT/2
 class LoadingState:
     def __init__(self):
         global TESTINGGAME,TIMEDELAY
+
         test = open("testOption.json")
         data = json.load(test)
         if 1 == data["test"]:
            TESTINGGAME = True
         TIMEDELAY = data["delayTime"]
         test.close()
+
         map = open("stageInMap.json")
         self.mapData = json.load(map)
-
         map.close()
+
+        stage = open("stageInfo.json")
+        self.stageData = json.load(stage)
+        stage.close()
+
         op = open("object.json")
         datas = json.load(op)
         self.player = datas["player"]
@@ -82,10 +88,8 @@ class LoadingImage:
             "selectUI":load_image("../res/ui/main/selectUI.png"),
             "mainFont":load_image("../res/ui/main/mainFont_fix.png"),
             "bagic_player":load_image("../res/ui/main/select2.png"),
-            "super_player":load_image("../res/ui/main/select1.png")
-
-
-
+            "super_player":load_image("../res/ui/main/select1.png"),
+            "goUI":load_image("../res/ui/main/goUI.png")
         }
 
         self.imageCount = 7
@@ -107,7 +111,7 @@ class UI:
 
         self.handOn = False
         self.clickOn = False
-        self.clickOff = True
+        self.clickOff = False
         self.eventOn = False
         self.eventTime = 0
 
@@ -123,7 +127,7 @@ class UI:
         loadImages.main_menu_image[self.name].draw(self.x,self.y)
 
     def update(self):
-        if self.clickOn:
+        if self.clickOff and self.handOn:
             self.eventOn = True
         else:
             self.eventOn = False
@@ -142,7 +146,13 @@ class UI:
                 self.handOn = False
 
             if (keys.type,keys.button) == (SDL_MOUSEBUTTONUP,SDL_BUTTON_LEFT):
+                self.clickOff = True
+            else:
+                self.clickOff = False
+            if (keys.type,keys.button) == (SDL_MOUSEBUTTONDOWN,SDL_BUTTON_LEFT):
                 self.clickOn = True
+            else:
+                self.clickOn = False
 
         # print(self.handOn,self.clickOn,self.eventOn)
         # if self.handOn:
@@ -154,7 +164,7 @@ class UI:
 
 
 class selectUI(UI):
-    def __init__(self,sN, sX, sY, sW, sH, sImgN):
+    def __init__(self,sN, sX, sY, sW, sH, sImgN,sOption = True):
         self.name = sN
         self.x, self.y = sX, sY
         self.w, self.h = sW, sH
@@ -167,6 +177,10 @@ class selectUI(UI):
         self.eventOn = False
         self.eventTime = 0
 
+        self.selfOption = sOption
+        if self.selfOption == False:
+            self.optionVar = 0
+
 
         self.k = 0
 
@@ -177,11 +191,12 @@ class selectUI(UI):
 
     def draw(self):
         global loadImages
-        if self.handOn:
-            self.k = 1
-            if self.eventOn:
-                self.k = 2
-        else:self.k = 0
+        if self.selfOption:
+            if self.handOn:
+                self.k = 1
+                if self.eventOn:
+                    self.k = 2
+            else:self.k = 0
 
 
         loadImages.main_menu_image[self.name].clip_draw(self.k*self.w,self.imageNum*self.h,self.w,self.h, self.x, self.y)
@@ -194,7 +209,7 @@ def enter():
 
 
     initBox = []
-    initMap = []
+
     for y in range(15):
         for x in range(15):
             initBox.append((loadImages.object_structure_image["blocks"]).clip_image(100*x,100*y,100,100))
@@ -203,14 +218,20 @@ def enter():
 
     for y in range(3):
         for x in range(3):
-            initMap.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
-        loadTerrain.append(initMap)
-        initMap = []
+            loadTerrain.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
 
     loadCount =0
 
 def exit():
     close_canvas()
+    global  loadImages,loadState,loadCount,loadBlocks,loadTerrain
+    print("loading close!")
+    loadImages = None
+    loadState = None
+    loadCount = 0
+    loadBlocks = []
+    loadTerrain = []
+    del loadImages,loadState,loadCount,loadBlocks,loadTerrain
     pass
 
 
@@ -229,39 +250,11 @@ def draw():
 def update():
     global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks,TESTINGGAME
     loadCount += 5 if loadCount <=47 else 0
-   #  #----------------------
-   #  if loadImages == None:
-   #      loadImages = LoadingImage()
-   #
-   #      loadCount = curTime - allTime
-   #      allTime = curTime
-   #  if loadState == None:
-   #      loadState = LoadingState()
-   #
-   #
-   #
-   #
-   #
-   #
-   #
-   #
-   #
-   #
-   #
-   #
-   # #---------------------
+
     delay(1/60)
     handle_events()
     if loadCount >=47:
-        # if TESTINGGAME:
-        #     import object_control
-        #     object_control.TESTINGGAME = TESTINGGAME
-        #
-        #     gf.push_state(object_control)
-        # else:
-        #     import DB
-        #     gf.push_state(DB)
-        import  object_control
+        import menu
         gf.push_state(menu)
 
 
@@ -271,6 +264,7 @@ def handle_events():
         if key.type == SDL_QUIT: gf.quit()
         elif (key.type,key.key) == (SDL_KEYDOWN, SDLK_ESCAPE): gf.pop_state()
 def pause():
+    print("loading on!!")
     pass
 
 def resume():

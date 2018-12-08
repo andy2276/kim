@@ -22,7 +22,7 @@ class enemy:
     _STATE = {'stay','recon','found','move','attack'}
     _COUNT = 1
 
-    def __init__(self,sName,sX,sY,sRad,sRs,sFs,sAi,w,h):
+    def __init__(self,sName,sX,sY,sRad,sRs,sFs,sAi,w,h,delay):
         self.name = sName
         self.play = 'enemy'
         self.x, self.y = sX,sY
@@ -31,7 +31,7 @@ class enemy:
         self.hp =100
         self.damage = 10
         self.attackCool = 1/120
-        self.attackDelay = 1.0
+        self.attackDelay = delay
         self.attackIdle = 0.0
 
         self.tx,self.ty = 0,0

@@ -1,3 +1,5 @@
+
+print("welcome to menu!!!")
 from pico2d import *
 import game_framework as gf
 import loading_state as lo
@@ -31,6 +33,12 @@ def enter():
 
 
 def exit():
+    global fontStart, fontReset, fontQuit
+    fontStart = None
+    fontReset = None
+    fontQuit = None
+    del fontStart, fontReset, fontQuit
+    print("menu exit!!")
     pass
 
 
@@ -57,8 +65,8 @@ def update():
     fontQuit.update()
 
     if fontStart.eventOn:
-        import stage_control
-        gf.change_state(stage_control)
+        import DB
+        gf.change_state(DB)
     elif fontQuit.eventOn:
         Running = False
         gf.quit()

@@ -6,19 +6,20 @@
 #//--------/seventh,eighth,ninth : define/---------------------------------//
 #//---------------------/Notice End/-----------------------------------------//
 
-
+print("start!!! logo_state!!!")
 #first import pico2d
 from pico2d import *
 #second import game_framework - keyword 'as' is only use game_framework
 import game_framework as gf
 #third import next module
-import loading_state
+
 
 
 logo = None
 loadingBar = None
 flowTime = 0.0
 test = 0
+
 
 def enter():
 	global logo
@@ -31,6 +32,7 @@ def exit():
 	close_canvas()
 	global logo
 	del logo
+	print("logo exit!!!")
 
 def draw():
 	global logo
@@ -42,6 +44,7 @@ def update():
 	global logo,flowTime
 
 	if flowTime >=3.0:
+		import loading_state
 		gf.change_state(loading_state)
 		handle_events()
 	else :
