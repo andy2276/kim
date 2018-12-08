@@ -24,7 +24,7 @@ gameLoof = False
 #gameObject_control
 gameobject = None
 
-def stageClear():
+def isStageClear():
     global gameobject
     a = 0
     for i in gameobject.enemyList:
@@ -98,17 +98,20 @@ def selectHandle_event(key):
     seletR.handle_event(key)
     seletL.handle_event(key)
     goUI.handle_event(key)
-def MapEnter():
-    pass
-
-
-
+def MapDraw(stageNum):
+    for m in lo.loadState.mapData[stageNum]:
+        x,y,n = m
+        lo.loadTerrain[stageNum][n].draw(x,y)
+    #print("map create!!")
 
 
 def enter():
     global gameFist,gameLoof,gameobject
     if gameLoof:
-        print("gameEnter!")
+        if isStageClear():
+            print("clear!")
+        else:
+            print("gameEnter!")
     elif gameFist:
         selectEneter()
 
@@ -119,7 +122,11 @@ def draw():
     global gameFist, gameLoof,gameobject
     clear_canvas()
     if gameLoof:
-        gameobject.draw()
+        if isStageClear():
+            lo.loadImages.main_menu_image ["stageClear"].draw(lo.CW_HALF,lo.CH_HALF)
+        else:
+            MapDraw(db.stageData.stageNum)
+            gameobject.draw()
     elif gameFist:
         selectDraw()
 
@@ -129,25 +136,28 @@ def draw():
 def update():
     global gameFist, gameLoof,gameobject
     if gameLoof:
-        if stageClear():
+        if isStageClear():
             print("clear!")
-        lo.loadTerrain[db.stageData.mapNum]
-        gameobject.update()
+        else:
+            gameobject.update()
 
 
     elif gameFist:
         selectUdate()
 
 
-
-
-
-
-
 def handle_events():
     global Running,gameFist, gameLoof, gameobject
+
     if gameLoof:
-        gameobject.handle_events()
+        if isStageClear():
+            events = get_events()
+            for key in events:
+                if key.type == SDL_QUIT:
+                    gf.quit()
+            print("clear!")
+        else:
+            gameobject.handle_events()
     if gameFist:
         events = get_events()
         for key in events:

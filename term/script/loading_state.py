@@ -89,7 +89,8 @@ class LoadingImage:
             "mainFont":load_image("../res/ui/main/mainFont_fix.png"),
             "bagic_player":load_image("../res/ui/main/select2.png"),
             "super_player":load_image("../res/ui/main/select1.png"),
-            "goUI":load_image("../res/ui/main/goUI.png")
+            "goUI":load_image("../res/ui/main/goUI.png"),
+            "stageClear":load_image("../res/ui/main/stageClear.png")
         }
 
         self.imageCount = 7
@@ -98,8 +99,8 @@ loadImages = None
 loadState = None
 loadCount = 0
 loadBlocks = []
-
 loadTerrain = []
+loadProjectile = []
 class UI:
     def __init__(self,sN, sX, sY, sW, sH, sImgN):
 
@@ -215,11 +216,12 @@ def enter():
             initBox.append((loadImages.object_structure_image["blocks"]).clip_image(100*x,100*y,100,100))
         loadBlocks.append(initBox)
         initBox = []
-
-    for y in range(3):
-        for x in range(3):
-            loadTerrain.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
-
+        stageMaps = []
+    for s in range(1):
+        for y in range(3):
+            for x in range(3):
+                stageMaps.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
+        loadTerrain.append(stageMaps)
     loadCount =0
 
 def exit():

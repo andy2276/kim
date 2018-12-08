@@ -59,8 +59,18 @@
 	[
 		{
 			"name":"cannonball",
+			"damage":50,
 			"speed":500,
-			"radius":5,
+			"visualR":5,
+			"colType":"circle",
+			"width":10,
+			"high":10
+		},
+		{
+			"name":"fireball",
+			"damage":60,
+			"speed":400,
+			"visualR":10,
 			"colType":"circle",
 			"width":10,
 			"high":10

@@ -60,8 +60,6 @@ def enemyEnter(selectEnemy,countEnenmy):
     MOVE_TIME = delta_time.deltaTime()
     object_enemy.MOVE_TIME = MOVE_TIME
     object_enemy.TESTINGGAME = TESTINGGAME
-    plus = 10
-
     for i in range(countEnenmy):
         #print(i)
         enemy = object_enemy.enemy(p["name"], p["x"] + (i*40)+200, p["y"] + (i*50)+200, p['rad'], p["rotateForce"], p['SpeedForce'],
@@ -79,14 +77,17 @@ def structureEnter():
 #     global mapNum
 #     for i in range(72):
 #         mapNum.append((random.randint(0,2),random.randint(0,2)))
+def playerUpdate():
+    global player, enemy, test, MOVE_TIME,projectile
+    player.update()
+    if player.barrel.attack:
+        player.barrel.attack = False
+        missiles=object_projectile.projectile(player.name,"missile", player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
+                                           "player",500,10,10,"circle",10,10)
+        missiles.collision = collider.Collision(missiles)
+        projectile.append(missiles)
 
 
-def mapDraw():
-    global mapNum
-    for y in range(12):
-        for x in range(6):
-            i,j=mapNum[(y*6)+x]
-            lo.loadTerrain[i][j].draw((y*150)+75,(x*150)+75)
 
 def enemyUpdate():
     global player, enemy,test,MOVE_TIME
@@ -117,9 +118,8 @@ def enemyUpdate():
                 e.attackIdle += e.attackCool
                 # enmey attack delay
                 if e.attackIdle >= e.attackDelay:
-
-                    missiles = object_projectile.missile(e.name, e.x, e.y, e.rad, "enemy",
-                                                         100, 20, "box", 10, 10)
+                    missiles = object_projectile.projectile(e.name,"cannonball", e.x, e.y, e.rad, "enemy",
+                                                         500, 20, 10,"box", 10, 10)
                     missiles.collision = collider.Collision(missiles)
                     projectile.append(missiles)
                     e.attackIdle = 0.0
@@ -131,26 +131,20 @@ def enemyUpdate():
 
 
 def projectileUpdate():
-    global player, enemy, projectile,test,MOVE_TIME,structure
-    if player.barrel.attack:
-        player.barrel.attack = False
-        missiles=object_projectile.cannonball(player.name, player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
-                                           "player",300,5,"circle",10,10)
-        missiles.collision = collider.Collision(missiles)
-        projectile.append(missiles)
+    global player, enemy, projectile,test,MOVE_TIME,structure,projectile
 
+    for s in structure:
+        for m in projectile:
+            if m.collision.isCollider(s):
+                projectile.remove(m)
+                break
     for m in projectile:
         m.update()
         if m.x <= 0 or m.x >= get_canvas_width() or \
                 m.y <= 0 or m.y >= get_canvas_height():
             projectile.remove(m)
+            print("out!!")
             break
-    for s in structure:
-        for m in projectile:
-            if s.collision.isCollider(m):
-                projectile.remove(m)
-                break
-
 
 
     #playerAttackToEnemy
@@ -158,18 +152,20 @@ def projectileUpdate():
         for e in enemyList:
             if m.collision.isCollider(e):
                 if m.play != e.play:
-                    enemyList.remove(e)
+                    e.hp -= m.damage
+
+                    if e.hp <= 0:
+                        enemyList.remove(e)
                     projectile.remove(m)
                     break#리스트 반복을 시키면 안된다.
         for e in enemyList:
             if m.collision.isCollider(player):
                 if m.play == "enemy":
-                    player.hp -= e.damage
+                    player.hp -= m.damage
+                    print(player.hp)
                     projectile.remove(m)
                     #print(player.hp)
                     break
-
-
 
 def EnemyCheckOverlap():
     global player, enemyList, projectile,structure
@@ -288,10 +284,12 @@ def update():
     #print(delta_time.get_fps())
     timeUpdate()
     #print(test.handOn,test.clickOn,test.eventOn)
+
     if test.eventOn:
         print("event On!!!")
-    player.update()
+
     projectileUpdate()
+    playerUpdate()
     enemyUpdate()
 
     #print(len(projectile))
