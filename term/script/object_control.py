@@ -137,6 +137,8 @@ def projectileUpdate():
         for m in projectile:
             if m.collision.isCollider(s):
                 projectile.remove(m)
+                s.x -= math.cos(m.rad) * m.damage
+                s.y -= math.sin(m.rad) * m.damage
                 break
     for m in projectile:
         m.update()
@@ -153,7 +155,8 @@ def projectileUpdate():
             if m.collision.isCollider(e):
                 if m.play != e.play:
                     e.hp -= m.damage
-
+                    e.x -= math.cos(m.rad) * e.fwForce*m.damage
+                    e.y -= math.sin(m.rad) * e.fwForce*m.damage
                     if e.hp <= 0:
                         enemyList.remove(e)
                     projectile.remove(m)

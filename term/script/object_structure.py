@@ -40,8 +40,8 @@ class Box(structure):
             self.imageNumX = 0
             self.imageNumY = 0
         else:
-            self.imageNumX = sImgN % 10
-            self.imageNumY = sImgN // 10
+            self.imageNumX = sImgN % 15
+            self.imageNumY = sImgN // 15
         self.collision = None
         self.colType = sColType
         self.crush = False
