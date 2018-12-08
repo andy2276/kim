@@ -52,9 +52,13 @@ def draw():
 
 def update():
     global fontStart, fontReset, fontQuit,Running
+    fontStart.update()
+    fontReset.update()
+    fontQuit.update()
+
     if fontStart.eventOn:
-        import object_control
-        gf.change_state(object_control)
+        import stage_control
+        gf.change_state(stage_control)
     elif fontQuit.eventOn:
         Running = False
         gf.quit()

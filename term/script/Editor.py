@@ -1,7 +1,6 @@
 from pico2d import *
 import game_framework as gf
-import math
-import loading_state as lo
+import json
 
 CW = 1200
 CH = 800
@@ -12,6 +11,7 @@ mapImage = None
 map = []
 customMap = []
 rekeys = []
+stageNum = 0
 
 toggle  = False
 toggleInKey = 0
@@ -38,12 +38,6 @@ def enter():
     for x in range(3):
         for y in range(3):
             map.append(mapImage.clip_image(mapMaker.w*x,mapMaker.h*y,mapMaker.w,mapMaker.h))
-
-
-
-
-
-
 
 def exit():
 	pass
@@ -96,7 +90,7 @@ def update():
 
 
 def handle_events():
-    global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey
+    global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey,stageNum
     events = get_events()
     for key in events:
         if key.type == SDL_QUIT: gf.quit()
@@ -183,11 +177,21 @@ def handle_events():
                     toggle = True
                 print("toggle is ", toggle,"toggle in key is ",toggleInKey)
             elif key.key == SDLK_r:
-                pass
-    count = 0
-    for i in rekeys:
-        count +=1
-        print(count)
+                if rekeys == []:
+                    print("No Date!!! you must injection in rekeys for Data!!")
+                else:
+                    # with open('stage')
+                    customMap.append(rekeys)
+                    stageNum +=1
+                    print(json.dumps(customMap,ensure_ascii=False,indent="\t"))
+                    with open("stageInMap.json",'a',encoding="utf-8")as make_file:
+                        json.dump(customMap,make_file,ensure_ascii=False,indent="\t")
+                    print("save done!!")
+
+
+
+
+        #print(rekeys)
 
 
 

@@ -10,7 +10,7 @@ from pico2d import *
 #
 #
 #
-
+print(-143%2)
 
 # allTime= get_time()
 
@@ -33,5 +33,5 @@ from pico2d import *
 # print(dt.get_fps())
 #
 # print("me!!!!",1/60)
-for i in range(15):
-    print(150*i//5)
+# for i in range(15):
+#     print(150*i//5)

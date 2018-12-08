@@ -38,6 +38,10 @@ class LoadingState:
            TESTINGGAME = True
         TIMEDELAY = data["delayTime"]
         test.close()
+        map = open("stageInMap.json")
+        self.mapData = json.load(map)
+
+        map.close()
         op = open("object.json")
         datas = json.load(op)
         self.player = datas["player"]
@@ -76,7 +80,11 @@ class LoadingImage:
         self.main_menu_image = {"background":load_image("../res/ui/main/background_fix.png"),
             "battleUI":load_image("../res/ui/main/battleUI.png"),
             "selectUI":load_image("../res/ui/main/selectUI.png"),
-            "mainFont":load_image("../res/ui/main/mainFont_fix.png")
+            "mainFont":load_image("../res/ui/main/mainFont_fix.png"),
+            "bagic_player":load_image("../res/ui/main/select2.png"),
+            "super_player":load_image("../res/ui/main/select1.png")
+
+
 
         }
 
@@ -99,8 +107,10 @@ class UI:
 
         self.handOn = False
         self.clickOn = False
-        #self.clickOff = True
+        self.clickOff = True
         self.eventOn = False
+        self.eventTime = 0
+
 
         self.left,self.bottom = self.x- self.w/2,self.y - self.h/2
         self.right,self.top = self.x + self.w/2,self.y+self.h/2
@@ -113,28 +123,26 @@ class UI:
         loadImages.main_menu_image[self.name].draw(self.x,self.y)
 
     def update(self):
+        if self.clickOn:
+            self.eventOn = True
+        else:
+            self.eventOn = False
         pass
 
+
+
+
+
     def handle_event(self,keys):
-        #print(self.left,self.right,self.bottom,self.top,keys.x,C_HIEGHT-keys.y)
-        #print(keys.x,keys.y- C_HIEGHT)
         if keys.x != None:
+            self.eventOn = False
             if self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top:
                 self.handOn = True
             elif False == (self.left <= keys.x and keys.x <=self.right and self.bottom <= C_HIEGHT-keys.y  and C_HIEGHT-keys.y <= self.top):
                 self.handOn = False
-                return
 
-            if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
+            if (keys.type,keys.button) == (SDL_MOUSEBUTTONUP,SDL_BUTTON_LEFT):
                 self.clickOn = True
-            else:
-                self.clickOn = False
-
-            if self.clickOn and self.handOn:
-                    self.eventOn = True
-            elif (self.clickOn and self.handOn) == False:
-                self.eventOn = False
-
 
         # print(self.handOn,self.clickOn,self.eventOn)
         # if self.handOn:
@@ -155,8 +163,10 @@ class selectUI(UI):
 
         self.handOn = False
         self.clickOn = False
-        # self.clickOff = True
+        self.clickOff = True
         self.eventOn = False
+        self.eventTime = 0
+
 
         self.k = 0
 

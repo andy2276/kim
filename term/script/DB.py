@@ -1,39 +1,45 @@
 from pico2d import *
 
 import game_framework as gf
-import  loading_state as lo
-import math
+import loading_state as lo
+
+class playerInfo:
+    def __init__(self):
+        self.select = 0
+        self.CurHp = 0
+        self.Magnize = 0
 
 class stageInfo:
     def __init__(self):
-        self.selectPlayer = 0
-        self.playerCurHp = 0
-        self.playerCurMagnize = 0
+        self.Num = 0
+        self.map = 0
+        self.structure = 0
+        self.enemyCount = 0
+        self.bagic_enemy = 0
+        self.middle_enemy = 0
+        self.boss_enemy = 0
 
-
-
+global playerData,stageData
+playerData = playerInfo()
+stageData = stageInfo()
 
 def enter():
+    global playerData, stageData
+    print("Data base on!")
+
     pass
 
 def exit():
 	pass
 
 def draw():
-    global player,enemy,projectile,structure
-    clear_canvas()
-
-    update_canvas()
-
+    pass
 
 def update():
    pass
 
 def handle_events():
-    events = get_events()
-    for key in events:
-        if key.type == SDL_QUIT: gf.quit()
-        elif (key.type,key.key) == (SDL_KEYDOWN, SDLK_ESCAPE): gf.pop_state()
+    pass
 
 
 def pause():
