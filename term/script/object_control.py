@@ -211,10 +211,17 @@ def structureCheckOverlap():
         if s.collision.isCollider(player):
             player.body.canGo = 0
             if player.body.canGo == 0:
-                nrad = math.atan2(s.y - e.y, s.x - e.x)
-                player.x -= math.cos(nrad)
-                player.y -= math.sin(nrad)
+                nrad = math.atan2(s.y - player.y, s.x - player.x)
+                player.x -= math.cos(nrad)*player.bodyBkSpeed
+                player.y -= math.sin(nrad)*player.bodyBkSpeed
         else: player.body.canGo= 1
+
+        for bs in structure:
+            if s.collision.isCollider(bs):
+                nrad = math.atan2(s.y - bs.y, s.x - bs.x)
+                s.x -= math.cos(nrad)
+                s.y -= math.sin(nrad)
+
 
 
 def timeUpdate():

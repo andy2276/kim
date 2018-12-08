@@ -12,6 +12,7 @@ strImage = None
 
 map = []
 customMap = []
+customStructure = []
 rekeys = []
 stageNum = 0
 
@@ -42,7 +43,7 @@ class StrMapMaker():
         self.w,self.h = 100,100
         self.mapType = 0
     def draw(self):
-        strImage.clip_draw(self.left,self.bottom,self.w,self.h.x,self.y)
+        strImage.clip_draw(self.left,self.bottom,self.w,self.h,self.x,self.y)
 
 
 
@@ -66,7 +67,7 @@ def draw():
     clear_canvas()
     for i in rekeys:
         if isStructure:
-            l,b,x,y = rekeys
+            l,b,x,y = i
             strImage.clip_draw(l,b,strMaker.w,strMaker.h,x,y)
         else:
             x,y,n = i
@@ -98,7 +99,17 @@ def update():
                 troble = False
                 for m in rekeys:
                     if isStructure:
-                        pass
+                        l,b,x,y =m
+                        if psx == x and psy == y:
+                            troble = True
+                            if psl ==l and psb == b  :
+                                print("is Same left and bottom!")
+                                break
+                        elif psl ==l or psb == b :
+                            print("changing this")
+                            rekeys.append((psl,psb,psx,psy))
+                            rekeys.remove(m)
+                            break
                     else:
                         x, y, n = m
                         if px == x and py == y:
@@ -113,13 +124,16 @@ def update():
                                 break
                 if troble == False:
                     if isStructure:
-                        pass
+                        rekeys.append((psl, psb, psx, psy))
                     else:
                         rekeys.append((px, py, pn))
         elif toggleInKey == 2:
             for m in rekeys:
                 if isStructure:
-                    pass
+                    _,_,x,y = m
+                    if strMaker.x ==x and strMaker.y == y:
+                        rekeys.remove(m)
+                        break
                 else:
                     x, y, _ = m
                     if mapMaker.x == x and mapMaker.y == y:
@@ -132,7 +146,10 @@ def update():
 
 
 def handle_events():
-    global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey,stageNum,isStructure,strMaker
+    global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey,stageNum,isStructure,strMaker,\
+        customStructure
+
+
     events = get_events()
     for key in events:
         if key.type == SDL_QUIT: gf.quit()
@@ -140,47 +157,47 @@ def handle_events():
         elif (key.type) == (SDL_KEYDOWN):
             if key.key == SDLK_1:
                 if isStructure:
-                    pass
+                    strMaker.left =0
                 else:
                     mapMaker.mapType = 0
             elif key.key == SDLK_2:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w
                 else:
                     mapMaker.mapType = 1
             elif key.key == SDLK_3:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*2
                 else:
                     mapMaker.mapType = 2
             elif key.key == SDLK_4:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*3
                 else:
                     mapMaker.mapType = 3
             elif key.key == SDLK_5:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*4
                 else:
                     mapMaker.mapType = 4
             elif key.key == SDLK_6:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*5
                 else:
                     mapMaker.mapType = 5
             elif key.key == SDLK_7:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*6
                 else:
                     mapMaker.mapType = 6
             elif key.key == SDLK_8:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*7
                 else:
                     mapMaker.mapType = 7
             elif key.key == SDLK_9:
                 if isStructure:
-                    pass
+                    strMaker.left = strMaker.w*8
                 else:
                     mapMaker.mapType = 8
             elif key.key == SDLK_0:
@@ -190,33 +207,59 @@ def handle_events():
                 else:
                     isStructure =True
                     print("structureMaker is", isStructure)
-
+            if isStructure:
+                if key.key == SDLK_t:
+                    strMaker.bottom +=strMaker.h
+                    if strMaker.bottom > 1500:
+                        strMaker.bottom -= strMaker.h
+                elif key.key == SDLK_g:
+                    strMaker.bottom -=strMaker.h
+                    if strMaker.bottom < 0:
+                        strMaker.bottom += strMaker.h
+                elif key.key == SDLK_f:
+                    strMaker.left -= strMaker.w
+                    if strMaker.left < 0 :
+                        strMaker.left +=strMaker.w
+                elif key.key == SDLK_h:
+                    strMaker.left += strMaker.w
+                    if strMaker.left > 1500:
+                        strMaker.left -= strMaker.w
 
             if key.key == SDLK_RIGHT:
                 if isStructure:
-                    pass
+                    strMaker.x += strMaker.w
+                    if strMaker.x >= CW:
+                        strMaker.x -= strMaker.w
                 else:
-
                     mapMaker.x += mapMaker.w
                 if mapMaker.x >=CW:
                     mapMaker.x -=  mapMaker.w
+
             elif key.key == SDLK_LEFT:
                 if isStructure:
-                    pass
+                    strMaker.x -= strMaker.w
+                    if strMaker.x <= 0:
+                        strMaker.x += strMaker.w
                 else:
                     mapMaker.x -=  mapMaker.w
                 if mapMaker.x <= 0:
                     mapMaker.x +=  mapMaker.w
+
             elif key.key == SDLK_UP:
                 if isStructure:
-                    pass
+                    strMaker.y += strMaker.h
+                    if strMaker.y >= CH + strMaker.h:
+                        strMaker.y -= strMaker.h
                 else:
                     mapMaker.y +=  mapMaker.h
                 if mapMaker.y >= CH+mapMaker.h:
                     mapMaker.y -= mapMaker.h
+
             elif key.key == SDLK_DOWN:
                 if isStructure:
-                    pass
+                    strMaker.y -= strMaker.h
+                    if strMaker.y <= 0:
+                        strMaker.y += strMaker.h
                 else:
                     mapMaker.y -= mapMaker.h
                 if mapMaker.y <= 0:
@@ -230,18 +273,31 @@ def handle_events():
                     toggleInKey = 1
                 else:toggleInKey= 0
 
-                px,py,pn = mapMaker.x, mapMaker.y, mapMaker.mapType
+                if isStructure:
+                    psl, psb, psx, psy = strMaker.left, strMaker.bottom, strMaker.x, strMaker.y
+                else:
+                    px,py,pn = mapMaker.x, mapMaker.y, mapMaker.mapType
 
                 if rekeys == []:
                     if isStructure:
-                        pass
+                        rekeys.append((psl, psb, psx, psy))
                     else:
                         rekeys.append((px,py,pn))
                 else:
                     troble = False
                     for m in rekeys:
                         if isStructure:
-                            pass
+                            l,b,x,y = m
+                            if psx == x and psy == y:
+                                troble = True
+                                if psl == l and psb == b:
+                                    print("structure you press key q, perfect same!!")
+                                    break
+                                elif psl != l or psb != b:
+                                    print("structure wow different thing,changing")
+                                    rekeys.append((psl, psb, psx, psy))
+                                    rekeys.remove(m)
+                                    break
                         else:
                             x,y,n = m
                             if px == x and py == y :
@@ -256,7 +312,7 @@ def handle_events():
                                     break
                     if troble == False:
                         if isStructure:
-                            pass
+                            rekeys.append((psl, psb, psx, psy))
                         else:
                             rekeys.append((px, py, pn))
 
@@ -264,7 +320,10 @@ def handle_events():
             elif key.key == SDLK_w:
                 for m in rekeys:
                     if isStructure:
-                        pass
+                        _,_,x,y = m
+                        if strMaker.x == x and strMaker.y == y:
+                            rekeys.remove(m)
+                            break
                     else:
                         x,y,_ = m
                         if mapMaker.x == x and mapMaker.y == y:
@@ -285,14 +344,18 @@ def handle_events():
                 else:
                     # with open('stage')
                     if isStructure:
-                        pass
+                        customStructure.append(rekeys)
+                        print(json.dumps(customStructure,ensure_ascii=False,indent=""))
+                        with open("stageInStructure.json",'a',encoding="utf-8")as make_f:
+                            json.dump(customStructure,make_f,ensure_ascii=False,indent="")
+                            print("structure save done!!")
                     else:
                         customMap.append(rekeys)
                         stageNum +=1
                         print(json.dumps(customMap,ensure_ascii=False,indent="\t"))
                         with open("stageInMap.json",'a',encoding="utf-8")as make_file:
                             json.dump(customMap,make_file,ensure_ascii=False,indent="\t")
-                        print("save done!!")
+                        print("map save done!!")
 
 
 
