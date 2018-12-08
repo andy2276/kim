@@ -75,10 +75,10 @@ def structureEnter():
         st = object_structure.Box("test",50+500,500,100,100,"NPC",0,"box",100)
         st.collision = collider.Collision(st)
         structure.append(st)
-def mapEnter():
-    global mapNum
-    for i in range(72):
-        mapNum.append((random.randint(0,2),random.randint(0,2)))
+# def mapEnter():
+#     global mapNum
+#     for i in range(72):
+#         mapNum.append((random.randint(0,2),random.randint(0,2)))
 
 
 def mapDraw():
@@ -147,7 +147,7 @@ def projectileUpdate():
             break
     for s in structure:
         for m in projectile:
-            if m.collision.isCollider(s):
+            if s.collision.isCollider(m):
                 projectile.remove(m)
                 break
 
@@ -284,7 +284,7 @@ def draw():
 
 
 def update():
-    global player, enemy, projectile,MOVE_TIME,test
+    global player, enemy, projectile,MOVE_TIME,test,enemyList
     #print(delta_time.get_fps())
     timeUpdate()
     #print(test.handOn,test.clickOn,test.eventOn)
@@ -293,10 +293,8 @@ def update():
     player.update()
     projectileUpdate()
     enemyUpdate()
+
     #print(len(projectile))
-
-
-
 
 
 def handle_events():

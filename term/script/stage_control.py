@@ -24,6 +24,15 @@ gameLoof = False
 #gameObject_control
 gameobject = None
 
+def stageClear():
+    global gameobject
+    a = 0
+    for i in gameobject.enemyList:
+        a += 1
+    if a == 0:
+        return True
+    else:
+        return False
 
 def selectEneter():
     global seletR, seletL, chooseChar, goUI,gameLoof
@@ -120,16 +129,12 @@ def draw():
 def update():
     global gameFist, gameLoof,gameobject
     if gameLoof:
+        if stageClear():
+            print("clear!")
         lo.loadTerrain[db.stageData.mapNum]
-
-
-
-
-
-
-
-
         gameobject.update()
+
+
     elif gameFist:
         selectUdate()
 
