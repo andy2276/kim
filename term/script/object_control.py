@@ -69,8 +69,8 @@ def enemyEnter(selectEnemy,countEnenmy):
 def structureEnter():
     global structure
     object_structure.TESTINGGAME = TESTINGGAME
-    for i in range(1):
-        st = object_structure.Box("test",50+500,500,100,100,"NPC",0,"box",100)
+    for i in range(2):
+        st = object_structure.Box("test",(100*i+500),500+i*120,100,100,"NPC",0,"box",100)
         st.collision = collider.Collision(st)
         structure.append(st)
 # def mapEnter():
@@ -137,8 +137,12 @@ def projectileUpdate():
         for m in projectile:
             if m.collision.isCollider(s):
                 projectile.remove(m)
-                s.x -= math.cos(m.rad) * m.damage
-                s.y -= math.sin(m.rad) * m.damage
+                if m.play == "player":
+                    s.x -= math.cos(m.rad) * m.damage*0.1
+                    s.y -= math.sin(m.rad) * m.damage*0.1
+                elif m.play == "enemy":
+                    s.x += math.cos(m.rad) * m.damage * 0.1
+                    s.y += math.sin(m.rad) * m.damage * 0.1
                 break
     for m in projectile:
         m.update()
@@ -147,8 +151,6 @@ def projectileUpdate():
             projectile.remove(m)
             print("out!!")
             break
-
-
     #playerAttackToEnemy
     for m in projectile:
         for e in enemyList:
@@ -216,11 +218,7 @@ def structureCheckOverlap():
                 player.y -= math.sin(nrad)*player.bodyBkSpeed
         else: player.body.canGo= 1
 
-        for bs in structure:
-            if s.collision.isCollider(bs):
-                nrad = math.atan2(s.y - bs.y, s.x - bs.x)
-                s.x -= math.cos(nrad)
-                s.y -= math.sin(nrad)
+
 
 
 

@@ -42,6 +42,8 @@ class Box(structure):
         else:
             self.imageNumX = sImgN % 15
             self.imageNumY = sImgN // 15
+
+
         self.collision = None
         self.colType = sColType
         self.crush = False
