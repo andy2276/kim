@@ -10,6 +10,8 @@ import object_structure
 import random
 import collider
 import delta_time
+import stage_control
+import DB as db
 
 
 
@@ -31,6 +33,8 @@ mapNum = []
 player = None
 enemy = None
 test = None
+clearCount = 0
+pp = load_image('../res/object/character/po.png')
 
 #interface var to DB
 #player
@@ -39,10 +43,15 @@ playerCurHp = 0
 playerCurMagnize = 0
 
 #stage
+stageNum = 0
 enemyCount =0
 bagicCount = 0
 middleCount =0
 bossCount = 0
+# def stageEnter():
+#     global playerSelect,playerCurHp,playerCurMagnize,stageNum,enemyCount,bagicCount,middleCount,bossCount
+
+
 def playerEnter(selectPlayer):
     global player,MOVE_TIME
     p = lo.loadState.player[selectPlayer]
@@ -61,16 +70,17 @@ def enemyEnter(selectEnemy,countEnenmy):
     object_enemy.MOVE_TIME = MOVE_TIME
     object_enemy.TESTINGGAME = TESTINGGAME
     for i in range(countEnenmy):
-        #print(i)
-        enemy = object_enemy.enemy(p["name"], p["x"] + (i*40)+200, p["y"] + (i*50)+200, p['rad'], p["rotateForce"], p['SpeedForce'],
+
+        enemy = object_enemy.enemy(p["name"], p["x"] +450 +(random.randint(100,200)*random.randint(-1,1)), p["y"] +450 +(random.randint(100,200)*random.randint(-1,1)), p['rad'], p["rotateForce"], p['SpeedForce'],
                                    p["ai"], p["width"], p['high'],p["attackDelay"])
         enemy.collision = collider.Collision(enemy)
         enemyList.append(enemy)
-def structureEnter():
+def structureEnter(stageN):
     global structure
     object_structure.TESTINGGAME = TESTINGGAME
-    for i in range(2):
-        st = object_structure.Box("test",(100*i+500),500+i*120,100,100,"NPC",0,"box",100)
+    for i in lo.loadState.structData[stageN]:
+        l,d,x,y = i
+        st = object_structure.Box("box",l,d,x,y,100,100,"NPC","box",100)
         st.collision = collider.Collision(st)
         structure.append(st)
 # def mapEnter():
@@ -83,14 +93,21 @@ def playerUpdate():
     if player.barrel.attack:
         player.barrel.attack = False
         missiles=object_projectile.projectile(player.name,"missile", player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
-                                           "player",500,10,10,"circle",10,10)
+                                           "player",500,10,100,"circle",10,10)
         missiles.collision = collider.Collision(missiles)
         projectile.append(missiles)
+
+    if lo.C_WIDTH < player.x or player.x < 0:
+        player.body.x += -math.cos(player.rad)*20
+        print("x out!")
+    if lo.C_HIEGHT < player.y or player.y < 0:
+        player.body.y += -math.sin(player.rad)*20
+        print("y out!")
 
 
 
 def enemyUpdate():
-    global player, enemy,test,MOVE_TIME
+    global player, enemy,test,MOVE_TIME,pp
 
     for e in enemyList:
         #print(e.state,e.blocked)
@@ -123,6 +140,44 @@ def enemyUpdate():
                     missiles.collision = collider.Collision(missiles)
                     projectile.append(missiles)
                     e.attackIdle = 0.0
+
+
+
+
+
+
+        # if lo.C_WIDTH-100 < e.x < 100 :
+        #     e.x += -math.cos(e.rad)
+        #     print("what?x")
+        # if lo.C_HIEGHT-100 < e.y < 100:
+        #     e.y += -math.sin(e.rad)
+        #     print("what?y")
+
+        # if lo.C_WIDTH < e.tx < 0
+
+        for s in structure:
+            if s.collision.vector[2][0] <= e.tx<= s.collision.vector[0][0] and\
+                    s.collision.vector[2][1] <= e.ty<= s.collision.vector[0][1]:
+                e.tx = s.x + random.randint(-1, 1) * s.w
+                e.ty = s.y + random.randint(-1, 1)* s.h
+                print(e.tx,e.ty)
+
+        if lo.C_WIDTH < e.x or e.x < 0:
+            e.x += -math.cos(e.rad)
+        if lo.C_HIEGHT-50 < e.y or e.y < 0:
+            e.y += -math.sin(e.rad)
+
+
+        # if (-e.ai <= e.x - e.tx <= e.ai) or (-e.ai <= e.y - e.ty <= e.ai):
+        #     e.collisionTime += MOVE_TIME
+        #     if e.collisionTime > 3.0:
+        #         print(e.count, "doesnt", e.x - e.tx, e.y - e.ty)
+        #         e.tx += random.randint(-50, 50)
+        #         e.ty += random.randint(-50, 50)
+        # else:
+        #     e.collisionTime = 0.0
+
+
 
 
         EnemyCheckOverlap()
@@ -214,13 +269,19 @@ def structureCheckOverlap():
             player.body.canGo = 0
             if player.body.canGo == 0:
                 nrad = math.atan2(s.y - player.y, s.x - player.x)
-                player.x -= math.cos(nrad)*player.bodyBkSpeed
-                player.y -= math.sin(nrad)*player.bodyBkSpeed
+                player.body.x -= math.cos(nrad)
+                player.body.y -= math.sin(nrad)
         else: player.body.canGo= 1
 
+def myInfo():
+    global playerSelect, playerCurHp, playerCurMagnize,stageNum,player
+    playerCurHp = player.hp
+    return stageNum,playerSelect,playerCurHp,playerCurMagnize
 
-
-
+def MapDraw(stageNum):
+    for m in lo.loadState.mapData[stageNum]:
+        x,y,n = m
+        lo.loadTerrain[stageNum][n].draw(x,y)
 
 def timeUpdate():
     global MOVE_TIME
@@ -238,6 +299,8 @@ def timeUpdate():
 
 
 
+
+
     #test-----------
 def attackOnject():
     global player, enemy, projectile
@@ -248,59 +311,117 @@ def attackOnject():
                     break
 
 
+def isStageClear():
+    global enemyList
+    a = 0
+    for i in enemyList:
+        a += 1
+    if a == 0:
+        return True
+    else:
+        return False
 
 
-
-
-
-
+def nextStage(stageN):
+    global playerSelect,playerCurHp,playerCurMagnize,stageNum,enemyCount,bagicCount,middleCount,bossCount,clearCount,\
+        enemyList,projectile,structure,mapNum,player,enemy
+    db.stageData.stageNum,db.playerData.select,db.playerData.CurHp,db.playerData.Magnize = myInfo()
+    clearCount += delta_time.deltaTime()
+    if clearCount >= 1.0:
+        stageNum = stageN
+        db.stageSelect(stageNum)
+        playerSelect = db.playerData.select
+        playerCurHp = db.playerData.CurHp
+        playerCurMagnize = db.playerData.Magnize
+            # stage
+        stageNum = db.stageData.stageNum
+        enemyCount = db.stageData.enemyCount
+        bagicCount = db.stageData.bagic_enemy
+        middleCount = db.stageData.middle_enemy
+        bossCount = db.stageData.boss_enemy
+        print(stageNum,playerSelect,playerCurHp,playerCurMagnize,stageNum,enemyCount)
+        enemyList = []
+        projectile = []
+        structure = []
+        mapNum = []
+        player = None
+        enemy = None
+        enter()
 def enter():
-    global player,enemy,test,playerSelect,bagicCount,middleCount,bossCount
-
+    global player,enemy,test,playerSelect,bagicCount,middleCount,bossCount,stageNum
+    db.stageSelect(stageNum)
     #mapEnter()
-
-    test = lo.UI("battleUI",1100,50,200,100,0)
-    playerEnter(playerSelect)
+    playerEnter(db.playerData.select)
     if bagicCount != 0:
         enemyEnter(0,bagicCount)
     if middleCount != 0:
         enemyEnter(1, bagicCount)
     if bossCount !=0 :
         enemyEnter(2,bossCount)
-    structureEnter()
+    structureEnter(stageNum)
+    test = lo.UI("battleUI", 1100, 50, 200, 100, 0)
+
 
 def exit():
-	pass
+    global playerSelect,playerCurHp,playerCurMagnize, player, enemy, test, MOVE_TIME,projectile,stageNum
+    print("objectControl exit!!")
+    MOVE_TIME = 0
+    # createVar
+    enemyList = []
+    projectile = []
+    structure = []
+    mapNum = []
+    player = None
+    enemy = None
+    test = None
+
+    del playerSelect,playerCurHp,playerCurMagnize, player, enemy, test, MOVE_TIME,projectile,stageNum
+    import sys
+    sys.exit()
+
+
+
+
 
 def draw():
-    global player,enemy,projectile,structure,test
+    global player,enemy,projectile,structure,test,pp
+    clear_canvas()
+    if isStageClear():
+        lo.loadImages.main_menu_image["stageClear"].draw(lo.CW_HALF, lo.CH_HALF)
+    else:
+        MapDraw(stageNum)
+        print("what the?!",stageNum)
+        player.draw()
+    # test.draw()
+        for s in structure:
+            s.draw()
+        for e in enemyList:
+            e.draw()
+            #pp.draw(e.tx, e.ty)
+        for m in projectile:
+            m.draw()
 
-    #mapDraw()
-    player.draw()
-    test.draw()
-    for s in structure:
-        s.draw()
-    for e in enemyList:
-        e.draw()
-    for m in projectile:
-        m.draw()
 
+    update_canvas()
 
 
 def update():
-    global player, enemy, projectile,MOVE_TIME,test,enemyList
+    global player, enemy, projectile,MOVE_TIME,test,enemyList,clearCount
     #print(delta_time.get_fps())
     timeUpdate()
     #print(test.handOn,test.clickOn,test.eventOn)
 
-    if test.eventOn:
-        print("event On!!!")
+    # if test.eventOn:
+    #     print("event On!!!")
 
     projectileUpdate()
     playerUpdate()
     enemyUpdate()
+    if isStageClear():
+        nextStage(1)
 
     #print(len(projectile))
+
 
 
 def handle_events():

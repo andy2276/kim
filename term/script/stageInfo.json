@@ -2,10 +2,32 @@
 	{	
 		"stageNum":0,
 		"mapNum":0,
-		"structure":4,
-		"enemyCount":10,
+		"enemyCount":5,
+		"structure":20,
 		"enemySelect":0,
-		"bagic_enemy":10,
+		"bagic_enemy":5,
+		"middle_enemy":0,
+		"boss_enemy":0
+		
+	},
+	{	
+		"stageNum":1,
+		"mapNum":0,
+		"enemyCount":6,
+		"structure":20,
+		"enemySelect":0,
+		"bagic_enemy":6,
+		"middle_enemy":0,
+		"boss_enemy":0
+		
+	},
+	{	
+		"stageNum":2,
+		"mapNum":0,
+		"enemyCount":7,
+		"structure":20,
+		"enemySelect":0,
+		"bagic_enemy":6,
 		"middle_enemy":0,
 		"boss_enemy":0
 		

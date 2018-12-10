@@ -27,6 +27,7 @@ global playerData,stageData
 playerData = playerInfo()
 stageData = stageInfo()
 
+
 def stageSelect(stageNum):
     global stageData
     stageData.stageNum = lo.loadState.stageData[stageNum]["stageNum"]
@@ -56,9 +57,7 @@ def draw():
     pass
 
 def update():
-    stageSelect(0)
-
-
+    stageSelect(stageData.stageNum)
 
     gf.push_state(stage_control)
 

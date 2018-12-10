@@ -7,14 +7,14 @@ import loading_state as lo
 TESTINGGAME = True
 
 class structure:
-    def __init__(self,sN,sX,sY,sW,sH,sP,sImgN,sColType,sR):
+    def __init__(self,sN,sL,sB,sX,sY,sW,sH,sP,sColType,sR):
         self.name = sN
         self.x,self.y = sX,sY
         self.w,self.h = sW,sH
         self.rad = 0
         self.play = sP
-        self.imageNumX = sImgN%10
-        self.imageNumY = sImgN//10
+        self.left = sL
+        self.bottom = sB
         self.collision = None
         self.colType = sColType
         self.crush = False
@@ -22,7 +22,7 @@ class structure:
         self.visualR = self.r
 
     def draw(self):
-        lo.loadBlocks[self.imageNumY][self.imageNumX].draw(self.x,self.y)
+        lo.loadBlocks.clip_draw(self.left,self.bottom,self.w,self.h,self.x,self.y)
 
     def update(self):
         pass
@@ -30,20 +30,15 @@ class structure:
         pass
 
 class Box(structure):
-    def __init__(self,sN,sX,sY,sW,sH,sP,sImgN,sColType,sR):
+    def __init__(self,sN,sL,sB,sX,sY,sW,sH,sP,sColType,sR):
         self.name = sN
         self.x, self.y = sX, sY
         self.w, self.h = sW, sH
         self.rad = 0
         self.play = sP
-        if sImgN == 0:
-            self.imageNumX = 0
-            self.imageNumY = 0
-        else:
-            self.imageNumX = sImgN % 15
-            self.imageNumY = sImgN // 15
-
-
+        self.play = sP
+        self.left = sL
+        self.bottom = sB
         self.collision = None
         self.colType = sColType
         self.crush = False

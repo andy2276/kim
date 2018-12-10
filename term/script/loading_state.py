@@ -23,6 +23,7 @@ global MOVE_TIME
 
 
 
+
 TESTINGGAME = False
 TIMEDELAY = 0
 
@@ -43,6 +44,9 @@ class LoadingState:
         map = open("stageInMap.json")
         self.mapData = json.load(map)
         map.close()
+        stru = open("stageInStructure.json")
+        self.structData = json.load(stru)
+        stru.close()
 
         stage = open("stageInfo.json")
         self.stageData = json.load(stage)
@@ -209,15 +213,10 @@ def enter():
     loadImages = LoadingImage()
 
 
-    initBox = []
+    loadBlocks = loadImages.object_structure_image["blocks"]
 
-    for y in range(15):
-        for x in range(15):
-            initBox.append((loadImages.object_structure_image["blocks"]).clip_image(100*x,100*y,100,100))
-        loadBlocks.append(initBox)
-        initBox = []
-        stageMaps = []
-    for s in range(1):
+    stageMaps = []
+    for s in range(3):
         for y in range(3):
             for x in range(3):
                 stageMaps.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
@@ -250,12 +249,12 @@ def draw():
 
 
 def update():
-    global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks,TESTINGGAME
-    loadCount += 5 if loadCount <=47 else 0
+    global loadImages, loadCount,loadImages,loadState,loadCount,loadBlocks,TESTINGGAME,MOVE_TIME
 
-    delay(1/60)
+    loadCount += 1 if loadCount <=46 else 0
+    print(loadCount)
     handle_events()
-    if loadCount >=47:
+    if loadCount >=46:
         import menu
         gf.push_state(menu)
 

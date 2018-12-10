@@ -1,30 +1,38 @@
+
+print("welcome to Edit")
 from pico2d import *
 import game_framework as gf
 import json
+
+#여기는 니가 그릴 캔버스 크기
 
 CW = 1200
 CH = 800
 
 
-
+#이미지 넣는 부분
 mapImage = None
 strImage = None
-
+#변수들 여기에서 부르는거라 나중에 건들면됨
 map = []
 customMap = []
 customStructure = []
-rekeys = []
+rekeys = []#실질적으로 이미지가 등록되는 부분
+strkeys = []
 stageNum = 0
 
+#토글 기능이 있는곳
 toggle  = False
 toggleInKey = 0
 
+#모드 변환 하는 곳
 isStructure = False
 mapMaker = None
 strMaker = None
 
 # 나의 앵글을 정수로 몫을 뽑는데 90도로 나누면 몇사분면인지 나온다.
 
+#맵 커서
 class MapMaker():
     def __init__(self):
         self.x,self.y =75,75
@@ -34,7 +42,7 @@ class MapMaker():
         map[self.mapType].draw(self.x,self.y)
 
 
-
+#구조물 커서
 class StrMapMaker():
     global strImage
     def __init__(self):
@@ -51,10 +59,12 @@ class StrMapMaker():
 
 def enter():
     global mapImage,mapMaker,isStructure,strImage,strMaker,map
+    #이미지 렌더 부분
     mapImage = load_image("../res/object/structure/base_fix.png")
     strImage = load_image("../res/object/structure/structure_block_fix.png")
     mapMaker = MapMaker()
     strMaker = StrMapMaker()
+    #맵의 배열 넣는곳
     for x in range(3):
         for y in range(3):
             map.append(mapImage.clip_image(mapMaker.w*x,mapMaker.h*y,mapMaker.w,mapMaker.h))
@@ -63,15 +73,17 @@ def exit():
 	pass
 
 def draw():
-    global mapImage, mapMaker,customMap,rekeys,map,strImage,isStructure,strMaker
+    global mapImage, mapMaker,customMap,rekeys,map,strImage,isStructure,strMaker,strkeys
     clear_canvas()
-    for i in rekeys:
-        if isStructure:
+    if rekeys != []:
+        for i in rekeys:
+            x, y, n = i
+            map[n].draw(x, y)
+    if strkeys != []:
+        for i in  strkeys:
             l,b,x,y = i
             strImage.clip_draw(l,b,strMaker.w,strMaker.h,x,y)
-        else:
-            x,y,n = i
-            map[n].draw(x,y)
+
 
 
     if isStructure:
@@ -83,62 +95,65 @@ def draw():
 
 
 def update():
-    global toggle,toggleInKey,mapMaker,rekeys,isStructure,strMaker
+    global toggle,toggleInKey,mapMaker,rekeys,isStructure,strMaker,strkeys
     if toggle:
         if isStructure:
             psl,psb,psx,psy = strMaker.left,strMaker.bottom,strMaker.x,strMaker.y
         else:
             px, py, pn = mapMaker.x, mapMaker.y, mapMaker.mapType
+
         if toggleInKey == 1:
-            if rekeys == []:
-                if isStructure:
-                    rekeys.append((psl,psb,psx,psy))
+            if isStructure:
+                if strkeys == []:
+                    strkeys.append((psl,psb,psx,psy))
                 else:
-                    rekeys.append((px, py, pn))
-            else:
-                troble = False
-                for m in rekeys:
-                    if isStructure:
-                        l,b,x,y =m
+                    troble = False
+                    for m in strkeys:
+                        l, b, x, y = m
                         if psx == x and psy == y:
                             troble = True
-                            if psl ==l and psb == b  :
+                            if psl == l and psb == b:
                                 print("is Same left and bottom!")
                                 break
-                        elif psl ==l or psb == b :
-                            print("changing this")
-                            rekeys.append((psl,psb,psx,psy))
-                            rekeys.remove(m)
-                            break
-                    else:
-                        x, y, n = m
+                            elif psl == l or psb == b:
+                                print("changing this")
+                                strkeys.append((psl, psb, psx, psy))
+                                strkeys.remove(m)
+                                break
+                    if troble == False:
+                        strkeys.append((psl, psb, psx, psy))
+            else:
+                if rekeys == []:
+                    rekeys.append((px, py, pn))
+                else:
+                    troble = False
+                    for m in rekeys:
+                        x,y,n = m
                         if px == x and py == y:
                             troble = True
                             if pn == n:
-                                print("is same!")
+                                print("is same! Number!")
                                 break
                             elif pn != n:
-                                print("is change!")
+                                print("is change!!! map!")
                                 rekeys.append((px, py, pn))
                                 rekeys.remove(m)
                                 break
-                if troble == False:
-                    if isStructure:
-                        rekeys.append((psl, psb, psx, psy))
-                    else:
+                    if troble == False:
                         rekeys.append((px, py, pn))
         elif toggleInKey == 2:
-            for m in rekeys:
                 if isStructure:
-                    _,_,x,y = m
-                    if strMaker.x ==x and strMaker.y == y:
-                        rekeys.remove(m)
-                        break
+                    for m in strkeys:
+                        _,_,x,y = m
+                        if strMaker.x ==x and strMaker.y == y:
+                            strkeys.remove(m)
+                            break
                 else:
-                    x, y, _ = m
-                    if mapMaker.x == x and mapMaker.y == y:
-                        rekeys.remove(m)
-                        break
+                    for m in rekeys:
+                        x, y, _ = m
+                        if mapMaker.x == x and mapMaker.y == y:
+                            rekeys.remove(m)
+                            break
 
 
 
@@ -147,7 +162,7 @@ def update():
 
 def handle_events():
     global map,customMap,rekeys,mapMaker,CW,CH,customMap,rekeys,toggle,toggleInKey,stageNum,isStructure,strMaker,\
-        customStructure
+        customStructure,strkeys
 
 
     events = get_events()
@@ -266,28 +281,25 @@ def handle_events():
                     mapMaker.y += mapMaker.h
 
             if key.key == SDLK_c:
-                rekeys = []
+                if isStructure:
+                    strkeys = []
+                else:
+                    rekeys = []
 
             if key.key == SDLK_q:
                 if toggle:
                     toggleInKey = 1
-                else:toggleInKey= 0
+                else:
+                    toggleInKey= 0
 
                 if isStructure:
                     psl, psb, psx, psy = strMaker.left, strMaker.bottom, strMaker.x, strMaker.y
-                else:
-                    px,py,pn = mapMaker.x, mapMaker.y, mapMaker.mapType
-
-                if rekeys == []:
-                    if isStructure:
-                        rekeys.append((psl, psb, psx, psy))
+                    if strkeys == []:
+                        strkeys.append((psl, psb, psx, psy))
                     else:
-                        rekeys.append((px,py,pn))
-                else:
-                    troble = False
-                    for m in rekeys:
-                        if isStructure:
-                            l,b,x,y = m
+                        troble = False
+                        for m in strkeys:
+                            l, b, x, y = m
                             if psx == x and psy == y:
                                 troble = True
                                 if psl == l and psb == b:
@@ -295,42 +307,50 @@ def handle_events():
                                     break
                                 elif psl != l or psb != b:
                                     print("structure wow different thing,changing")
-                                    rekeys.append((psl, psb, psx, psy))
-                                    rekeys.remove(m)
+                                    strkeys.append((psl, psb, psx, psy))
+                                    strkeys.remove(m)
                                     break
-                        else:
-                            x,y,n = m
-                            if px == x and py == y :
+                        if troble == False:
+                            strkeys.append((psl, psb, psx, psy))
+                else:
+                    px, py, pn = mapMaker.x, mapMaker.y, mapMaker.mapType
+                    if rekeys == []:
+                        rekeys.append((px, py, pn))
+                    else:
+                        troble = False
+                        for m in rekeys:
+                            x, y, n = m
+                            if px == x and py == y:
                                 troble = True
                                 if pn == n:
-                                    print("is same!")
+                                    print("is same! Number!")
                                     break
                                 elif pn != n:
-                                    print("is change!")
+                                    print("is change!!! map!")
                                     rekeys.append((px, py, pn))
                                     rekeys.remove(m)
                                     break
-                    if troble == False:
-                        if isStructure:
-                            rekeys.append((psl, psb, psx, psy))
-                        else:
+                        if troble == False:
                             rekeys.append((px, py, pn))
-
-
             elif key.key == SDLK_w:
-                for m in rekeys:
-                    if isStructure:
+                if isStructure:
+                    for m in strkeys:
                         _,_,x,y = m
                         if strMaker.x == x and strMaker.y == y:
                             rekeys.remove(m)
                             break
-                    else:
+                else:
+                    for m in rekeys:
                         x,y,_ = m
                         if mapMaker.x == x and mapMaker.y == y:
                             rekeys.remove(m)
                             break
+
+
                 if toggle:
                     toggleInKey = 2
+
+
             elif key.key == SDLK_e:
                 if toggle:
                     toggleInKey = 0
@@ -339,27 +359,25 @@ def handle_events():
                     toggle = True
                 print("toggle is ", toggle,"toggle in key is ",toggleInKey)
             elif key.key == SDLK_r:
-                if rekeys == []:
-                    print("No Date!!! you must injection in rekeys for Data!!")
-                else:
-                    # with open('stage')
-                    if isStructure:
-                        customStructure.append(rekeys)
-                        print(json.dumps(customStructure,ensure_ascii=False,indent=""))
-                        with open("stageInStructure.json",'a',encoding="utf-8")as make_f:
-                            json.dump(customStructure,make_f,ensure_ascii=False,indent="")
+                if isStructure:
+                    if strkeys == []:
+                        print("structure None!!!")
+                    else:
+                        customStructure.append(strkeys)
+                        print(json.dumps(customStructure, ensure_ascii=False, indent=""))
+                        with open("stageInStructure.json", 'a', encoding="utf-8")as make_f:
+                            json.dump(customStructure, make_f)
                             print("structure save done!!")
+                else:
+                    if rekeys == []:
+                        print("map None!!")
                     else:
                         customMap.append(rekeys)
-                        stageNum +=1
-                        print(json.dumps(customMap,ensure_ascii=False,indent="\t"))
-                        with open("stageInMap.json",'a',encoding="utf-8")as make_file:
-                            json.dump(customMap,make_file,ensure_ascii=False,indent="\t")
+                        stageNum += 1
+                        print(json.dumps(customMap, ensure_ascii=False, indent="\t"))
+                        with open("stageInMap.json", 'a', encoding="utf-8")as make_file:
+                            json.dump(customMap, make_file)
                         print("map save done!!")
-
-
-
-
         #print(rekeys)
 
 

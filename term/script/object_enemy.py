@@ -53,6 +53,7 @@ class enemy:
         self.fwForce = sFs*MOVE_TIME * MOVE_FREEZE
         self.ai = sAi
 
+        self.collisionTime = 0.0
 
         self.state = 'stay'
         self.found = False
@@ -77,6 +78,8 @@ class enemy:
 
         #self.collision.draw()
     def update(self):
+
+
         #print(MOVE_TIME)
         if self.state == 'stay':
             enemy.stay(self)
@@ -107,8 +110,15 @@ class enemy:
            # return
 
 
-        if -2<=self.x - self.tx<=2:#근사치
-            self.state = 'stay'
+        if -self.ai<=self.x - self.tx<=self.ai or -self.ai <= self.y - self.ty <= self.ai:#근사치
+            self.collisionTime += MOVE_TIME
+            #print("#근사치",self.collisionTime)
+            if self.collisionTime >= self.ai/2:
+
+                self.state = 'stay'
+                self.collisionTime = 0.0
+            else:
+                self.state = 'stay'
             return
         if self.found :
             #print('found you!!!!!!!!!!')

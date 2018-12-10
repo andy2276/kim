@@ -35,8 +35,8 @@
 			"hp":100,
 			"rad":90,
 			"rotateForce":0.1,
-			"SpeedForce":30,
-			"ai":0,
+			"SpeedForce":100,
+			"ai":5,
 			"width":56,
 			"high":75,
 			"attackDelay":8.0

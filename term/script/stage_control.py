@@ -5,6 +5,7 @@ import game_framework as gf
 import loading_state as lo
 import delta_time
 import DB as db
+import object_control
 
 
 
@@ -17,6 +18,9 @@ goUI = None
 chooseChar = []
 clicked = 0
 charNum = 0
+
+
+stageIn = []
 
 gameFist = True
 gameLoof = False
@@ -64,35 +68,42 @@ def selectUdate():
         clicked += 1
 
         charNum = clicked % 2
-        print(clicked)
+        #print(clicked)
         seletR.clickOff = False
+        print(charNum)
     elif seletL.eventOn:
         clicked -= 1
         charNum = clicked % 2
         seletL.clickOff = False
+        print(charNum)
 
     if goUI.eventOn:
         print("go!!")
         goUI.clickOff = False
+        print(charNum)
         db.playerData.select = charNum
-        gameLoof = True
-        gameFist = False
+        print(db.playerData.select)
 
-        #gf.change_state(object_control)
-        import object_control
-        gameobject = object_control
-        gameobject.playerSelect = charNum
-        db.playerData.select = charNum
-        gameobject.enemyCount = db.stageData.enemyCount
-        print("stage_constrol",db.stageData.enemyCount)
-        gameobject.bagicCount = db.stageData.bagic_enemy
-        gameobject.middleCount = db.stageData.middle_enemy
-        gameobject.bossCount = db.stageData.boss_enemy
-        gameobject.enter()
-
+        stageEnter()
+        gf.change_state(object_control)
 
     if -2 == clicked or clicked == 2:
         charNum = 0
+def stageExit():
+    global gameobject
+
+
+def stageEnter():
+    object_control.stageNum = db.stageData.stageNum
+    db.stageSelect(db.stageData.stageNum)
+    object_control.playerCurHp = db.playerData.CurHp
+    object_control.playerCurMagnize = db.playerData.Magnize
+    object_control.enemyCount = db.stageData.enemyCount
+    object_control.bagicCount = db.stageData.bagic_enemy
+    object_control.middleCount = db.stageData.middle_enemy
+    object_control.bossCount = db.stageData.boss_enemy
+
+
 def selectHandle_event(key):
     global seletR, seletL, Running, goUI
     seletR.handle_event(key)
@@ -103,17 +114,14 @@ def MapDraw(stageNum):
         x,y,n = m
         lo.loadTerrain[stageNum][n].draw(x,y)
     #print("map create!!")
-
+# def structureDraw(stageNum):
+#     for s in  lo.loadState.structData[stageNum]:
+#         l,b,x,y = s
+#         lo.loadImages.object_structure_image["blocks"].clip_draw(l,b,100,100,x,y)
 
 def enter():
     global gameFist,gameLoof,gameobject
-    if gameLoof:
-        if isStageClear():
-            print("clear!")
-        else:
-            print("gameEnter!")
-    elif gameFist:
-        selectEneter()
+    selectEneter()
 
 def exit():
 	pass
@@ -121,60 +129,28 @@ def exit():
 def draw():
     global gameFist, gameLoof,gameobject
     clear_canvas()
-    if gameLoof:
-        if isStageClear():
-            lo.loadImages.main_menu_image ["stageClear"].draw(lo.CW_HALF,lo.CH_HALF)
-        else:
-            MapDraw(db.stageData.stageNum)
-            gameobject.draw()
-    elif gameFist:
-        selectDraw()
 
+    selectDraw()
     update_canvas()
 
 
 def update():
-    global gameFist, gameLoof,gameobject
-    if gameLoof:
-        if isStageClear():
-            print("clear!")
-        else:
-            gameobject.update()
-
-
-    elif gameFist:
-        selectUdate()
+    global gameFist, gameLoof,gameobject,stageIn
+    selectUdate()
+    print(lo.loadTerrain[0])
 
 
 def handle_events():
     global Running,gameFist, gameLoof, gameobject
 
-    if gameLoof:
-        if isStageClear():
-            events = get_events()
-            for key in events:
-                if key.type == SDL_QUIT:
-                    gf.quit()
-            print("clear!")
+    events = get_events()
+    for key in events:
+        if key.type == SDL_QUIT:
+            gf.quit()
+        elif (key.type, key.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
+            gf.pop_state()
         else:
-            gameobject.handle_events()
-    if gameFist:
-        events = get_events()
-        for key in events:
-            if key.type == SDL_QUIT:
-                gf.quit()
-            elif (key.type, key.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
-                gf.pop_state()
-            else:
-                if gameFist:
-                    selectHandle_event(key)
-
-
-
-
-
-
-
+            selectHandle_event(key)
 def pause():
 	pass
 
