@@ -406,7 +406,7 @@ def draw():
 
 
 def update():
-    global player, enemy, projectile,MOVE_TIME,test,enemyList,clearCount
+    global player, enemy, projectile,MOVE_TIME,test,enemyList,clearCount,stageNum
     #print(delta_time.get_fps())
     timeUpdate()
     #print(test.handOn,test.clickOn,test.eventOn)
@@ -418,7 +418,8 @@ def update():
     playerUpdate()
     enemyUpdate()
     if isStageClear():
-        nextStage(1)
+        volotaile = stageNum+1
+        nextStage(volotaile)
 
     #print(len(projectile))
 
