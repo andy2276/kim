@@ -92,9 +92,18 @@ def playerUpdate():
     player.update()
     if player.barrel.attack:
         player.barrel.attack = False
-        missiles=object_projectile.projectile(player.name,"missile", player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
-                                           "player",500,10,100,"circle",10,10)
-        missiles.collision = collider.Collision(missiles)
+        if player.barrel.weapon == 0:
+            missiles=object_projectile.projectile(player.name,"missile", player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
+                                                  "player",500,10,100,"circle",10,10)
+            missiles.collision = collider.Collision(missiles)
+        elif player.barrel.weapon == 1:
+            missiles = object_projectile.projectile(player.name, "cannonball", player.barrel.gpx, player.barrel.gpy,
+                                                    player.barrel.rad,
+                                                    "player", 500, 10, 10, "circle", 10, 10)
+            missiles.collision = collider.Collision(missiles)
+        elif player.barrel.weapon == 2:
+            pass
+
         projectile.append(missiles)
 
     if lo.C_WIDTH < player.x or player.x < 0:
@@ -347,6 +356,13 @@ def nextStage(stageN):
         player = None
         enemy = None
         enter()
+
+def uiDraw():
+    pass
+def uiUpdate():
+    pass
+
+
 def enter():
     global player,enemy,test,playerSelect,bagicCount,middleCount,bossCount,stageNum
     db.stageSelect(stageNum)
@@ -390,7 +406,7 @@ def draw():
         lo.loadImages.main_menu_image["stageClear"].draw(lo.CW_HALF, lo.CH_HALF)
     else:
         MapDraw(stageNum)
-        print("what the?!",stageNum)
+        #print("what the?!",stageNum)
         player.draw()
     # test.draw()
         for s in structure:

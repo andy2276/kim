@@ -81,7 +81,8 @@ class LoadingImage:
         }
         self.object_projectile_image = {
             "cannonball":load_image('../res/object/projectile/cannonball.png'),
-            "missile":load_image('../res/object/projectile/missile.png')
+            "missile":load_image('../res/object/projectile/missile.png'),
+            "energy":load_image("../res/object/projectile/energy.png")
         }
         self.object_structure_image = {"blocks":load_image("../res/object/structure/structure_block_fix.png")
         }

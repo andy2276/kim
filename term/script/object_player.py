@@ -79,10 +79,12 @@ class Barrel:
         self.rad = 0.0
         self.rotSpeed = prs/10 * math.pi/60
 
+        self.weapon = 0
         if Barrel.image == None:
             Barrel.image =  lo.loadImages.object_player_image["player_barrel"]
             if TESTINGGAME:
                 self.colAim = load_image('../res/object/character/po.png')
+
 
 
          #   self.im2 = self.im
@@ -106,6 +108,8 @@ class Barrel:
 
         self.x , self.y = px, py
 
+
+
         #print(self.tx,self.ty)
 
 
@@ -117,6 +121,15 @@ class Barrel:
         if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
             self.tx,self.ty =  keys.x, lo.C_HIEGHT - keys.y
             self.attack = True
+        if (keys.type,keys.key)  == (SDL_KEYDOWN,SDLK_q):
+            self.weapon = ((self.weapon+1)%2)
+            print(self.weapon,"press q")
+
+        if (keys.type,keys.key)  == (SDL_KEYDOWN,SDLK_e):
+            self.weapon = ((self.weapon - 1) % 2)
+            print(self.weapon,"press e")
+        #print("weapon",self.weapon)
+
             #print(self.tx,self.ty,self.rad)
 
 
@@ -152,6 +165,8 @@ class Player:
         if Player.colBox == None:
             self.colBox =  lo.loadImages.object_player_colBox_image['player_colBox']
 
+
+
         #self.collision = co.collider(self.x,self.y,"box",16,16)  # 함수만들거임
 
     def draw(self):
@@ -169,6 +184,7 @@ class Player:
             self.collision.update()
 
     def handle_event(self,keys):
+
         self.body.handle_event(keys)
         self.barrel.handle_event(keys)
 

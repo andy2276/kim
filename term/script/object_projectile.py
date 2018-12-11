@@ -94,5 +94,30 @@ class cannonball(projectile):
 
 
 
+class frameProjectile(projectile):
+    global TESTINGGAME
+    def __init__(self,sN = 'noname',sMs = "no",sX = 0,sY = 0,sRad = math.pi/180,sPlay = 'no',sFs = 0,sVr= 0,sDmg = 0,sCt = 'circle',sW = 0,sH = 0,
+                 sF = 0):
+        self.name = sN
+        self.missileName = sMs
+        self.x,self.y =sX,sY
+        self.rad = sRad
+        self.play = sPlay
+        self.fwSpeed = sFs
+        self.visualR = sVr
+        self.damage = sDmg
+        self.collision = None
+        self.colType = sCt
 
+        self.frame = sF
+
+        if TESTINGGAME:
+            self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
+
+        self.w,self.h = sW,sH
+
+        self.r = self.w / 2
+        self.crush = False
+
+        self.image = lo.loadImages.object_projectile_image[self.missileName]
 
