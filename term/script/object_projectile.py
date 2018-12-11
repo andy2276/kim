@@ -35,9 +35,9 @@ class projectile:
         self.image = lo.loadImages.object_projectile_image[self.missileName]
     def draw(self):
         if self.play == "player":
-            self.image.composite_draw(self.rad,"",self.x,self.y)
+           lo.loadImages.object_projectile_image[self.missileName].composite_draw(self.rad,"",self.x,self.y)
         else:
-            self.image.composite_draw(self.rad + math.pi, "", self.x, self.y)
+            lo.loadImages.object_projectile_image[self.missileName].composite_draw(self.rad, "", self.x, self.y)
         #print(self.x,self.y)
     def update(self):
         dist = MOVE_TIME*self.fwSpeed
@@ -70,7 +70,7 @@ class missile(projectile):
         self.w,self.h = sW,sH
         self.r = self.w/2
         self.crush = False
-        self.image = lo.loadImages.object_projectile_image['missile']
+
 
 class cannonball(projectile):
     def __init__(self,sN = 'noname',sX = 0,sY = 0,sRad = math.pi/180,sPlay = 'no',sFs = 0,sVr= 0,sDmag =0,sCt = 'circle',sW = 0,sH = 0):
@@ -90,7 +90,7 @@ class cannonball(projectile):
         self.w,self.h = sW,sH
         self.r = self.w/2
         self.crush = False
-        self.image = lo.loadImages.object_projectile_image['cannonball']
+
 
 
 
@@ -113,11 +113,18 @@ class frameProjectile(projectile):
 
         if TESTINGGAME:
             self.colBox = lo.loadImages.object_enemy_colBox_image['bagic_enemy']
-
         self.w,self.h = sW,sH
-
         self.r = self.w / 2
         self.crush = False
 
-        self.image = lo.loadImages.object_projectile_image[self.missileName]
+    def draw(self):
+        self.frame = (self.frame + 1) % 8
+
+        if self.play == "player":
+            lo.loadImages.object_projectile_image[self.missileName].clip_composite_draw(self.frame * 50 ,0,50,30,self.rad,"",self.x,self.y,50,30)
+            #clip_composite_draw(self, left, bottom, width, height, rad, flip, x, y, w = None, h = None):
+
+        else:
+            lo.loadImages.object_projectile_image[self.missileName].clip_composite_draw( self.frame * 50, 0, 400, 30,
+                                                                                 self.rad, "", self.x, self.y,50,30)
 

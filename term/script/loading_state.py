@@ -56,6 +56,7 @@ class LoadingState:
         datas = json.load(op)
         self.player = datas["player"]
         self.enemy = datas["enemy"]
+        self.projectile = datas["projectile"]
         op.close()
 
 
@@ -84,6 +85,7 @@ class LoadingImage:
             "missile":load_image('../res/object/projectile/missile.png'),
             "energy":load_image("../res/object/projectile/energy.png")
         }
+        #self.object_projectile_image["cannonball"].
         self.object_structure_image = {"blocks":load_image("../res/object/structure/structure_block_fix.png")
         }
         self.map_terrain_image = {"base":load_image("../res/object/structure/base_fix.png")
@@ -99,8 +101,16 @@ class LoadingImage:
         }
 
         self.imageCount = 7
+class LoadingSound():
+    def __init__(self):
+        self.playerSound = {}
+        self.enemySound = {}
+        self.bgSound = {}
+        self.uiSound ={}
+
 
 loadImages = None
+loadSound = None
 loadState = None
 loadCount = 0
 loadBlocks = []

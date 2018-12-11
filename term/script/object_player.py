@@ -68,7 +68,7 @@ class Body:
 #-------Tank Barrel---------
 class Barrel:
     image = None
-    def __init__(self,px,py,prs):
+    def __init__(self,px,py,prs,wC):
         self.x,self.y = px,py
         self.gpx,self.gpy = 0 ,0
 
@@ -79,7 +79,9 @@ class Barrel:
         self.rad = 0.0
         self.rotSpeed = prs/10 * math.pi/60
 
+        self.reload = True
         self.weapon = 0
+        self.wpCount = wC
         if Barrel.image == None:
             Barrel.image =  lo.loadImages.object_player_image["player_barrel"]
             if TESTINGGAME:
@@ -102,11 +104,10 @@ class Barrel:
         #print("player",MOVE_TIME)
         dx = BARREL_GUNPORT*math.cos(self.rad) - math.sin(self.rad)
         dy = BARREL_GUNPORT*math.sin(self.rad) + math.cos(self.rad)
-
         self.gpx = self.x + dx*-1
         self.gpy = self.y + dy*-1
-
         self.x , self.y = px, py
+
 
 
 
@@ -121,12 +122,16 @@ class Barrel:
         if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
             self.tx,self.ty =  keys.x, lo.C_HIEGHT - keys.y
             self.attack = True
+
+        if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_RIGHT:
+            self.reload = True
+
         if (keys.type,keys.key)  == (SDL_KEYDOWN,SDLK_q):
-            self.weapon = ((self.weapon+1)%2)
+            self.weapon = ((self.weapon+1)%self.wpCount)
             print(self.weapon,"press q")
 
         if (keys.type,keys.key)  == (SDL_KEYDOWN,SDLK_e):
-            self.weapon = ((self.weapon - 1) % 2)
+            self.weapon = ((self.weapon - 1) % self.wpCount)
             print(self.weapon,"press e")
         #print("weapon",self.weapon)
 
@@ -153,6 +158,8 @@ class Player:
         self.rotSpeed = sPrs
         self.bodyFwSpeed = sPfs
         self.bodyBkSpeed = sPbs
+
+
 
 
         self.body = Body(self.x,self.y,self.rad,self.rotSpeed,self.bodyFwSpeed,self.bodyBkSpeed)
