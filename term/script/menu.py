@@ -26,7 +26,9 @@ def enter():
     fontStart = lo.selectUI("mainFont",760,480,400,95,0)
     fontReset = lo.selectUI("mainFont", 880, 340, 400, 110, 2)
     fontQuit = lo.selectUI("mainFont", 1000, 200, 400, 107, 1)
-
+    lo.loadSound.bgSound["main_menu"].set_volume(12)
+    lo.loadSound.bgSound["main_menu"].repeat_play()
+    delay(1.0)
 
 
 
@@ -67,8 +69,12 @@ def update():
     if fontStart.eventOn:
         import DB
         gf.change_state(DB)
+        lo.loadSound.uiSound["menu_click"].set_volume(5)
+        lo.loadSound.uiSound["menu_click"].play(1)
     elif fontQuit.eventOn:
         Running = False
+        lo.loadSound.uiSound["menu_click"].set_volume(5)
+        lo.loadSound.uiSound["menu_click"].play(1)
         gf.quit()
     pass
 

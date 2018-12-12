@@ -28,6 +28,8 @@ class Body:
         #print(self.fwSpeed,self.bkSpeed)
         self.rad = prad
         self.key = {}
+
+        self.moved = False
         for k in Body.KeyEvent :
             self.key[k] = False
         if Body.image ==None :
@@ -48,6 +50,7 @@ class Body:
             self.rad += rot*self.rotSpeed
         #rot and mov not over 1 or -1
         if mov !=0:
+            self.moved = True
             mv = None
             if self.key[SDLK_w]:
                 mv = self.fwSpeed*MOVE_TIME* self.canGo
@@ -56,8 +59,8 @@ class Body:
 
             self.x += mov * mv * math.cos(self.rad)
             self.y += mov * mv * math.sin(self.rad)
-
-
+        else:
+            self.moved = False
         return self.x, self.y
 
     def handle_event(self,keys):
@@ -80,6 +83,7 @@ class Barrel:
         self.rotSpeed = prs/10 * math.pi/60
 
         self.reload = True
+        self.reloading = False
         self.weapon = 0
         self.wpCount = wC
         if Barrel.image == None:
@@ -121,10 +125,16 @@ class Barrel:
             self.mx, self.my = keys.x, lo.C_HIEGHT - keys.y
         if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_LEFT:
             self.tx,self.ty =  keys.x, lo.C_HIEGHT - keys.y
-            self.attack = True
+            if self.wpCount == 0:
+                lo.loadSound.playerSound["reload_reload"].set_volume(5)
+                lo.loadSound.playerSound["reload_reload"].play(1)
+            else:
+                self.attack = True
 
         if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_RIGHT:
-            self.reload = True
+            self.reloading = True
+
+
 
         if (keys.type,keys.key)  == (SDL_KEYDOWN,SDLK_q):
             self.weapon = ((self.weapon+1)%self.wpCount)
@@ -142,7 +152,8 @@ class Barrel:
 #-------Tank Body+Barrel---------
 class Player:
     colBox = None
-    def __init__(self, sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs,w,h):
+    def __init__(self,sSelect ,sName, sX, sY, sHp, sRad, sPrs, sPfs, sPbs,w,h,wC,aCool):
+        self.select = sSelect
         self.name = sName
         self.play = 'player'
         self.x, self.y = sX, sY
@@ -152,6 +163,7 @@ class Player:
         self.x = get_canvas_width() // 2
         self.y = get_canvas_height() // 2
 
+        self.wp = lo.loadState.weaponCount[self.select]
 
         self.hp = sHp
         self.rad = math.pi/(180/sRad)
@@ -159,11 +171,11 @@ class Player:
         self.bodyFwSpeed = sPfs
         self.bodyBkSpeed = sPbs
 
-
-
+        self.weaponCount = wC
+        self.attackCool = aCool
 
         self.body = Body(self.x,self.y,self.rad,self.rotSpeed,self.bodyFwSpeed,self.bodyBkSpeed)
-        self.barrel = Barrel(self.x,self.y,self.rotSpeed)
+        self.barrel = Barrel(self.x,self.y,self.rotSpeed,self.weaponCount)
 
         self.collision = None
         self.colType = 'box'
@@ -189,9 +201,21 @@ class Player:
         #print("player ",self.x)
         if self.collision != None:
             self.collision.update()
+        if self.barrel.attack:
+            Player.countWeapon(self)
 
     def handle_event(self,keys):
 
         self.body.handle_event(keys)
         self.barrel.handle_event(keys)
+    def countWeapon(self):
+        self.wp[self.barrel.weapon] -=1
+        if self.wp[self.barrel.weapon] <=0:
+            self.barrel.reload = False
+        if self.barrel.reloading:
+            self.barrel.reloading = False
+            self.wp[self.barrel.weapon] = lo.loadState.weaponCount[self.select][self.barrel.weapon]
+            self.barrel.reload = True
+
+
 

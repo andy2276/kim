@@ -11,7 +11,9 @@
 			"fowardSpeed":100,
 			"backSpeed":5,
 			"width":78,
-			"high":58
+			"high":58,
+			"weaponKind":2,
+			"attackCool":10.0
 		},
 		{
 			"name":"super_player",
@@ -23,7 +25,9 @@
 			"fowardSpeed":200,
 			"backSpeed":150,
 			"width":78,
-			"high":58
+			"high":58,
+			"weaponKind":3,
+			"attackCool":1.0
 		}
 	],
 	"enemy":
@@ -35,7 +39,7 @@
 			"hp":100,
 			"rad":90,
 			"rotateForce":0.1,
-			"SpeedForce":100,
+			"SpeedForce":20,
 			"ai":5,
 			"width":56,
 			"high":75,
@@ -45,11 +49,11 @@
 			"name":"middle_enemy",
 			"x":0,
 			"y":0,
-			"hp":200,
+			"hp":300,
 			"rad":90,
 			"rotateForce":0.2,
-			"SpeedForce":20,
-			"ai":0,
+			"SpeedForce":30,
+			"ai":7,
 			"width":58,
 			"high":75,
 			"attackDelay":3.0
@@ -59,8 +63,8 @@
 	[
 		{
 			"name":"cannonball",
-			"damage":50,
-			"speed":500,
+			"damage":30,
+			"speed":300,
 			"visualR":5,
 			"colType":"circle",
 			"width":10,
@@ -68,13 +72,46 @@
 		},
 		{
 			"name":"fireball",
-			"damage":60,
-			"speed":400,
-			"visualR":10,
+			"damage":70,
+			"speed":250,
+			"visualR":25,
 			"colType":"circle",
-			"width":10,
-			"high":10
+			"width":50,
+			"high":50
+		},
+		{
+			"name":"energy",
+			"damage":90,
+			"speed":400,
+			"visualR":30,
+			"colType":"circle",
+			"width":50,
+			"high":30
 		}
+	
+	],
+	"weaponKindCount":
+	[
+		[
+			50,
+			10,
+			2
+		],
+		[
+			9999,
+			9999,
+			9999
+		]
+	],
+	"attackKind":
+	[
+		[
+			0,1
+		],
+		[
+			2
+		]
+		
 	
 	]
 }

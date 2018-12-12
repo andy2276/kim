@@ -10,7 +10,7 @@ class playerInfo:
     def __init__(self):
         self.select = 0
         self.CurHp = 0
-        self.Magnize = 0
+        self.Magnize = []
 
 class stageInfo:
     def __init__(self):

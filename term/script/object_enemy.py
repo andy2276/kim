@@ -49,8 +49,11 @@ class enemy:
         enemy._COUNT += 1#id & count
 
         self.rad = sRad
-        self.rotForce = sRs*MOVE_TIME * math.pi/60
-        self.fwForce = sFs*MOVE_TIME * MOVE_FREEZE
+        self.movePower = sFs
+        self.rotForce = self.movePower*MOVE_TIME * math.pi/60
+        self.fwForce = self.movePower*MOVE_TIME * MOVE_FREEZE
+        self.moveB = 1
+
         self.ai = sAi
 
         self.collisionTime = 0.0
@@ -78,7 +81,12 @@ class enemy:
 
         #self.collision.draw()
     def update(self):
-
+        self.fwForce = self.movePower*MOVE_TIME*self.moveB
+        if self.state == 'found':
+            if self.moveB <= self.ai:
+                self.moveB += MOVE_TIME#self.moveB
+                #print(self.moveB)
+        else : self.moveB = 1
 
         #print(MOVE_TIME)
         if self.state == 'stay':

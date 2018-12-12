@@ -20,12 +20,12 @@ import DB as db
 #testVar
 TESTINGGAME = False
 #timeVar
-DELAYTIME = 1/360
+DELAYTIME = 1/720
 
 delta_time.set_delay(DELAYTIME)
-delta_time.startDeltaTime()
+# delta_time.startDeltaTime()
 global MOVE_TIME
-MOVE_TIME = 0
+MOVE_TIME = delta_time.deltaTime()
 #createVar
 enemyList = []
 projectile = []
@@ -48,7 +48,8 @@ pp = load_image('../res/object/character/po.png')
 #player
 playerSelect = 0
 playerCurHp = 0
-playerCurMagnize = 0
+playerCurMagnize = []
+notFirstGame = False
 
 #stage
 stageNum = 0
@@ -60,21 +61,42 @@ bossCount = 0
 #     global playerSelect,playerCurHp,playerCurMagnize,stageNum,enemyCount,bagicCount,middleCount,bossCount
 
 
+
+def setDB():
+    global playerSelect, playerCurHp, playerCurMagnize, stageNum, enemyCount\
+        , bagicCount, middleCount, bossCount, clearCount
+
+    playerSelect = db.playerData.select
+    playerCurHp = db.playerData.CurHp
+    playerCurMagnize = db.playerData.Magnize
+    # stage
+    stageNum = db.stageData.stageNum
+    enemyCount = db.stageData.enemyCount
+    bagicCount = db.stageData.bagic_enemy
+    middleCount = db.stageData.middle_enemy
+    bossCount = db.stageData.boss_enemy
+
 def playerEnter(selectPlayer):
     global player,MOVE_TIME
     p = lo.loadState.player[selectPlayer]
-    MOVE_TIME = delta_time.deltaTime()
+    #MOVE_TIME = delta_time.deltaTime()
     object_player.MOVE_TIME = MOVE_TIME
     object_player.TESTINGGAME = TESTINGGAME
-    player = object_player.Player(p["name"], p['x'], p['y'], p['hp'], p['rad'], p['rotateSpeed'], p['fowardSpeed'],
-                                  p['backSpeed'], p['width'], p['high'],p['weaponKind'])
+    player = object_player.Player(selectPlayer,p["name"], p['x'], p['y'], p['hp'], p['rad'], p['rotateSpeed'], p['fowardSpeed'],
+                                  p['backSpeed'], p['width'], p['high'],p['weaponKind'],p["attackCool"])
     player.collision = collider.Collision(player)
+    if notFirstGame:
+        setDB()
+        player.hp = playerCurHp
+        for i in range(player.weaponCount):
+            player.wp[i] = playerCurMagnize[i]
+
 
 
 def enemyEnter(selectEnemy,countEnenmy):
     global enemy,enemyList,MOVE_TIME
     p = lo.loadState.enemy[selectEnemy]
-    MOVE_TIME = delta_time.deltaTime()
+    #MOVE_TIME = delta_time.deltaTime()
     object_enemy.MOVE_TIME = MOVE_TIME
     object_enemy.TESTINGGAME = TESTINGGAME
     for i in range(countEnenmy):
@@ -94,41 +116,45 @@ def structureEnter(stageN):
 #     global mapNum
 #     for i in range(72):
 #         mapNum.append((random.randint(0,2),random.randint(0,2)))
+
+global playerSoundTime,playerAttackDelay,playerAttackGeneral,playerAttackUlti
+playerSoundTime = 0.0
+playerAttackDelay = 0.0
+playerAttackGeneral = False
+playerAttackUlti = False
 def playerUpdate():
-    global player, enemy, test, MOVE_TIME,projectile
+    global player, enemy, test, MOVE_TIME,projectile,playerSoundTime,playerAttackDelay,playerAttackGeneral,playerAttackUlti
     player.update()
-    if player.barrel.attack:
-        player.barrel.attack = False
-        # if player.barrel.weapon == 0:
-        #     missiles=object_projectile.projectile(player.name,"missile", player.barrel.gpx, player.barrel.gpy, player.barrel.rad,
-        #                                           "player",250,10,30,"circle",10,10)
-        #     missiles.collision = collider.Collision(missiles)
-        # elif player.barrel.weapon == 1:
-        #     missiles = object_projectile.projectile(player.name, "cannonball", player.barrel.gpx, player.barrel.gpy,
-        #                                             player.barrel.rad,
-        #                                             "player", 340, 10, 10, "circle", 10, 10)
-        #     missiles.collision = collider.Collision(missiles)
-        # elif player.barrel.weapon == 2:
-        #     missiles = object_projectile.frameProjectile(player.name, "energy", player.barrel.gpx, player.barrel.gpy,
-        #                                             player.barrel.rad,
-        #                                             "player", 200, 10, 100, "circle", 30, 30)
-        #
-        #     missiles.collision = collider.Collision(missiles)
+    if player.barrel.reload:
         p = lo.loadState.projectile[player.barrel.weapon]
-        if player.barrel.weapon == 0 or 1:
-            missiles = object_projectile.projectile(player.name, p[player.barrel.weapon], player.barrel.gpx, player.barrel.gpy,
-                                                    player.barrel.rad,
-                                                    "player", p["speed"], p["visualR"], p["damage"], p["colType"], p['width'], p['high'])
-            missiles.collision = collider.Collision(missiles)
-        elif player.barrel.weapon == 2:
-            missiles = object_projectile.frameProjectile(player.name, "energy", player.barrel.gpx, player.barrel.gpy,
-                                                         player.barrel.rad,
-                                                         "player", 200, 10, 100, "circle", 30, 30)
 
-            missiles.collision = collider.Collision(missiles)
+    #print(player.barrel.weapon,p["name"])
+        if player.barrel.attack :
+            #print("playerUpdate!!!!!!---------------------,",playerAttackDelay)
+            player.barrel.attack = False
+            if playerAttackDelay == 0.0 :
+                playerAttackDelay += MOVE_TIME
+                if player.barrel.weapon in lo.loadState.attackKind[0]:
+                    missiles = object_projectile.projectile(player.name, p["name"], player.barrel.gpx, player.barrel.gpy,player.barrel.rad,"player", p["speed"], p["visualR"], p["damage"], p["colType"], p['width'], p['high'])
+                    missiles.collision = collider.Collision(missiles)
+                    playerAttackUlti = False
+                    playerAttackGeneral = True
+                elif player.barrel.weapon in lo.loadState.attackKind[1]:
+                    missiles = object_projectile.frameProjectile(player.name, p["name"], player.barrel.gpx, player.barrel.gpy,player.barrel.rad,"player", p["speed"], p["visualR"], p["damage"], p["colType"], p['width'], p['high'])
+                    missiles.collision = collider.Collision(missiles)
+                    playerAttackUlti = True
+                    playerAttackGeneral = False
+                projectile.append(missiles)
+            else:
+                if playerAttackGeneral:
+                    playerAttackDelay += MOVE_TIME*80
+                elif playerAttackUlti:
+                    playerAttackDelay += MOVE_TIME*30
+
+                if playerAttackDelay >= player.attackCool:
+                    playerAttackDelay = 0.0
 
 
-        projectile.append(missiles)
 
     if lo.C_WIDTH < player.x or player.x < 0:
         player.body.x += -math.cos(player.rad)*20
@@ -137,8 +163,18 @@ def playerUpdate():
         player.body.y += -math.sin(player.rad)*20
         print("y out!")
 
-
-
+    if player.body.moved:
+        if playerSoundTime == 0.0:
+            lo.loadSound.playerSound["move"][1].set_volume(5)
+            lo.loadSound.playerSound["move"][1].play(1)
+            playerSoundTime += MOVE_TIME * 10
+        elif 0< playerSoundTime <= 4.3:
+            playerSoundTime += MOVE_TIME
+        else:
+            playerSoundTime = 0.0
+    else:
+        lo.loadSound.playerSound["move"][1].stop()
+        playerSoundTime = 0.0
 def enemyUpdate():
     global player, enemy,test,MOVE_TIME,pp
 
@@ -193,7 +229,7 @@ def enemyUpdate():
                     s.collision.vector[2][1] <= e.ty<= s.collision.vector[0][1]:
                 e.tx = s.x + random.randint(-1, 1) * s.w
                 e.ty = s.y + random.randint(-1, 1)* s.h
-                print(e.tx,e.ty)
+                #print(e.tx,e.ty)
 
         if lo.C_WIDTH < e.x or e.x < 0:
             e.x += -math.cos(e.rad)
@@ -226,11 +262,11 @@ def projectileUpdate():
             if m.collision.isCollider(s):
                 projectile.remove(m)
                 if m.play == "player":
-                    s.x -= math.cos(m.rad) * m.damage*0.1
-                    s.y -= math.sin(m.rad) * m.damage*0.1
+                    s.x -= math.cos(m.rad) * m.damage*0.01
+                    s.y -= math.sin(m.rad) * m.damage*0.01
                 elif m.play == "enemy":
-                    s.x += math.cos(m.rad) * m.damage * 0.1
-                    s.y += math.sin(m.rad) * m.damage * 0.1
+                    s.x += math.cos(m.rad) * m.damage * 0.01
+                    s.y += math.sin(m.rad) * m.damage * 0.01
                 break
     for m in projectile:
         m.update()
@@ -245,10 +281,11 @@ def projectileUpdate():
             if m.collision.isCollider(e):
                 if m.play != e.play:
                     e.hp -= m.damage
-                    e.x -= math.cos(m.rad) * e.fwForce*m.damage
-                    e.y -= math.sin(m.rad) * e.fwForce*m.damage
+                    e.x -= math.cos(m.rad) *(m.damage/e.ai)
+                    e.y -= math.sin(m.rad) *(m.damage/e.ai)
                     if e.hp <= 0:
                         enemyList.remove(e)
+                        break
                     projectile.remove(m)
                     break#리스트 반복을 시키면 안된다.
         for e in enemyList:
@@ -309,6 +346,11 @@ def structureCheckOverlap():
 def myInfo():
     global playerSelect, playerCurHp, playerCurMagnize,stageNum,player
     playerCurHp = player.hp
+    for i in range(player.weaponCount):
+        playerCurMagnize.append(player.wp[i])
+
+    print("myinfo",playerCurMagnize)
+
     return stageNum,playerSelect,playerCurHp,playerCurMagnize
 
 def MapDraw(stageNum):
@@ -356,7 +398,7 @@ def isStageClear():
 
 def clearVar():
     global  enemyCount, bagicCount, middleCount, bossCount, \
-        enemyList, projectile, structure, mapNum, player, enemy, hpLabel, magnizeLabel
+        enemyList, projectile, structure, mapNum, player, enemy, hpLabel, magnizeLabel,pan
     enemyList = []
     projectile = []
     structure = []
@@ -365,25 +407,24 @@ def clearVar():
     enemy = None
     hpLabel = None
     magnizeLabel = None
+    pan = None
 
-def setDB():
-    global playerSelect, playerCurHp, playerCurMagnize, stageNum, enemyCount\
-        , bagicCount, middleCount, bossCount, clearCount
 
-    playerSelect = db.playerData.select
-    playerCurHp = db.playerData.CurHp
-    playerCurMagnize = db.playerData.Magnize
-    # stage
-    stageNum = db.stageData.stageNum
-    enemyCount = db.stageData.enemyCount
-    bagicCount = db.stageData.bagic_enemy
-    middleCount = db.stageData.middle_enemy
-    bossCount = db.stageData.boss_enemy
 
 def nextStage(stageN):
-    global stageNum,clearCount
-    db.stageData.stageNum,db.playerData.select,db.playerData.CurHp,db.playerData.Magnize = myInfo()
-    clearCount += delta_time.deltaTime()
+    global stageNum,clearCount,MOVE_TIME,notFirstGame
+    n,s,h,m=myInfo()
+    print("시발?!!!")
+    db.stageData.stageNum =n
+    db.playerData.select = s
+    db.playerData.CurHp =h
+    #여기를 다시보자 그리고 사운드를 넣자.
+    for i in m:
+        db.playerData.Magnize.append(i)
+
+    if notFirstGame == False:
+        notFirstGame = True
+    clearCount += MOVE_TIME
     if clearCount >= 1.0:
         stageNum = stageN
         db.stageSelect(stageNum)
@@ -391,11 +432,19 @@ def nextStage(stageN):
         clearVar()
         enter()
 def uiEnter():
-    global hpLabel,pan
-    label = ui.Label("Test", lo.CW_HALF, lo.CH_HALF, 42, ui.FONT_2)
+    global hpLabel,pan,magnizeLabel
+    label = ui.Label("Test", 1020 ,75, 42, ui.FONT_2)
     label.color = (213,213,213)
     ui.labels.append(label)
     hpLabel = label
+
+    label = ui.Label("curMagnize",1020,30,42,ui.FONT_2)
+    label.color = (213,213,213)
+    ui.labels.append(label)
+    magnizeLabel = label
+
+
+
     pan = lo.UI("battleUI", 1100, 50, 200, 100, 0)
 
 
@@ -406,9 +455,13 @@ def uiDraw():
 
     pass
 def uiUpdate():
-    global hpLabel,player
+    global hpLabel,player,magnizeLabel
     str = "{:5.0f}".format(player.hp)
     hpLabel.text = str
+
+    str = "{:5.0f}".format(player.wp[player.barrel.weapon])
+    print(player.wp[player.barrel.weapon])
+    magnizeLabel.text = str
 
 
 def enter():

@@ -78,8 +78,11 @@ def selectUdate():
         print(charNum)
 
     if goUI.eventOn:
+        lo.loadSound.uiSound["menu_click"].set_volume(5)
+        lo.loadSound.uiSound["menu_click"].play(1)
         print("go!!")
         goUI.clickOff = False
+
         print(charNum)
         db.playerData.select = charNum
         print(db.playerData.select)
@@ -137,7 +140,7 @@ def draw():
 def update():
     global gameFist, gameLoof,gameobject,stageIn
     selectUdate()
-    print(lo.loadTerrain[0])
+    #print(lo.loadTerrain[0])
 
 
 def handle_events():

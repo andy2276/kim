@@ -21,9 +21,6 @@ import delta_time
 
 global MOVE_TIME
 
-
-
-
 TESTINGGAME = False
 TIMEDELAY = 0
 
@@ -57,6 +54,8 @@ class LoadingState:
         self.player = datas["player"]
         self.enemy = datas["enemy"]
         self.projectile = datas["projectile"]
+        self.weaponCount = datas["weaponKindCount"]
+        self.attackKind = datas["attackKind"]
         op.close()
 
 
@@ -82,7 +81,7 @@ class LoadingImage:
         }
         self.object_projectile_image = {
             "cannonball":load_image('../res/object/projectile/cannonball.png'),
-            "missile":load_image('../res/object/projectile/missile.png'),
+            "fireball":load_image('../res/object/projectile/missile.png'),
             "energy":load_image("../res/object/projectile/energy.png")
         }
         #self.object_projectile_image["cannonball"].
@@ -103,10 +102,28 @@ class LoadingImage:
         self.imageCount = 7
 class LoadingSound():
     def __init__(self):
-        self.playerSound = {}
-        self.enemySound = {}
-        self.bgSound = {}
-        self.uiSound ={}
+        self.playerSound = {
+            "fire_cannon":[load_music("player_fire_cannon.mp3"),load_music("player_fire_cannon2.mp3")],
+            "fire_fireball": [load_music("player_fire_fireball.mp3"),load_music("player_fire_fireball2.mp3"),load_music("player_fire_fireball3.mp3")],
+            "fire_energy": load_music("player_fire_energy.mp3"),
+            "move": [load_music("player_move1.mp3"),load_music("player_move2.mp3")],
+            "reload_need": load_music("player_need_reload.mp3"),
+            "reload_reload": load_music("player_reload.mp3"),
+        }
+
+        self.enemySound = {
+            "enemy_fire":load_music("enemy_fire.mp3"),
+        }
+        self.bgSound = {
+            "boom":[load_music("boom1.mp3"),load_music("boom2.mp3"),load_music("boom3.mp3")],
+            "main_menu":load_music("main_menu.mp3"),
+            "ingame":load_music("ingame_bg.mp3")
+        }
+        self.uiSound ={
+            "menu_intro": load_music("menu_intro.mp3"),
+            "menu_hovr": load_music("menu_click.mp3"),
+            "menu_click": load_music("click.mp3")
+        }
 
 
 loadImages = None
@@ -218,9 +235,10 @@ class selectUI(UI):
         loadImages.main_menu_image[self.name].clip_draw(self.k*self.w,self.imageNum*self.h,self.w,self.h, self.x, self.y)
 
 def enter():
-    global loadImages,loadState,loadCount,loadBlocks,loadTerrain
+    global loadImages,loadState,loadCount,loadBlocks,loadTerrain,loadSound
     open_canvas(C_WIDTH, C_HIEGHT)
     loadState = LoadingState()
+    loadSound = LoadingSound()
     loadImages = LoadingImage()
 
 
@@ -233,6 +251,9 @@ def enter():
                 stageMaps.append(loadImages.map_terrain_image["base"].clip_image(150*y,150*x,150,150))
         loadTerrain.append(stageMaps)
     loadCount =0
+
+    loadSound.uiSound["menu_intro"].set_volume(128)
+    loadSound.uiSound["menu_intro"].repeat_play()
 
 def exit():
     close_canvas()
