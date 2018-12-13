@@ -24,7 +24,7 @@ test = 0
 def enter():
 	global logo
 	open_canvas()
-	logo = load_image('../res/ui/logo_title/kpu_credit.png')
+	logo = load_image('kpu_credit.png')
 
 
 

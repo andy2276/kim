@@ -5,6 +5,8 @@ import game_framework as gf
 #third import next module
 import logo_state
 
+print("start main")
 #start this module's script
 
 gf.run(logo_state)
+

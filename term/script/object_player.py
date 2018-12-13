@@ -89,7 +89,7 @@ class Barrel:
         if Barrel.image == None:
             Barrel.image =  lo.loadImages.object_player_image["player_barrel"]
             if TESTINGGAME:
-                self.colAim = load_image('../res/object/character/po.png')
+                self.colAim = load_image('po.png')
 
 
 
@@ -132,6 +132,7 @@ class Barrel:
                 self.attack = True
 
         if keys.type == SDL_MOUSEBUTTONDOWN and keys.button == SDL_BUTTON_RIGHT:
+            print("reloading!!")
             self.reloading = True
 
 
@@ -164,6 +165,7 @@ class Player:
         self.y = get_canvas_height() // 2
 
         self.wp = lo.loadState.weaponCount[self.select]
+        print("player init ",self.wp)
 
         self.hp = sHp
         self.rad = math.pi/(180/sRad)
@@ -215,6 +217,9 @@ class Player:
         if self.barrel.reloading:
             self.barrel.reloading = False
             self.wp[self.barrel.weapon] = lo.loadState.weaponCount[self.select][self.barrel.weapon]
+            print("reloading!!!!!!!!!!!!!!!!!!!!!!!!",lo.loadState.weaponCount[self.select][self.barrel.weapon])
+            print("in barrel: ",self.wp[self.barrel.weapon])
+            print("self.wp",self.wp)
             self.barrel.reload = True
 
 

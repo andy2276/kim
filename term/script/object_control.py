@@ -37,12 +37,14 @@ test = None
 pan = None
 clearCount = 0
 
+
+
 #UI
 hpLabel =None
 magnizeLabel = None
 
 
-pp = load_image('../res/object/character/po.png')
+pp = load_image('po.png')
 
 #interface var to DB
 #player
@@ -127,7 +129,6 @@ def playerUpdate():
     player.update()
     if player.barrel.reload:
         p = lo.loadState.projectile[player.barrel.weapon]
-
     #print(player.barrel.weapon,p["name"])
         if player.barrel.attack :
             #print("playerUpdate!!!!!!---------------------,",playerAttackDelay)
@@ -136,11 +137,21 @@ def playerUpdate():
                 playerAttackDelay += MOVE_TIME
                 if player.barrel.weapon in lo.loadState.attackKind[0]:
                     missiles = object_projectile.projectile(player.name, p["name"], player.barrel.gpx, player.barrel.gpy,player.barrel.rad,"player", p["speed"], p["visualR"], p["damage"], p["colType"], p['width'], p['high'])
+
+
+                    lo.loadSound.playerSound[p["name"]][0].set_volume(6)
+                    lo.loadSound.playerSound[p["name"]][0].repeat_play()
+
                     missiles.collision = collider.Collision(missiles)
                     playerAttackUlti = False
                     playerAttackGeneral = True
                 elif player.barrel.weapon in lo.loadState.attackKind[1]:
                     missiles = object_projectile.frameProjectile(player.name, p["name"], player.barrel.gpx, player.barrel.gpy,player.barrel.rad,"player", p["speed"], p["visualR"], p["damage"], p["colType"], p['width'], p['high'])
+
+
+                    lo.loadSound.playerSound[p["name"]][0].set_volume(6)
+                    lo.loadSound.playerSound[p["name"]][0].repeat_play()
+
                     missiles.collision = collider.Collision(missiles)
                     playerAttackUlti = True
                     playerAttackGeneral = False
@@ -245,10 +256,6 @@ def enemyUpdate():
         #         e.ty += random.randint(-50, 50)
         # else:
         #     e.collisionTime = 0.0
-
-
-
-
         EnemyCheckOverlap()
         e.update()
 
@@ -268,6 +275,7 @@ def projectileUpdate():
                     s.x += math.cos(m.rad) * m.damage * 0.01
                     s.y += math.sin(m.rad) * m.damage * 0.01
                 break
+
     for m in projectile:
         m.update()
         if m.x <= 0 or m.x >= get_canvas_width() or \
@@ -345,11 +353,12 @@ def structureCheckOverlap():
 
 def myInfo():
     global playerSelect, playerCurHp, playerCurMagnize,stageNum,player
+    playerSelect = player.select
     playerCurHp = player.hp
     for i in range(player.weaponCount):
         playerCurMagnize.append(player.wp[i])
 
-    print("myinfo",playerCurMagnize)
+    #print("myinfo",playerCurMagnize)
 
     return stageNum,playerSelect,playerCurHp,playerCurMagnize
 
@@ -403,6 +412,7 @@ def clearVar():
     projectile = []
     structure = []
     mapNum = []
+    ui.labels = []
     player = None
     enemy = None
     hpLabel = None
@@ -413,23 +423,33 @@ def clearVar():
 
 def nextStage(stageN):
     global stageNum,clearCount,MOVE_TIME,notFirstGame
-    n,s,h,m=myInfo()
-    print("시발?!!!")
-    db.stageData.stageNum =n
-    db.playerData.select = s
-    db.playerData.CurHp =h
+
+
     #여기를 다시보자 그리고 사운드를 넣자.
-    for i in m:
-        db.playerData.Magnize.append(i)
+    # for i in m:
+    #     db.playerData.Magnize.append(i)
+
+    print("please tt nextStage")
 
     if notFirstGame == False:
         notFirstGame = True
     clearCount += MOVE_TIME
     if clearCount >= 1.0:
+        n, s, h, m = myInfo()
+        print("test?!!!")
+        db.stageData.stageNum = n
+        db.playerData.select = s
+        db.playerData.CurHp = h
+        print("in my info", n, s, h, m)
+        print("in DB", db.stageData.stageNum, db.playerData.select, db.playerData.CurHp, db.playerData.Magnize)
+
         stageNum = stageN
         db.stageSelect(stageNum)
         setDB()
         clearVar()
+        print("in my info2", n, s, h, m)
+        print("in DB2", db.stageData.stageNum, db.playerData.select, db.playerData.CurHp, db.playerData.Magnize)
+        print("gogoNext stage!!!")
         enter()
 def uiEnter():
     global hpLabel,pan,magnizeLabel
@@ -442,6 +462,8 @@ def uiEnter():
     label.color = (213,213,213)
     ui.labels.append(label)
     magnizeLabel = label
+
+
 
 
 
@@ -460,7 +482,7 @@ def uiUpdate():
     hpLabel.text = str
 
     str = "{:5.0f}".format(player.wp[player.barrel.weapon])
-    print(player.wp[player.barrel.weapon])
+    #print(player.wp[player.barrel.weapon])
     magnizeLabel.text = str
 
 
@@ -522,11 +544,23 @@ def draw():
 
     update_canvas()
 
-
+global bgmTime
+bgmTime =0.0
 def update():
-    global player, enemy, projectile,MOVE_TIME,test,enemyList,clearCount,stageNum
+    global player, enemy, projectile,MOVE_TIME,test,enemyList,clearCount,stageNum,bgmTime
     #print(delta_time.get_fps())
     timeUpdate()
+    if bgmTime == 0.0:
+        lo.loadSound.bgSound["ingameBGM"].set_volume(8)
+        lo.loadSound.bgSound["ingameBGM"].play(1)
+        for i in range(3):
+            lo.loadSound.bgSound["ingame1"][i].set_volume(24)
+            lo.loadSound.bgSound["ingame1"][i].play(1)
+        bgmTime+=MOVE_TIME
+    elif bgmTime >= 168.0:
+        bgmTime = 0.0
+    else:
+        bgmTime += MOVE_TIME
     #print(test.handOn,test.clickOn,test.eventOn)
 
     # if test.eventOn:

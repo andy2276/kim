@@ -60,8 +60,8 @@ class StrMapMaker():
 def enter():
     global mapImage,mapMaker,isStructure,strImage,strMaker,map
     #이미지 렌더 부분
-    mapImage = load_image("../res/object/structure/base_fix.png")
-    strImage = load_image("../res/object/structure/structure_block_fix.png")
+    mapImage = load_image("base_fix.png")
+    strImage = load_image("structure_block_fix.png")
     mapMaker = MapMaker()
     strMaker = StrMapMaker()
     #맵의 배열 넣는곳
